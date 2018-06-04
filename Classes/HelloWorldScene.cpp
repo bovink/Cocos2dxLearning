@@ -25,6 +25,7 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 #include "CustomTableCellView.h"
+#include "node/TestLayerScene.h"
 
 Scene *HelloWorld::createScene() {
     return HelloWorld::create();
@@ -129,6 +130,11 @@ void HelloWorld::testTableView() {
 void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
 
     CCLOG("click cell id: %ld", static_cast<long>(cell->getIdx()));
+    if (cell->getIdx() == 10) {
+        auto scene = TestLayerScene::create();
+
+        Director::getInstance()->pushScene(scene);
+    }
 }
 
 // 设置Cell的大小

@@ -14,7 +14,8 @@ LOCAL_MODULE_FILENAME := libCocos2dxLearning
 LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
                    $(LOCAL_PATH)/../../../Classes/AppDelegate.cpp \
                    $(LOCAL_PATH)/../../../Classes/HelloWorldScene.cpp \
-                   $(LOCAL_PATH)/../../../Classes/CustomTableCellView.cpp
+                   $(LOCAL_PATH)/../../../Classes/CustomTableCellView.cpp \
+                   $(LOCAL_PATH)/../../../Classes/node/TestLayerScene.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 

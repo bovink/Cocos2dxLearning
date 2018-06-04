@@ -35,7 +35,7 @@ class HelloWorld : public Scene, public TableViewDataSource, public TableViewDel
 public:
     static Scene *createScene();
 
-    virtual bool init();
+    bool init() override;
 
     // a selector callback
     void menuCloseCallback(cocos2d::Ref *pSender);
