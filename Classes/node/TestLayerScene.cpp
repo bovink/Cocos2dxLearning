@@ -12,9 +12,16 @@ bool TestLayerScene::init() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+    // 添加带有颜色的层
+    auto layer = LayerColor::create(Color4B(192, 0, 0, 255), getContentSize().width,
+                                    getContentSize().height);
+    layer->setPosition(Vec2(0, 0));
+    addChild(layer);
+
+    // 添加标签
     auto label = Label::create();
     label->setString("hello,this is test");
-    label->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f));
+    label->setPosition(Vec2(getContentSize().width / 2.0f, getContentSize().height / 2.0f));
     addChild(label);
 
     // 监听键盘事件

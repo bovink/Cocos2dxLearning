@@ -115,11 +115,17 @@ bool HelloWorld::init() {
 }
 
 void HelloWorld::testTableView() {
+    // 添加标签
+    auto label = Label::create();
+    label->setString("hello,this is test");
+    label->setPosition(Vec2(getContentSize().width / 2.0f, getContentSize().height / 2.0f));
+    addChild(label, 10);
 
-    TableView *tableView = TableView::create(this, Size(120, 250));
-    tableView->setColor(Color3B::GREEN);
+    TableView *tableView = TableView::create(this, Size(120, getContentSize().height));
     tableView->setDirection(ScrollView::Direction::VERTICAL);
-    tableView->setPosition(Vec2(getContentSize().width / 2.0f, 0));
+    // 这位置有点奇怪，没搞懂为什么是要多1个位置
+    tableView->setPosition(
+            Vec2(150, 0));
     tableView->setDelegate(this);
     tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
     this->addChild(tableView);
