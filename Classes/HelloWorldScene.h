@@ -26,19 +26,34 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "extensions/cocos-ext.h"
 
-class HelloWorld : public cocos2d::Scene
-{
+USING_NS_CC;
+USING_NS_CC_EXT;
+
+class HelloWorld : public Scene, public TableViewDataSource, public TableViewDelegate {
 public:
-    static cocos2d::Scene* createScene();
+    static Scene *createScene();
 
     virtual bool init();
-    
+
     // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
-    
+    void menuCloseCallback(cocos2d::Ref *pSender);
+
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+
+    void tableCellTouched(TableView *table, TableViewCell *cell) override;
+
+    Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
+
+    TableViewCell *tableCellAtIndex(TableView *table, ssize_t idx) override;
+
+    ssize_t numberOfCellsInTableView(TableView *table) override;;
+private:
+    // function
+    void testTableView();
+
 };
 
 #endif // __HELLOWORLD_SCENE_H__

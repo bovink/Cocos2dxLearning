@@ -24,28 +24,23 @@
 
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include "CustomTableCellView.h"
 
-USING_NS_CC;
-
-Scene* HelloWorld::createScene()
-{
+Scene *HelloWorld::createScene() {
     return HelloWorld::create();
 }
 
 // Print useful error message instead of segfaulting when files are not there.
-static void problemLoading(const char* filename)
-{
+static void problemLoading(const char *filename) {
     printf("Error while loading: %s\n", filename);
     printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
 }
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
-{
+bool HelloWorld::init() {
     //////////////////////////////
     // 1. super init first
-    if ( !Scene::init() )
-    {
+    if (!Scene::init()) {
         return false;
     }
 
@@ -58,21 +53,18 @@ bool HelloWorld::init()
 
     // add a "close" icon to exit the progress. it's an autorelease object
     auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+            "CloseNormal.png",
+            "CloseSelected.png",
+            CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
     if (closeItem == nullptr ||
         closeItem->getContentSize().width <= 0 ||
-        closeItem->getContentSize().height <= 0)
-    {
+        closeItem->getContentSize().height <= 0) {
         problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
-    }
-    else
-    {
-        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
-        float y = origin.y + closeItem->getContentSize().height/2;
-        closeItem->setPosition(Vec2(x,y));
+    } else {
+        float x = origin.x + visibleSize.width - closeItem->getContentSize().width / 2;
+        float y = origin.y + closeItem->getContentSize().height / 2;
+        closeItem->setPosition(Vec2(x, y));
     }
 
     // create menu, it's an autorelease object
@@ -86,45 +78,87 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
 
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-    if (label == nullptr)
-    {
-        problemLoading("'fonts/Marker Felt.ttf'");
-    }
-    else
-    {
-        // position the label on the center of the screen
-        label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                origin.y + visibleSize.height - label->getContentSize().height));
+//    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+//    if (label == nullptr)
+//    {
+//        problemLoading("'fonts/Marker Felt.ttf'");
+//    }
+//    else
+//    {
+//        // position the label on the center of the screen
+//        label->setPosition(Vec2(origin.x + visibleSize.width/2,
+//                                origin.y + visibleSize.height - label->getContentSize().height));
+//
+//        // add the label as a child to this layer
+//        this->addChild(label, 1);
+//    }
+//
+//    // add "HelloWorld" splash screen"
+//    auto sprite = Sprite::create("HelloWorld.png");
+//    if (sprite == nullptr)
+//    {
+//        problemLoading("'HelloWorld.png'");
+//    }
+//    else
+//    {
+//        // position the sprite on the center of the screen
+//        sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+//
+//        // add the sprite as a child to this layer
+//        this->addChild(sprite, 0);
+//    }
 
-        // add the label as a child to this layer
-        this->addChild(label, 1);
-    }
+    testTableView();
 
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-    if (sprite == nullptr)
-    {
-        problemLoading("'HelloWorld.png'");
-    }
-    else
-    {
-        // position the sprite on the center of the screen
-        sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
-        // add the sprite as a child to this layer
-        this->addChild(sprite, 0);
-    }
     return true;
 }
 
+void HelloWorld::testTableView() {
 
-void HelloWorld::menuCloseCallback(Ref* pSender)
-{
+    TableView *tableView = TableView::create(this, Size(120, 250));
+    tableView->setColor(Color3B::GREEN);
+    tableView->setDirection(ScrollView::Direction::VERTICAL);
+    tableView->setPosition(Vec2(getContentSize().width / 2.0f, 0));
+    tableView->setDelegate(this);
+    tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
+    this->addChild(tableView);
+    tableView->reloadData();
+}
+
+void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
+
+    CCLOG("click cell id: %ld", static_cast<long>(cell->getIdx()));
+}
+
+Size HelloWorld::tableCellSizeForIndex(TableView *table, ssize_t idx) {
+    return Size(30, 30);
+}
+
+TableViewCell *HelloWorld::tableCellAtIndex(TableView *table, ssize_t idx) {
+
+    TableViewCell *cell = table->dequeueCell();
+    if (!cell) {
+
+        cell = new(std::nothrow) CustomTableCellView(idx);
+        cell->autorelease();
+    } else {
+
+        ((CustomTableCellView *) cell)->updateCell(idx);
+    }
+
+    return cell;
+}
+
+ssize_t HelloWorld::numberOfCellsInTableView(TableView *table) {
+    return 20;
+}
+
+
+void HelloWorld::menuCloseCallback(Ref *pSender) {
     //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();
 
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
 
