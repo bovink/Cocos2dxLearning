@@ -24,27 +24,65 @@ bool TestLayerScene::init() {
     label->setPosition(Vec2(getContentSize().width / 2.0f, getContentSize().height / 2.0f));
     addChild(label);
 
+    addTouchEventListener();
+
+    addKeyboardEventListener();
+
+    return true;
+}
+
+void TestLayerScene::addTouchEventListener() {
+
+    auto listener = EventListenerTouchOneByOne::create();
+
+    listener->onTouchBegan = [](Touch *touch, Event *event) {
+
+        return true;
+    };
+
+    listener->onTouchMoved = [](Touch *touch, Event *event) {
+
+        Vec2 location = touch->getLocation();
+        CCLOG("x:%f, y:%f", location.x, location.y);
+    };
+
+    listener->onTouchEnded = [](Touch *touch, Event *event) {
+
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+void TestLayerScene::addKeyboardEventListener() {
+
     // 监听键盘事件
     auto listener = EventListenerKeyboard::create();
 
-    listener->onKeyPressed = CC_CALLBACK_2(TestLayerScene::onKeyPressed, this);
+    listener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event *event) {
 
-    listener->onKeyReleased = CC_CALLBACK_2(TestLayerScene::onKeyReleased, this);
+        CCLOG("keycode %d pressed", keyCode);
+        Director::getInstance()->popScene();
+    };
+
+    listener->onKeyReleased = [](EventKeyboard::KeyCode keyCode, Event *event) {
+
+        CCLOG("keycode %d released", keyCode);
+    };
+
+//    listener->onKeyPressed = CC_CALLBACK_2(TestLayerScene::onKeyPressed, this);
+//
+//    listener->onKeyReleased = CC_CALLBACK_2(TestLayerScene::onKeyReleased, this);
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-
-    return true;
 }
 
 void TestLayerScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event *event) {
 
     CCLOG("keycode %d pressed", keyCode);
-    Director::getInstance()->popScene();
 }
 
 void TestLayerScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event *event) {
 
-    CCLOG("keycode %d released", keyCode);
 }
 
 

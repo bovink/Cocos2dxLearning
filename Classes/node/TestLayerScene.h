@@ -20,6 +20,10 @@ public:
 
 private:;
 
+    void addTouchEventListener();
+
+    void addKeyboardEventListener();
+
     // 键盘按键按下事件
     void onKeyPressed(EventKeyboard::KeyCode keyCode, Event *event);
 
