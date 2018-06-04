@@ -19,6 +19,12 @@ public:
     bool init() override;
 
 private:;
+
+    // 键盘按键按下事件
+    void onKeyPressed(EventKeyboard::KeyCode keyCode, Event *event);
+
+    // 键盘按键释放事件
+    void onKeyReleased(EventKeyboard::KeyCode keyCode, Event *event);
 };
 
 

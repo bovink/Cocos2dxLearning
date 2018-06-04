@@ -17,6 +17,28 @@ bool TestLayerScene::init() {
     label->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f));
     addChild(label);
 
+    // 监听键盘事件
+    auto listener = EventListenerKeyboard::create();
+
+    listener->onKeyPressed = CC_CALLBACK_2(TestLayerScene::onKeyPressed, this);
+
+    listener->onKeyReleased = CC_CALLBACK_2(TestLayerScene::onKeyReleased, this);
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
     return true;
 }
+
+void TestLayerScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event *event) {
+
+    CCLOG("keycode %d pressed", keyCode);
+    Director::getInstance()->popScene();
+}
+
+void TestLayerScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event *event) {
+
+    CCLOG("keycode %d released", keyCode);
+}
+
+
 
