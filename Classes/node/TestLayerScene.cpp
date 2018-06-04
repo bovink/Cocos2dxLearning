@@ -12,10 +12,15 @@ bool TestLayerScene::init() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+    auto bottomLayer = LayerColor::create(Color4B(255, 255, 255, 255), 720,
+                                    1280);
+    bottomLayer->setPosition(Vec2(0, 0));
+    addChild(bottomLayer);
+
     // 添加带有颜色的层
-    auto layer = LayerColor::create(Color4B(192, 0, 0, 255), getContentSize().width,
-                                    getContentSize().height);
-    layer->setPosition(Vec2(0, 0));
+    auto layer = LayerColor::create(Color4B(192, 0, 0, 255), 700,
+                                    1260);
+    layer->setPosition(Vec2(10, 10));
     addChild(layer);
 
     // 添加标签
