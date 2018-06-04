@@ -26,6 +26,7 @@
 #include "SimpleAudioEngine.h"
 #include "CustomTableCellView.h"
 #include "node/TestLayerScene.h"
+#include "ui/TestVideoPlayer.h"
 
 Scene *HelloWorld::createScene() {
     return HelloWorld::create();
@@ -136,10 +137,20 @@ void HelloWorld::testTableView() {
 void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
 
     CCLOG("click cell id: %ld", static_cast<long>(cell->getIdx()));
-    if (cell->getIdx() == 10) {
-        auto scene = TestLayerScene::create();
+    Scene *scene;
+    switch (cell->getIdx()) {
+        case 0:
+            scene = TestLayerScene::create();
 
-        Director::getInstance()->pushScene(scene);
+            Director::getInstance()->pushScene(scene);
+            break;
+        case 1:
+            scene = TestVideoPlayer::create();
+
+            Director::getInstance()->pushScene(scene);
+            break;
+        default:
+            break;
     }
 }
 
