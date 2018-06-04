@@ -1,11 +1,18 @@
-#configure
+#Configure
+.gradle
 .idea
 
-#engine
-
+#Engine
 cocos2d
 
-#project
+#Project
 proj.ios_mac
 proj.linux
 proj.win32
+
+#AndroidStudio
+.externalNativeBuild
+build
+*.iml
+local.properties
+
