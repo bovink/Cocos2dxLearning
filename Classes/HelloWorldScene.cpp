@@ -121,11 +121,11 @@ void HelloWorld::testTableView() {
     label->setPosition(Vec2(getContentSize().width / 2.0f, getContentSize().height / 2.0f));
     addChild(label, 10);
 
-    TableView *tableView = TableView::create(this, Size(120, getContentSize().height));
+    TableView *tableView = TableView::create(this, Size(480, getContentSize().height));
     tableView->setDirection(ScrollView::Direction::VERTICAL);
     // 这位置有点奇怪，没搞懂为什么是要多1个位置
     tableView->setPosition(
-            Vec2(150, 0));
+            Vec2(0, 0));
     tableView->setDelegate(this);
     tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
     this->addChild(tableView);
@@ -145,7 +145,7 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
 
 // 设置Cell的大小
 Size HelloWorld::tableCellSizeForIndex(TableView *table, ssize_t idx) {
-    return Size(30, 30);
+    return Size(120, 120);
 }
 
 // 初始化或加载Cell
