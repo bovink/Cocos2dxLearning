@@ -7,9 +7,9 @@ $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d/external)
 $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d/cocos)
 $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d/cocos/audio/include)
 
-LOCAL_MODULE := MyGame_shared
+LOCAL_MODULE := Cocos2dxLearning_shared
 
-LOCAL_MODULE_FILENAME := libMyGame
+LOCAL_MODULE_FILENAME := libCocos2dxLearning
 
 LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
                    $(LOCAL_PATH)/../../../Classes/AppDelegate.cpp \

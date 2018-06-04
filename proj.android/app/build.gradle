@@ -14,14 +14,14 @@ android {
         externalNativeBuild {
             if (PROP_BUILD_TYPE == 'ndk-build') {
                 ndkBuild {
-                    targets 'MyGame'
+                    targets 'Cocos2dxLearning'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
                     arguments '-j' + Runtime.runtime.availableProcessors()
                 }
             }
             else if (PROP_BUILD_TYPE == 'cmake') {
                 cmake {
-                    targets 'MyGame'
+                    targets 'Cocos2dxLearning'
                     arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", \
                               "-DUSE_CHIPMUNK=TRUE", "-DUSE_BULLET=TRUE"
                     cppFlags "-frtti -fexceptions"
