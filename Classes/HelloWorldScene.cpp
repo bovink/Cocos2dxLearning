@@ -125,15 +125,18 @@ void HelloWorld::testTableView() {
     tableView->reloadData();
 }
 
+// 设置Cell的触摸事件
 void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
 
     CCLOG("click cell id: %ld", static_cast<long>(cell->getIdx()));
 }
 
+// 设置Cell的大小
 Size HelloWorld::tableCellSizeForIndex(TableView *table, ssize_t idx) {
     return Size(30, 30);
 }
 
+// 初始化或加载Cell
 TableViewCell *HelloWorld::tableCellAtIndex(TableView *table, ssize_t idx) {
 
     TableViewCell *cell = table->dequeueCell();
@@ -149,6 +152,7 @@ TableViewCell *HelloWorld::tableCellAtIndex(TableView *table, ssize_t idx) {
     return cell;
 }
 
+// 竖排Cell的个数
 ssize_t HelloWorld::numberOfCellsInTableView(TableView *table) {
     return 20;
 }
