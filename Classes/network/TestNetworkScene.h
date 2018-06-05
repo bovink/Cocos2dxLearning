@@ -21,6 +21,9 @@ private:
 
     void testNetworkGet();
 
+    //Http Response Callback
+    void onHttpRequestCompleted(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);
+
 };
 
 

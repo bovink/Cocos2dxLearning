@@ -10,7 +10,6 @@ void CustomTableCellView::draw(Renderer *renderer, const Mat4 &transform, uint32
 
 bool CustomTableCellView::init() {
 
-    CCLOG("CustomTableCellView::init()");
     auto string = StringUtils::format("%ld", static_cast<long>(this->id));
 
     for (int i = 0; i < 4; i++) {
@@ -46,7 +45,6 @@ void CustomTableCellView::updateCell(ssize_t id) {
 }
 
 CustomTableCellView::CustomTableCellView(ssize_t id) {
-    CCLOG("CustomTableCellView(ssize_t id)");
 
     this->id = id;
     init();
