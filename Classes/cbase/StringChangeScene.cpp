@@ -8,10 +8,12 @@ bool StringChangeScene::init() {
     if (!Scene::init()) {
         return false;
     }
-    stringToChar();
-    charToString();
-    stringToCharArray();
-    charArrayToString();
+//    stringToChar();
+//    charToString();
+//    stringToCharArray();
+//    charArrayToString();
+
+    ptrCharVectorToString();
     return true;
 }
 
@@ -63,4 +65,24 @@ void StringChangeScene::charArrayToString() {
     CCLOG("string:%s",s.c_str());
 
 
+}
+
+void StringChangeScene::ptrCharVectorToString() {
+
+    std::vector<char> c = {};
+
+    std::vector<char> *chars = &c;
+    chars->push_back('t');
+    chars->push_back('h');
+    chars->push_back('i');
+    chars->push_back('s');
+
+    std::string s;
+
+    for (int i = 0; i < chars->size(); ++i) {
+        s += (*chars)[i];
+    }
+    s += "\0";
+
+    CCLOG("string:%s",s.c_str());
 }

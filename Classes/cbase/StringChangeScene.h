@@ -24,6 +24,7 @@ private:
 
     void stringToCharArray();
 
+    void ptrCharVectorToString();
 private:
 
 };
