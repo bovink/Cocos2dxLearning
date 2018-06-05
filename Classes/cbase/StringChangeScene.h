@@ -20,6 +20,10 @@ private:
 
     void charToString();
 
+    void charArrayToString();
+
+    void stringToCharArray();
+
 private:
 
 };
