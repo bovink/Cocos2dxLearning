@@ -27,6 +27,10 @@
 #include "CustomTableCellView.h"
 #include "node/TestLayerScene.h"
 #include "ui/TestVideoPlayer.h"
+#include "external/json/document.h"
+#include "external/json/prettywriter.h"
+
+using namespace rapidjson;
 
 Scene *HelloWorld::createScene() {
     return HelloWorld::create();
@@ -112,7 +116,34 @@ bool HelloWorld::init() {
 
     testTableView();
 
+    testRapidJson();
     return true;
+}
+
+void HelloWorld::testRapidJson() {
+
+    const char json[] = " { \"hello\" : \"world\", \"t\" : true , \"f\" : false, \"n\": null, \"i\":123, \"pi\": 3.1416, \"a\":[1, 2, 3, 4] } ";
+
+    CCLOG("origin string: %s", json);
+
+    Document document;  // Default template parameter uses UTF8 and MemoryPoolAllocator.
+
+#if 0
+    // "normal" parsing, decode strings to new buffers. Can use other input stream via ParseStream().
+    if (document.Parse(json).HasParseError())
+        return;
+#else
+    // In-situ parsing, decode strings directly in the source string. Source must be string.
+    char buffer[sizeof(json)];
+    memcpy(buffer, json, sizeof(json));
+    if (document.ParseInsitu(buffer).HasParseError())
+        return;
+#endif
+
+    CCLOG("\nAccess values in document:\n");
+
+    CCLOG("hello = %s\n", document["hello"].GetString());
+
 }
 
 void HelloWorld::testTableView() {

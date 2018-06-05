@@ -54,6 +54,8 @@ private:
     // function
     void testTableView();
 
+    // 测试腾讯的JSON
+    void testRapidJson();
 };
 
 #endif // __HELLOWORLD_SCENE_H__

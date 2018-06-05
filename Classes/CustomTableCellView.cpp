@@ -21,7 +21,7 @@ bool CustomTableCellView::init() {
         this->addChild(sprite);
         vector.pushBack(sprite);
 
-        auto label = Label::createWithSystemFont(string, "Helvetica", 20.0);
+        auto label = Label::createWithSystemFont(string, "fonts/arial16.fnt", 20.0);
         label->setPosition(Vec2::ZERO);
         label->setAnchorPoint(Vec2::ZERO);
         label->setTag(123);
