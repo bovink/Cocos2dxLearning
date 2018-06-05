@@ -17,6 +17,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
                    $(LOCAL_PATH)/../../../Classes/CustomTableCellView.cpp \
                    $(LOCAL_PATH)/../../../Classes/node/TestLayerScene.cpp \
                    $(LOCAL_PATH)/../../../Classes/ui/TestVideoPlayer.cpp \
+                   $(LOCAL_PATH)/../../../Classes/network/TestNetworkScene.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 

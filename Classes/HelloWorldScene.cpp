@@ -27,6 +27,7 @@
 #include "CustomTableCellView.h"
 #include "node/TestLayerScene.h"
 #include "ui/TestVideoPlayer.h"
+#include "network/TestNetworkScene.h"
 #include "external/json/document.h"
 #include "external/json/prettywriter.h"
 
@@ -177,6 +178,11 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
             break;
         case 1:
             scene = TestVideoPlayer::create();
+
+            Director::getInstance()->pushScene(scene);
+            break;
+        case 2:
+            scene = TestNetworkScene::create();
 
             Director::getInstance()->pushScene(scene);
             break;
