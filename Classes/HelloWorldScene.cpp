@@ -28,6 +28,7 @@
 #include "node/TestLayerScene.h"
 #include "ui/TestVideoPlayer.h"
 #include "network/TestNetworkScene.h"
+#include "cbase/StringChangeScene.h"
 #include "external/json/document.h"
 #include "external/json/prettywriter.h"
 
@@ -183,6 +184,11 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
             break;
         case 2:
             scene = TestNetworkScene::create();
+
+            Director::getInstance()->pushScene(scene);
+            break;
+        case 3:
+            scene = StringChangeScene::create();
 
             Director::getInstance()->pushScene(scene);
             break;

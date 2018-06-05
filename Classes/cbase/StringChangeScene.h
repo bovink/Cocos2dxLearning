@@ -5,8 +5,22 @@
 #ifndef PROJ_ANDROID_STRINGCHANGESCENE_H
 #define PROJ_ANDROID_STRINGCHANGESCENE_H
 
+#include "cocos2d.h"
 
-class StringChangeScene {
+USING_NS_CC;
+
+class StringChangeScene : public Scene {
+public:
+    bool init() override;
+
+    CREATE_FUNC(StringChangeScene);
+
+private:
+    void stringToChar();
+
+    void charToString();
+
+private:
 
 };
 
