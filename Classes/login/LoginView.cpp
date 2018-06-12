@@ -12,7 +12,15 @@ LoginView *LoginView::newInstance(Presenter *presenter) {
     LoginView *loginView = new LoginView();
     loginView->presenter = presenter;
 
-    return loginView;
+    if (loginView->init()) {
+        loginView->autorelease();
+        return loginView;
+    } else {
+
+        delete loginView;
+        return nullptr;
+    }
+
 }
 
 bool LoginView::init() {
@@ -22,6 +30,9 @@ bool LoginView::init() {
     }
 
     presenter->bindView(this);
+
+    CCLOG("init");
+    CCLOG("%s", presenter->getUserName().c_str());
 
     return true;
 }

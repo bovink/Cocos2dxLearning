@@ -16,6 +16,9 @@ public :
 
     void bindView(View *baseView) override;
 
+    std::string getUserName() override;
+
+
 private:
     View *view;
 };

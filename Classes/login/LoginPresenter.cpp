@@ -13,3 +13,8 @@ void LoginPresenter::bindView(View *baseView) {
     view = baseView;
 }
 
+std::string LoginPresenter::getUserName() {
+    std::string name = "lix";
+
+    return name;
+}
