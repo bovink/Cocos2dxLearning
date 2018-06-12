@@ -11,14 +11,20 @@ LOCAL_MODULE := Cocos2dxLearning_shared
 
 LOCAL_MODULE_FILENAME := libCocos2dxLearning
 
-LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
-                   $(LOCAL_PATH)/../../../Classes/AppDelegate.cpp \
-                   $(LOCAL_PATH)/../../../Classes/HelloWorldScene.cpp \
-                   $(LOCAL_PATH)/../../../Classes/CustomTableCellView.cpp \
-                   $(LOCAL_PATH)/../../../Classes/node/TestLayerScene.cpp \
-                   $(LOCAL_PATH)/../../../Classes/ui/TestVideoPlayer.cpp \
-                   $(LOCAL_PATH)/../../../Classes/network/TestNetworkScene.cpp \
-                   $(LOCAL_PATH)/../../../Classes/cbase/StringChangeScene.cpp \
+# 遍历目录及子目录的函数
+define walk
+    $(wildcard $(1)) $(foreach e, $(wildcard $(1)/*), $(call walk, $(e)))
+endef
+
+# 遍历Classes目录
+ALLFILES = $(call walk, $(LOCAL_PATH)/../../../Classes)
+
+FILE_LIST := hellocpp/main.cpp
+# 从所有文件中提取出所有.cpp文件
+FILE_LIST += $(filter %.cpp, $(ALLFILES))
+FILE_LIST += $(filter %.c, $(ALLFILES))
+
+LOCAL_SRC_FILES := $(FILE_LIST:$(LOCAL_PATH)/%=%)
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 
