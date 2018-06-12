@@ -4,6 +4,9 @@
 
 #include "LoginView.h"
 
+LoginView::LoginView() {}
+
+LoginView::~LoginView() {}
 
 LoginView *LoginView::newInstance(Presenter *presenter) {
     LoginView *loginView = new LoginView();
@@ -13,7 +16,7 @@ LoginView *LoginView::newInstance(Presenter *presenter) {
 }
 
 bool LoginView::init() {
-    if (!Layer::init()) {
+    if (!Scene::init()) {
 
         return false;
     }

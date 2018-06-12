@@ -22,6 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include <login/LoginView.h>
+#include <login/LoginPresenter.h>
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 #include "CustomTableCellView.h"
@@ -171,6 +173,7 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
 
     CCLOG("click cell id: %ld", static_cast<long>(cell->getIdx()));
     Scene *scene;
+    LoginPresenter *presenter;
     switch (cell->getIdx()) {
         case 0:
             scene = TestLayerScene::create();
@@ -189,6 +192,12 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
             break;
         case 3:
             scene = StringChangeScene::create();
+
+            Director::getInstance()->pushScene(scene);
+            break;
+        case 4:
+            presenter = new LoginPresenter();
+            scene = LoginView::newInstance(presenter);
 
             Director::getInstance()->pushScene(scene);
             break;

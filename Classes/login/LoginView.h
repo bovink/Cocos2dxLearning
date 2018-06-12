@@ -10,7 +10,7 @@
 
 USING_NS_CC;
 
-class LoginView : public Layer, public View {
+class LoginView : public Scene, public View {
 
 public:
     LoginView();

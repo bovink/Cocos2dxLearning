@@ -8,8 +8,8 @@
 
 #include "BaseView.h"
 
-template<typename T>
-class BasePresenter<T> {
+template<class T>
+class BasePresenter {
 
 public:
     virtual void bindView(T *baseView) = 0;

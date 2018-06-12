@@ -4,6 +4,10 @@
 
 #include "LoginPresenter.h"
 
+LoginPresenter::LoginPresenter() {}
+
+LoginPresenter::~LoginPresenter() {}
+
 void LoginPresenter::bindView(View *baseView) {
 
     view = baseView;
