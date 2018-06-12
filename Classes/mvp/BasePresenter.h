@@ -6,8 +6,13 @@
 #define PROJ_ANDROID_BASEPRESENTER_H
 
 
-class BasePresenter {
+#include "BaseView.h"
 
+template<typename T>
+class BasePresenter<T> {
+
+public:
+    virtual void bindView(T *baseView) = 0;
 };
 
 

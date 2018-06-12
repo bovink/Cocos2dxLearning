@@ -6,9 +6,20 @@
 #define PROJ_ANDROID_LOGINCONTRACT_H
 
 
+#include <mvp/BasePresenter.h>
+
 class LoginContract {
 
 };
+
+class View : public BaseView {
+
+};
+
+class Presenter : public BasePresenter<View> {
+
+};
+
 
 
 #endif //PROJ_ANDROID_LOGINCONTRACT_H

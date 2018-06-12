@@ -3,3 +3,9 @@
 //
 
 #include "LoginPresenter.h"
+
+void LoginPresenter::bindView(View *baseView) {
+
+    view = baseView;
+}
+

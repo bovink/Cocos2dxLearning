@@ -5,9 +5,19 @@
 #ifndef PROJ_ANDROID_LOGINPRESENTER_H
 #define PROJ_ANDROID_LOGINPRESENTER_H
 
+#include "LoginContract.h"
 
-class LoginPresenter {
+class LoginPresenter : public Presenter {
 
+public :
+    LoginPresenter();
+
+    ~LoginPresenter();
+
+    void bindView(View *baseView) override;
+
+private:
+    View *view;
 };
 
 

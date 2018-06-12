@@ -5,9 +5,25 @@
 #ifndef PROJ_ANDROID_LOGINVIEW_H
 #define PROJ_ANDROID_LOGINVIEW_H
 
+#include "cocos2d.h"
+#include "LoginContract.h"
 
-class LoginView {
+USING_NS_CC;
 
+class LoginView : public Layer, public View {
+
+public:
+    LoginView();
+
+    ~LoginView();
+
+    static LoginView *newInstance(Presenter *presenter);
+
+    bool init() override;
+
+private:
+
+    Presenter *presenter;
 };
 
 
