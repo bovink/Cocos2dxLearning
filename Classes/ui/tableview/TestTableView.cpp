@@ -24,7 +24,6 @@ bool TestTableView::init() {
     tableView->setDirection(ScrollView::Direction::HORIZONTAL);
     tableView->setPosition(Vec2(0, (getContentSize().height - 120) / 2));
     tableView->setDelegate(this);
-//    tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
     this->addChild(tableView);
     tableView->reloadData();
 
