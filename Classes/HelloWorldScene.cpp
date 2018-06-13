@@ -24,6 +24,7 @@
 
 #include <login/LoginView.h>
 #include <login/LoginPresenter.h>
+#include "ui/tableview/TestTableView.h"
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 #include "CustomTableCellView.h"
@@ -198,6 +199,11 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
         case 4:
             presenter = new LoginPresenter();
             scene = LoginView::newInstance(presenter);
+
+            Director::getInstance()->pushScene(scene);
+            break;
+        case 5:
+            scene = TestTableView::create();
 
             Director::getInstance()->pushScene(scene);
             break;
