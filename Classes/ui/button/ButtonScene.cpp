@@ -2,7 +2,7 @@
 // Created by 吴宗刚 on 2018/6/13.
 //
 
-#include "TestButtonScene.h"
+#include "ButtonScene.h"
 #include "cocos/ui/CocosGUI.h"
 
 using namespace ui;

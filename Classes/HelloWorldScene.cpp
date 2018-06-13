@@ -24,13 +24,13 @@
 
 #include <login/LoginView.h>
 #include <login/LoginPresenter.h>
-#include "ui/tableview/TestTableView.h"
-#include "ui/testbutton/TestButtonScene.h"
+#include "ui/tableview/TableViewScene.h"
+#include "ui/button/ButtonScene.h"
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 #include "CustomTableCellView.h"
 #include "node/TestLayerScene.h"
-#include "ui/TestVideoPlayer.h"
+#include "ui/videoplayer/VideoPlayerScene.h"
 #include "network/TestNetworkScene.h"
 #include "cbase/StringChangeScene.h"
 #include "external/json/document.h"

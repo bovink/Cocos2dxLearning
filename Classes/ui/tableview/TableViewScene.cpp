@@ -2,7 +2,7 @@
 // Created by 吴宗刚 on 2018/6/13.
 //
 
-#include "TestTableView.h"
+#include "TableViewScene.h"
 #include "CustomViewCell.h"
 
 bool TestTableView::init() {

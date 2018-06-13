@@ -2,7 +2,7 @@
 // Created by bovink on 2018/6/4.
 //
 
-#include "TestVideoPlayer.h"
+#include "VideoPlayerScene.h"
 
 bool TestVideoPlayer::init() {
     if (!Scene::init()) {
