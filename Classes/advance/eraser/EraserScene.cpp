@@ -64,10 +64,10 @@ void EraserScene::onTouchMoved(Touch *touch, Event *event) {
 
     auto startPos = touch->getLocation();
 
-    this->_brush->setPosition(startPos);
+    _brush->setPosition(startPos);
     BlendFunc func0 = {GL_ZERO, GL_ONE_MINUS_SRC_ALPHA};
-    this->_brush->setBlendFunc(func0);
-    this->_canvas->begin();
-    this->_brush->visit();
-    this->_canvas->end();
+    _brush->setBlendFunc(func0);
+    _canvas->begin();
+    _brush->visit();
+    _canvas->end();
 }
