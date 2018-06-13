@@ -11,9 +11,10 @@ bool TestTableView::init() {
     }
 
     // vertical
-    auto tableView = TableView::create(this, Size(100, getContentSize().height));
+    auto tableView = TableView::create(this, Size(120, getContentSize().height));
     tableView->setDirection(ScrollView::Direction::VERTICAL);
-    tableView->setPosition(Vec2(getContentSize().width / 2, getContentSize().height / 2));
+    tableView->setPosition(Vec2((getContentSize().width
+                                 - 120) / 2, 0));
     tableView->setDelegate(this);
     tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
     this->addChild(tableView);
@@ -47,5 +48,5 @@ ssize_t TestTableView::numberOfCellsInTableView(TableView *table) {
 }
 
 Size TestTableView::cellSizeForTable(TableView *table) {
-    return Size(100, 100);
+    return Size(120, 120);
 }

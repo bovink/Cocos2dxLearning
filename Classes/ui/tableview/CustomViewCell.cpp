@@ -17,10 +17,10 @@ bool CustomViewCell::init() {
         return false;
     }
 
-    CCLOG("init cell %d",this->_id);
+    CCLOG("init cell %d", this->_id);
 
     auto imageView = ImageView::create("ccicon.png");
-    imageView->setPosition(Vec2(getContentSize().width / 2, getContentSize().height / 2));
+    imageView->setAnchorPoint(Vec2::ZERO);
     this->addChild(imageView);
 
     return true;
