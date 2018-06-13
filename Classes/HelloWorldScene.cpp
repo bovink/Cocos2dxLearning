@@ -27,6 +27,7 @@
 #include "base/audio/AudioEngineScene.h"
 #include "base/ui/tableview/TableViewScene.h"
 #include "base/ui/button/ButtonScene.h"
+#include "advance/eraser/EraserScene.h"
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 #include "CustomTableCellView.h"
@@ -216,6 +217,11 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
             break;
         case 7:
             scene = AudioEngineScene::create();
+
+            Director::getInstance()->pushScene(scene);
+            break;
+        case 8:
+            scene = EraserScene::create();
 
             Director::getInstance()->pushScene(scene);
             break;

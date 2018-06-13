@@ -18,6 +18,10 @@ public:
 
     void addTouchEventListener();
 
+    void onTouchMoved(Touch *touch, Event *event);
+
+    RenderTexture *_canvas;
+    Sprite *_brush;
 };
 
 

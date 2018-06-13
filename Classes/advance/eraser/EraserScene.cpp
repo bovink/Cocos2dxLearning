@@ -3,9 +3,6 @@
 //
 
 #include "EraserScene.h"
-#include "cocos/ui/CocosGUI.h"
-
-using namespace ui;
 
 bool EraserScene::init() {
     if (!Scene::init()) {
@@ -17,22 +14,19 @@ bool EraserScene::init() {
     float _contentSizeHeight = getContentSize().height;
 
     // 添加背景图片
-    auto image = Sprite::create("HelloWorld.png");
+    auto image = Sprite::create("animationbuttonnormal.png");
     image->setPosition(Vec2(_contentSizeWidth / 2, _contentSizeHeight / 2));
     this->addChild(image);
-    BlendFunc blend;
-    blend = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
-    image->setBlendFunc(blend);
 
     // 画布
-    auto _canvas = RenderTexture::create(static_cast<int>(_contentSizeWidth),
-                                         static_cast<int>(_contentSizeHeight),
-                                         Texture2D::PixelFormat::RGBA8888);
+    _canvas = RenderTexture::create(static_cast<int>(_contentSizeWidth),
+                                    static_cast<int>(_contentSizeHeight),
+                                    Texture2D::PixelFormat::RGBA8888);
     _canvas->retain();
     _canvas->setPosition(Vec2(_contentSizeWidth / 2, _contentSizeHeight / 2));
     this->addChild(_canvas);
 
-    auto _brush = Sprite::create("snow.png");
+    _brush = Sprite::create("snow.png");
     _brush->setScale(3.5);
     _brush->retain();
 
@@ -52,17 +46,28 @@ void EraserScene::addTouchEventListener() {
 
     auto listener = EventListenerTouchOneByOne::create();
 
-    listener->onTouchMoved = [](Touch *touch, Event *event) {
+    listener->onTouchBegan = [](Touch *touch, Event *event) {
 
-        auto startPos = touch->getLocation();
+        return true;
+    };
 
-        _brush->setPosition(startPos);
-        BlendFunc func0 = {GL_ZERO, GL_ONE_MINUS_SRC_ALPHA};
-        _brush->setBlendFunc(func0);
-        _canvas->begin();
-        _brush->visit();
-        _canvas->end();
+    listener->onTouchMoved = CC_CALLBACK_2(EraserScene::onTouchMoved, this);
+
+    listener->onTouchEnded = [](Touch *touch, Event *event) {
+
     };
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+void EraserScene::onTouchMoved(Touch *touch, Event *event) {
+
+    auto startPos = touch->getLocation();
+
+    this->_brush->setPosition(startPos);
+    BlendFunc func0 = {GL_ZERO, GL_ONE_MINUS_SRC_ALPHA};
+    this->_brush->setBlendFunc(func0);
+    this->_canvas->begin();
+    this->_brush->visit();
+    this->_canvas->end();
 }
