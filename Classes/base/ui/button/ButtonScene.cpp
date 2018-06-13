@@ -7,7 +7,7 @@
 
 using namespace ui;
 
-bool TestButtonScene::init() {
+bool ButtonScene::init() {
 
     if (!Scene::init()) {
         return false;
@@ -16,7 +16,7 @@ bool TestButtonScene::init() {
     float _contentSizeHeight = getContentSize().height;
 
 
-    auto button = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
+    auto button = Button::create("animationbuttonnormal.png", "nimationbuttonpressed.png","HelloWorld.png");
     button->setPosition(Vec2(_contentSizeWidth / 2, _contentSizeHeight / 2));
 
     // 点击事件
@@ -27,6 +27,7 @@ bool TestButtonScene::init() {
 
     // 触摸事件
     button->addTouchEventListener([](Ref *ref, Widget::TouchEventType type) {
+        Button *clickButton;
         switch (type) {
             case Widget::TouchEventType::BEGAN:
                 CCLOG("touch begin");
@@ -35,6 +36,11 @@ bool TestButtonScene::init() {
                 CCLOG("touch moved");
                 break;
             case Widget::TouchEventType::ENDED:
+                clickButton = dynamic_cast<Button *>(ref);
+                // 设置不可点击
+                clickButton->setTouchEnabled(false);
+                // 设置图片
+                clickButton->setBright(false);
                 CCLOG("touch ended");
                 break;
             case Widget::TouchEventType::CANCELED:

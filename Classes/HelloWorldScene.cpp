@@ -211,7 +211,7 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
             Director::getInstance()->pushScene(scene);
             break;
         case 6:
-            scene = TestButtonScene::create();
+            scene = ButtonScene::create();
 
             Director::getInstance()->pushScene(scene);
             break;

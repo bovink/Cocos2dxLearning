@@ -9,11 +9,11 @@
 
 USING_NS_CC;
 
-class TestButtonScene : public Scene {
+class ButtonScene : public Scene {
 public:
     bool init() override;
 
-    CREATE_FUNC(TestButtonScene)
+    CREATE_FUNC(ButtonScene)
 
 };
 
