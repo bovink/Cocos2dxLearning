@@ -9,12 +9,15 @@
 
 USING_NS_CC;
 
-class EraserScene :public Scene{
+class EraserScene : public Scene {
 
 public:
     CREATE_FUNC(EraserScene)
 
     bool init() override;
+
+    void addTouchEventListener();
+
 };
 
 
