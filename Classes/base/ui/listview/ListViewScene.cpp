@@ -17,7 +17,7 @@ bool ListViewScene::init() {
 
     auto listView = ListView::create();
     listView->setDirection(ScrollView::Direction::VERTICAL);
-    listView->setContentSize(Size(200, getContentSize().height));
+    listView->setContentSize(Size(400, getContentSize().height));
 //    listView->setDirection(ScrollView::Direction::HORIZONTAL);
 //    listView->setContentSize(Size(getContentSize().width, 200));
     listView->setPosition(Vec2(0, 0));
@@ -28,11 +28,21 @@ bool ListViewScene::init() {
                                             "animationbuttonpressed.png");
     default_button->setName("Title Button");
 
+    Button *default_button2 = Button::create("animationbuttonnormal.png",
+                                             "animationbuttonpressed.png");
+    default_button2->setName("Title Button2");
+
     Layout *default_item = Layout::create();
     default_item->setTouchEnabled(true);
-    default_item->setContentSize(default_button->getContentSize());
-    default_button->setPosition(Vec2(default_item->getContentSize() / 2.0f));
+
+    default_item->setContentSize(Size(default_button->getContentSize().width * 2,
+                                      default_button->getContentSize().height));
+    default_button->setPosition(Vec2(default_button->getContentSize() / 2));
+    default_button2->setPosition(Vec2(default_button->getContentSize().width * 3 / 2,
+                                      default_button->getContentSize().height / 2));
+
     default_item->addChild(default_button);
+    default_item->addChild(default_button2);
 
     // set model
     listView->setItemModel(default_item);
