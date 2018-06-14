@@ -5,9 +5,17 @@
 #ifndef PROJ_ANDROID_MAINSCENE_H
 #define PROJ_ANDROID_MAINSCENE_H
 
+#include "cocos2d.h"
+#include "cocos/ui/CocosGUI.h"
 
-class MainScene {
+USING_NS_CC;
+using namespace ui;
 
+class MainScene : public Scene {
+public:
+    bool init() override;
+
+    CREATE_FUNC(MainScene)
 };
 
 
