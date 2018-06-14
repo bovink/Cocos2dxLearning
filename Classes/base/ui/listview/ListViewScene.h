@@ -6,7 +6,15 @@
 #define PROJ_ANDROID_LISTVIEWSCENE_H
 
 
-class ListViewScene {
+#include "cocos2d.h"
+
+USING_NS_CC;
+
+class ListViewScene : public Scene {
+public:
+    bool init() override;
+
+    CREATE_FUNC(ListViewScene)
 
 };
 
