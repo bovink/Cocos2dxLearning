@@ -19,11 +19,23 @@ bool CustomViewCell::init() {
 
     CCLOG("init cell %d", this->_id);
 
-    auto imageView = ImageView::create("ccicon.png");
-    imageView->setAnchorPoint(Vec2::ZERO);
-    this->addChild(imageView);
+    Button* button = Button::create("ccicon.png");
+    button->setAnchorPoint(Vec2::ZERO);
+    button->setSwallowTouches(false);
+
+    button->addClickEventListener([](Ref* ref) {
+
+        CCLOG("button HighLight");
+    });
+
+
+    this->addChild(button);
 
     return true;
+}
+
+void CustomViewCell::sayhi() {
+    CCLOG("reset button");
 }
 
 CustomViewCell::CustomViewCell(ssize_t _id) : _id(_id) {

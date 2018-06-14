@@ -21,6 +21,8 @@ public:
 
     void updateCell(ssize_t id);
 
+    void sayhi();
+
 private:
     ssize_t _id;
 };
