@@ -19,14 +19,11 @@ bool CustomViewCell::init() {
 
     CCLOG("init cell %d", this->_id);
 
-    Button* button = Button::create("ccicon.png");
+    button = Button::create("ccicon.png");
     button->setAnchorPoint(Vec2::ZERO);
     button->setSwallowTouches(false);
 
-    button->addClickEventListener([](Ref* ref) {
-
-        CCLOG("button HighLight");
-    });
+    button->addClickEventListener(CC_CALLBACK_1(CustomViewCell::onClickButton, this));
 
 
     this->addChild(button);
@@ -36,6 +33,11 @@ bool CustomViewCell::init() {
 
 void CustomViewCell::sayhi() {
     CCLOG("reset button");
+}
+
+void CustomViewCell::onClickButton(Ref *ref) {
+
+    CCLOG("button HighLight");
 }
 
 CustomViewCell::CustomViewCell(ssize_t _id) : _id(_id) {

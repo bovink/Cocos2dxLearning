@@ -7,9 +7,11 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "cocos/ui/UIButton.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace ui;
 
 class CustomViewCell : public TableViewCell {
 public:
@@ -23,8 +25,11 @@ public:
 
     void sayhi();
 
+    void onClickButton(Ref *ref);
+
 private:
     ssize_t _id;
+    Button *button;
 };
 
 
