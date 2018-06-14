@@ -25,6 +25,7 @@
 #include <login/LoginView.h>
 #include <login/LoginPresenter.h>
 #include <base/utils/StringUtilsScene.h>
+#include <base/ui/listview/ListViewScene.h>
 #include "base/audio/AudioEngineScene.h"
 #include "base/ui/tableview/TableViewScene.h"
 #include "base/ui/button/ButtonScene.h"
@@ -228,6 +229,11 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
             break;
         case 9:
             scene = StringUtilsScene::create();
+
+            Director::getInstance()->pushScene(scene);
+            break;
+        case 10:
+            scene = ListViewScene::create();
 
             Director::getInstance()->pushScene(scene);
             break;
