@@ -19,7 +19,7 @@ public:
 
     bool init() override;
 
-    CustomViewCell(ssize_t _id);
+    CustomViewCell(ssize_t _id, TableView *tableView);
 
     void updateCell(ssize_t id);
 
@@ -30,6 +30,7 @@ public:
 private:
     ssize_t _id;
     Button *button;
+    TableView *tableView;
 };
 
 

@@ -40,7 +40,7 @@ void CustomViewCell::onClickButton(Ref *ref) {
     CCLOG("button HighLight");
 }
 
-CustomViewCell::CustomViewCell(ssize_t _id) : _id(_id) {
+CustomViewCell::CustomViewCell(ssize_t _id, TableView *tableView) : _id(_id), tableView(tableView) {
 
     init();
 }

@@ -33,15 +33,6 @@ bool TestTableView::init() {
 void TestTableView::tableCellTouched(TableView *table, TableViewCell *cell) {
 
     CCLOG("touch index %d", cell->getIdx());
-    for (int i = 0; i < 20; ++i) {
-        if (i == cell->getIdx()) {
-            CCLOG("skip %d", i);
-            continue;
-        }
-
-        CustomViewCell *customViewCell = dynamic_cast<CustomViewCell *>(table->cellAtIndex(i));
-        customViewCell->sayhi();
-    }
 
 }
 
@@ -49,7 +40,7 @@ TableViewCell *TestTableView::tableCellAtIndex(TableView *table, ssize_t idx) {
     auto cell = table->dequeueCell();
     if (!cell) {
 
-        cell = new(std::nothrow) CustomViewCell(idx);
+        cell = new(std::nothrow) CustomViewCell(idx, table);
         cell->autorelease();
     } else {
 
