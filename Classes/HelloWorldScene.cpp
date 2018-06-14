@@ -24,6 +24,7 @@
 
 #include <login/LoginView.h>
 #include <login/LoginPresenter.h>
+#include <base/utils/StringUtilsScene.h>
 #include "base/audio/AudioEngineScene.h"
 #include "base/ui/tableview/TableViewScene.h"
 #include "base/ui/button/ButtonScene.h"
@@ -222,6 +223,11 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
             break;
         case 8:
             scene = EraserScene::create();
+
+            Director::getInstance()->pushScene(scene);
+            break;
+        case 9:
+            scene = StringUtilsScene::create();
 
             Director::getInstance()->pushScene(scene);
             break;
