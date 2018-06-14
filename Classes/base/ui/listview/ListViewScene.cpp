@@ -17,8 +17,11 @@ bool ListViewScene::init() {
 
     auto listView = ListView::create();
     listView->setDirection(ScrollView::Direction::VERTICAL);
-    listView->setContentSize(Size(getContentSize().width, getContentSize().height));
+    listView->setContentSize(Size(200, getContentSize().height));
+//    listView->setDirection(ScrollView::Direction::HORIZONTAL);
+//    listView->setContentSize(Size(getContentSize().width, 200));
     listView->setPosition(Vec2(0, 0));
+    listView->setTag(123);
     this->addChild(listView);
 
     Button *default_button = Button::create("animationbuttonnormal.png",
@@ -34,8 +37,6 @@ bool ListViewScene::init() {
     // set model
     listView->setItemModel(default_item);
 
-    // set all items layout gravity
-//    listView->setGravity(ListView::Gravity::CENTER_VERTICAL);
 
     std::vector<std::string> _array;
     for (int i = 0; i < 20; ++i) {
@@ -49,7 +50,22 @@ bool ListViewScene::init() {
         item->setTag(i);
         Button *btn = (Button *) item->getChildByName("Title Button");
         btn->setTitleText(_array.at(i));
+        btn->setTitleFontSize(20);
+        btn->addClickEventListener(CC_CALLBACK_1(ListViewScene::onButtonClicked, this));
         listView->pushBackCustomItem(item);
     }
     return true;
+}
+
+void ListViewScene::onButtonClicked(Ref *ref) {
+    ListView *listView = dynamic_cast<ListView *>(this->getChildByTag(123));
+    for (Widget *item :listView->getItems()) {
+
+        Button *btn = (Button *) item->getChildByName("Title Button");
+        btn->setBrightStyle(Button::BrightStyle::NORMAL);
+    }
+
+    Button *button = dynamic_cast<Button *>(ref);
+    button->setBrightStyle(Button::BrightStyle::HIGHLIGHT);
+
 }

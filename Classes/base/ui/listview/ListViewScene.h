@@ -16,6 +16,8 @@ public:
 
     CREATE_FUNC(ListViewScene)
 
+    void onButtonClicked(Ref *ref);
+
 };
 
 
