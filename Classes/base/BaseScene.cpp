@@ -3,3 +3,33 @@
 //
 
 #include "BaseScene.h"
+
+bool BaseScene::init() {
+    if (!Scene::init()) {
+
+        return false;
+    }
+
+    addKeyboardEventListener();
+
+    return true;
+}
+
+void BaseScene::addKeyboardEventListener() {
+
+    // 监听键盘事件
+    auto listener = EventListenerKeyboard::create();
+
+    listener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event *event) {
+
+        CCLOG("keycode %d pressed", keyCode);
+        Director::getInstance()->popScene();
+    };
+
+    listener->onKeyReleased = [](EventKeyboard::KeyCode keyCode, Event *event) {
+
+        CCLOG("keycode %d released", keyCode);
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}

@@ -5,11 +5,10 @@
 #ifndef PROJ_ANDROID_STRINGCHANGESCENE_H
 #define PROJ_ANDROID_STRINGCHANGESCENE_H
 
-#include "cocos2d.h"
 
-USING_NS_CC;
+#include <base/BaseScene.h>
 
-class StringChangeScene : public Scene {
+class StringChangeScene : public BaseScene {
 public:
     bool init() override;
 

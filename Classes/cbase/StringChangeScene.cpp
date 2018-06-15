@@ -5,7 +5,7 @@
 #include "StringChangeScene.h"
 
 bool StringChangeScene::init() {
-    if (!Scene::init()) {
+    if (!BaseScene::init()) {
         return false;
     }
 //    stringToChar();

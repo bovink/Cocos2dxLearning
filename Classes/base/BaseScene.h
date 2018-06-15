@@ -6,7 +6,18 @@
 #define PROJ_ANDROID_BASESCENE_H
 
 
-class BaseScene {
+#include "cocos2d.h"
+
+USING_NS_CC;
+
+class BaseScene : public Scene {
+public:
+    bool init() override;
+
+    CREATE_FUNC(BaseScene)
+
+private:
+    void addKeyboardEventListener();
 
 };
 
