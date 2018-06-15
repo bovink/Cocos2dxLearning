@@ -26,6 +26,7 @@
 #include <login/LoginPresenter.h>
 #include <base/utils/StringUtilsScene.h>
 #include <base/ui/listview/ListViewScene.h>
+#include <base/2d/transitionscene/TransitionTestScene.h>
 #include "base/audio/AudioEngineScene.h"
 #include "base/ui/tableview/TableViewScene.h"
 #include "base/ui/button/ButtonScene.h"
@@ -182,7 +183,7 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
     LoginPresenter *presenter;
     switch (cell->getIdx()) {
         case 0:
-            scene = TestLayerScene::create();
+            scene = TransitionTestScene::newInstance(Color4B(255, 255, 255, 255));
 
             Director::getInstance()->pushScene(scene);
             break;
