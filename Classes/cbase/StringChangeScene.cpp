@@ -14,6 +14,16 @@ bool StringChangeScene::init() {
 //    charArrayToString();
 
     ptrCharVectorToString();
+
+    // 为什么const char *能指向一个string
+    const char *base = "hello%d";
+
+    for (int i = 0; i < 10; ++i) {
+
+        std::string afterFormat = StringUtils::format(base, i);
+        CCLOG("%s", afterFormat.c_str());
+    }
+
     return true;
 }
 
@@ -62,7 +72,7 @@ void StringChangeScene::charArrayToString() {
     char c[] = "this is a string";
     std::string s;
     s = c;
-    CCLOG("string:%s",s.c_str());
+    CCLOG("string:%s", s.c_str());
 
 
 }
@@ -84,5 +94,5 @@ void StringChangeScene::ptrCharVectorToString() {
     }
     s += "\0";
 
-    CCLOG("string:%s",s.c_str());
+    CCLOG("string:%s", s.c_str());
 }
