@@ -11,25 +11,41 @@ bool MainScene::init() {
     }
     CCLOG("init main scene");
 
+//    Text *text = Text::create("test", "fonts/arial.ttf", 30);
+//    text->setName("title");
+    Button *button = Button::create("HelloWorld.png");
+    button->setName("title");
+//    text->setPosition(Vec2(_contentSize.width / 2, _contentSize.height / 2));
+//
+//    text->setString("hello world");
+//    this->addChild(text);
+
     Layout *layout = Layout::create();
     layout->setLayoutType(Layout::Type::VERTICAL);
-    layout->setContentSize(getContentSize());
+    layout->setContentSize(button->getContentSize());
     layout->setPosition(Vec2::ZERO);
-    this->addChild(layout);
+    layout->addChild(button);
 
-    Button *button1 = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
-    layout->addChild(button1);
+    ListView *listView = ListView::create();
+    listView->setDirection(ScrollView::Direction::VERTICAL);
+    listView->setContentSize(_contentSize);
+    listView->setPosition(Vec2::ZERO);
+    this->addChild(listView);
 
-    LinearLayoutParameter *button1Param = LinearLayoutParameter::create();
-    button1->setLayoutParameter(button1Param);
-    button1Param->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    listView->setItemModel(layout);
 
-    Button *button2 = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
-    layout->addChild(button2);
+    std::vector<const std::string> titles;
+    titles.push_back("test1");
+    titles.push_back("test2");
 
-    LinearLayoutParameter *button2Param = LinearLayoutParameter::create();
-    button2->setLayoutParameter(button2Param);
-    button2Param->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    for (std::string title : titles) {
+
+        Widget *item = layout->clone();
+        Button *titleText = dynamic_cast<Button *>(item->getChildByName("title"));
+        titleText->setTitleText(title);
+//        titleText->setString(title);
+        listView->pushBackCustomItem(item);
+    }
 
 
     return true;
