@@ -9,11 +9,13 @@ bool MainScene::init() {
 
         return false;
     }
+    CCLOG("init main scene");
 
     Layout *layout = Layout::create();
     layout->setLayoutType(Layout::Type::VERTICAL);
     layout->setContentSize(getContentSize());
-    layout->setPosition(Vec2(getContentSize() / 2));
+    layout->setPosition(Vec2::ZERO);
+    this->addChild(layout);
 
     Button *button1 = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
     layout->addChild(button1);
