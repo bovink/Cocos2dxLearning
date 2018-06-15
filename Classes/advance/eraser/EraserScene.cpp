@@ -14,7 +14,7 @@ bool EraserScene::init() {
     float _contentSizeHeight = getContentSize().height;
 
     // 添加背景图片
-    auto image = Sprite::create("animationbuttonnormal.png");
+    image = Sprite::create("animationbuttonnormal.png");
     image->setPosition(Vec2(_contentSizeWidth / 2, _contentSizeHeight / 2));
     this->addChild(image);
 
@@ -30,7 +30,8 @@ bool EraserScene::init() {
     _brush->setScale(3.5);
     _brush->retain();
 
-    auto mask = Sprite::create("HelloWorld.png");
+    mask = Sprite::create("HelloWorld.png");
+    mask->retain();
     mask->setPosition(Vec2(_contentSizeWidth / 2, _contentSizeHeight / 2));
 
     _canvas->begin();
@@ -39,6 +40,7 @@ bool EraserScene::init() {
 
 
     addTouchEventListener();
+    num = 0;
     return true;
 }
 
@@ -46,10 +48,7 @@ void EraserScene::addTouchEventListener() {
 
     auto listener = EventListenerTouchOneByOne::create();
 
-    listener->onTouchBegan = [](Touch *touch, Event *event) {
-
-        return true;
-    };
+    listener->onTouchBegan = CC_CALLBACK_2(EraserScene::onTouchBegan, this);
 
     listener->onTouchMoved = CC_CALLBACK_2(EraserScene::onTouchMoved, this);
 
@@ -60,10 +59,29 @@ void EraserScene::addTouchEventListener() {
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
+bool EraserScene::onTouchBegan(Touch *touch, Event *event) {
+
+    CCLOG("%d", num);
+    num++;
+    if (num % 3 == 2) {
+
+        image->setTexture("button.png");
+
+        _canvas->begin();
+        mask->visit();
+        _canvas->end();
+    }
+    return true;
+}
+
 void EraserScene::onTouchMoved(Touch *touch, Event *event) {
 
     auto startPos = touch->getLocation();
 
+    if (num % 3 == 1) {
+
+        _canvas->clear(0, 0, 0, 0);
+    }
     _brush->setPosition(startPos);
     BlendFunc func0 = {GL_ZERO, GL_ONE_MINUS_SRC_ALPHA};
     _brush->setBlendFunc(func0);

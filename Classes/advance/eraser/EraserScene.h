@@ -20,8 +20,13 @@ public:
 
     void onTouchMoved(Touch *touch, Event *event);
 
+    bool onTouchBegan(Touch *touch, Event *event);
+
     RenderTexture *_canvas;
     Sprite *_brush;
+    Sprite *mask;
+    Sprite *image;
+    int num;
 };
 
 
