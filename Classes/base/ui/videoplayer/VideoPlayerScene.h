@@ -16,7 +16,9 @@ public:
 
     bool init() override;
 
-    CREATE_FUNC(TestVideoPlayer);
+    CREATE_FUNC(TestVideoPlayer)
+
+    void update(float delta) override;;
 private:
     void onButtonClick(Ref *ref);
 

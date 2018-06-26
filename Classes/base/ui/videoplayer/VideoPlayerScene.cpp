@@ -38,6 +38,8 @@ bool TestVideoPlayer::init() {
     button->setPosition(Vec2::ZERO);
     button->addClickEventListener(CC_CALLBACK_1(TestVideoPlayer::onButtonClick, this));
     addChild(button);
+
+    scheduleUpdate();
     return true;
 }
 
@@ -47,4 +49,10 @@ void TestVideoPlayer::onButtonClick(Ref* ref) {
     videoPlayer->getDuration();
 
 
+}
+
+void TestVideoPlayer::update(float delta) {
+    VideoPlayer *videoPlayer = dynamic_cast<VideoPlayer *>(getChildByName("video"));
+    videoPlayer->initCurrentPosition();
+    videoPlayer->getCurrentPosition();
 }

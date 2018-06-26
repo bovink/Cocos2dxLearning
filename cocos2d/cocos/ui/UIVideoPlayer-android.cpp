@@ -44,6 +44,7 @@ USING_NS_CC;
 
 static void executeVideoCallback(int index,int event);
 static void executeInitDuration(int duration);
+static void executeInitCurrentPosition(int currentPosition);
 
 #define QUIT_FULLSCREEN 1000
 
@@ -54,6 +55,10 @@ extern "C" {
 
     void Java_org_cocos2dx_lib_Cocos2dxVideoHelper_nativeExecuteInitDuration(JNIEnv * env, jobject obj, jint duration) {
         executeInitDuration(duration);
+    }
+
+    void Java_org_cocos2dx_lib_Cocos2dxVideoHelper_nativeExecuteInitCurrentPosition(JNIEnv * env, jobject obj, jint currentPosition) {
+        executeInitCurrentPosition(currentPosition);
     }
 }
 
@@ -76,6 +81,7 @@ using namespace cocos2d::experimental::ui;
 
 static std::unordered_map<int, VideoPlayer*> s_allVideoPlayers;
 static int s_duration;
+static int s_currentPosition;
 
 VideoPlayer::VideoPlayer()
 : _fullScreenDirty(false)
@@ -209,11 +215,27 @@ void VideoPlayer::initDuration() {
 }
 
 void VideoPlayer::getDuration() {
+
     int duration = s_duration;
     CCLOG("==================");
     CCLOG("duration:%d",duration);
     CCLOG("==================");
+}
 
+void VideoPlayer::initCurrentPosition() {
+
+    if (! _videoURL.empty())
+    {
+        JniHelper::callStaticVoidMethod(videoHelperClassName, "initCurrentPosition", _videoPlayerIndex);
+    }
+}
+
+void VideoPlayer::getCurrentPosition() {
+
+    int currentPosition = s_currentPosition;
+    CCLOG("==================");
+    CCLOG("currentPosition:%d",currentPosition);
+    CCLOG("==================");
 }
 
 void VideoPlayer::pause()
@@ -339,6 +361,11 @@ void executeVideoCallback(int index,int event)
 void executeInitDuration(int duration)
 {
     s_duration = duration;
+}
+
+void executeInitCurrentPosition(int currentPosition)
+{
+    s_currentPosition = currentPosition;
 }
 
 #endif
