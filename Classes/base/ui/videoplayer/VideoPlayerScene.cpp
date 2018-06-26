@@ -39,14 +39,15 @@ bool TestVideoPlayer::init() {
     button->addClickEventListener(CC_CALLBACK_1(TestVideoPlayer::onButtonClick, this));
     addChild(button);
 
-    scheduleUpdate();
+//    scheduleUpdate();
     return true;
 }
 
 void TestVideoPlayer::onButtonClick(Ref* ref) {
-    VideoPlayer *videoPlayer = dynamic_cast<VideoPlayer *>(getChildByName("video"));
-    videoPlayer->initDuration();
-    videoPlayer->getDuration();
+//    VideoPlayer *videoPlayer = dynamic_cast<VideoPlayer *>(getChildByName("video"));
+//    videoPlayer->initDuration();
+//    videoPlayer->getDuration();
+    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity", "changedActivityOrientation", 1);
 
 
 }
