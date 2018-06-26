@@ -43,12 +43,17 @@ static const std::string videoHelperClassName = "org/cocos2dx/lib/Cocos2dxVideoH
 USING_NS_CC;
 
 static void executeVideoCallback(int index,int event);
+static void executeInitDuration(int duration);
 
 #define QUIT_FULLSCREEN 1000
 
 extern "C" {
     void Java_org_cocos2dx_lib_Cocos2dxVideoHelper_nativeExecuteVideoCallback(JNIEnv * env, jobject obj, jint index,jint event) {
         executeVideoCallback(index,event);
+    }
+
+    void Java_org_cocos2dx_lib_Cocos2dxVideoHelper_nativeExecuteInitDuration(JNIEnv * env, jobject obj, jint duration) {
+        executeInitDuration(duration);
     }
 }
 
@@ -70,6 +75,7 @@ int createVideoWidgetJNI()
 using namespace cocos2d::experimental::ui;
 
 static std::unordered_map<int, VideoPlayer*> s_allVideoPlayers;
+static int s_duration;
 
 VideoPlayer::VideoPlayer()
 : _fullScreenDirty(false)
@@ -97,7 +103,7 @@ void VideoPlayer::setFileName(const std::string& fileName)
 {
     _videoURL = FileUtils::getInstance()->fullPathForFilename(fileName);
     _videoSource = VideoPlayer::Source::FILENAME;
-    JniHelper::callStaticVoidMethod(videoHelperClassName, "setVideoUrl", _videoPlayerIndex, 
+    JniHelper::callStaticVoidMethod(videoHelperClassName, "setVideoUrl", _videoPlayerIndex,
                                     (int)Source::FILENAME,_videoURL);
 }
 
@@ -116,7 +122,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
     if (flags & FLAGS_TRANSFORM_DIRTY)
     {
         auto uiRect = cocos2d::ui::Helper::convertBoundingBoxToScreen(this);
-        JniHelper::callStaticVoidMethod(videoHelperClassName, "setVideoRect", _videoPlayerIndex, 
+        JniHelper::callStaticVoidMethod(videoHelperClassName, "setVideoRect", _videoPlayerIndex,
                                         (int)uiRect.origin.x, (int)uiRect.origin.y,
                                         (int)uiRect.size.width, (int)uiRect.size.height);
     }
@@ -142,7 +148,7 @@ void VideoPlayer::setFullScreenEnabled(bool enabled)
         _fullScreenEnabled = enabled;
 
         auto frameSize = Director::getInstance()->getOpenGLView()->getFrameSize();
-        JniHelper::callStaticVoidMethod(videoHelperClassName, "setFullScreenEnabled", _videoPlayerIndex, 
+        JniHelper::callStaticVoidMethod(videoHelperClassName, "setFullScreenEnabled", _videoPlayerIndex,
                                         enabled, (int)frameSize.width, (int)frameSize.height);
     }
 }
@@ -192,6 +198,22 @@ void VideoPlayer::play()
     {
         JniHelper::callStaticVoidMethod(videoHelperClassName, "startVideo", _videoPlayerIndex);
     }
+}
+
+void VideoPlayer::initDuration() {
+
+    if (! _videoURL.empty())
+    {
+        JniHelper::callStaticVoidMethod(videoHelperClassName, "initDuration", _videoPlayerIndex);
+    }
+}
+
+void VideoPlayer::getDuration() {
+    int duration = s_duration;
+    CCLOG("==================");
+    CCLOG("duration:%d",duration);
+    CCLOG("==================");
+
 }
 
 void VideoPlayer::pause()
@@ -266,7 +288,7 @@ void VideoPlayer::onPlayEvent(int event)
     if (event == QUIT_FULLSCREEN)
     {
         _fullScreenEnabled = false;
-    } 
+    }
     else
     {
         VideoPlayer::EventType videoEvent = (VideoPlayer::EventType)event;
@@ -312,6 +334,11 @@ void executeVideoCallback(int index,int event)
     {
         s_allVideoPlayers[index]->onPlayEvent(event);
     }
+}
+
+void executeInitDuration(int duration)
+{
+    s_duration = duration;
 }
 
 #endif

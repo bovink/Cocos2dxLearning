@@ -66,6 +66,7 @@ public class Cocos2dxVideoHelper {
     private final static int VideoTaskRestart = 10;
     private final static int VideoTaskKeepRatio = 11;
     private final static int VideoTaskFullScreen = 12;
+    private final static int VideoTaskInitDuration = 13;
     final static int KeyEventBack = 1000;
     
     static class VideoHandler extends Handler{
@@ -96,6 +97,11 @@ public class Cocos2dxVideoHelper {
             case VideoTaskStart: {
                 Cocos2dxVideoHelper helper = mReference.get();
                 helper._startVideo(msg.arg1);
+                break;
+            }
+            case VideoTaskInitDuration: {
+                Cocos2dxVideoHelper helper = mReference.get();
+                helper._initDuration(msg.arg1);
                 break;
             }
             case VideoTaskSetRect: {
@@ -187,7 +193,9 @@ public class Cocos2dxVideoHelper {
     }
     
     public static native void nativeExecuteVideoCallback(int index,int event);
-    
+
+    public static native void nativeExecuteInitDuration(int duration);
+
     OnVideoEventListener videoEventListener = new OnVideoEventListener() {
         
         @Override
@@ -302,6 +310,21 @@ public class Cocos2dxVideoHelper {
                 videoView.setFullScreenEnabled(false, 0, 0);
                 mActivity.runOnGLThread(new VideoEventRunnable(key, KeyEventBack));
             }
+        }
+    }
+
+    public static void initDuration(int index) {
+        Message msg = new Message();
+        msg.what = VideoTaskInitDuration;
+        msg.arg1 = index;
+        mVideoHandler.sendMessage(msg);
+    }
+
+    private void _initDuration(int index) {
+        Cocos2dxVideoView videoView = sVideoViews.get(index);
+        if (videoView != null) {
+            int duration = videoView.getDuration();
+            nativeExecuteInitDuration(duration);
         }
     }
     

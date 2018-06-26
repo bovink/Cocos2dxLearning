@@ -17,6 +17,8 @@ public:
     bool init() override;
 
     CREATE_FUNC(TestVideoPlayer);
+private:
+    void onButtonClick(Ref *ref);
 
 };
 

@@ -176,6 +176,9 @@ namespace experimental{
             virtual void onEnter() override;
             virtual void onExit() override;
 
+            virtual void initDuration();
+
+            virtual void getDuration();
         protected:
             virtual cocos2d::ui::Widget* createCloneInstance() override;
             virtual void copySpecialProperties(Widget* model) override;
