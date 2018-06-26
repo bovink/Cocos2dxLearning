@@ -3,7 +3,20 @@
 .idea
 
 #Engine
-cocos2d
+cocos2d/cmake
+cocos2d/docs
+cocos2d/extensions
+cocos2d/external
+cocos2d/licenses
+cocos2d/tools
+cocos2d/.appveyor.yml
+cocos2d/AUTHORS
+cocos2d/CHANGELOG
+cocos2d/CMakeLists.txt
+cocos2d/CONTRIBUTING.md
+cocos2d/download-deps.py
+cocos2d/issue_template.md
+cocos2d/README.md
 
 #Project
 proj.ios_mac
