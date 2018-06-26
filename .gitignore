@@ -1,8 +1,7 @@
-#Configure
-.gradle
+# ProjectConfig
 .idea
 
-#Engine
+# Engine
 cocos2d/cmake
 cocos2d/docs
 cocos2d/extensions
@@ -18,14 +17,20 @@ cocos2d/download-deps.py
 cocos2d/issue_template.md
 cocos2d/README.md
 
-#Project
+# iOS
 proj.ios_mac
+
+# Linux
 proj.linux
+
+# Win32
 proj.win32
 
-#AndroidStudio
+
+# Android
+.gradle
 .externalNativeBuild
-build
 *.iml
+build
 local.properties
 
