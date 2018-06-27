@@ -43,6 +43,11 @@
 
 using namespace rapidjson;
 
+#include "json.hpp"
+#include "Person.h"
+
+using json = nlohmann::json;
+
 Scene *HelloWorld::createScene() {
     return HelloWorld::create();
 }
@@ -127,7 +132,47 @@ bool HelloWorld::init() {
 
     testTableView();
 
-    testRapidJson();
+//    testRapidJson();
+    ns::Person *p = new ns::Person();
+    p->setName("lilei");
+    p->setSex("male");
+    p->setAge(14);
+
+    json j = *p;
+
+    CCLOG("json:%s", j.dump().c_str());
+//
+//    ns::Person copy = j;
+//
+//    CCLOG("name:%s", copy.getName().c_str());
+//    CCLOG("sex:%s", copy.getSex().c_str());
+//    CCLOG("age:%d", copy.getAge());
+
+    std::string personString = FileUtils::getInstance()->getStringFromFile("person.txt");
+    CCLOG("%s", personString.c_str());
+//
+    json j2;
+    j2 = json::parse(personString);
+//    j2 = {{"age",  13},
+//          {"sex",  "female"},
+//          {"name", "age"}};
+    CCLOG("json:%s", j2.dump().c_str());
+
+
+    std::vector<ns::Person> p2 = j2;
+    for (std::vector<ns::Person>::const_iterator p = p2.begin(); p != p2.end(); p++) {
+        CCLOG("name:%s", p->getName().c_str());
+        CCLOG("sex:%s", p->getSex().c_str());
+        CCLOG("age:%d", p->getAge());
+
+    }
+//    ns::Person p2 = j2;
+
+//    CCLOG("name:%s", p2.getName().c_str());
+//    CCLOG("sex:%s", p2.getSex().c_str());
+//    CCLOG("age:%d", p2.getAge());
+
+
     return true;
 }
 
