@@ -66,8 +66,8 @@ public class Cocos2dxVideoHelper {
     private final static int VideoTaskRestart = 10;
     private final static int VideoTaskKeepRatio = 11;
     private final static int VideoTaskFullScreen = 12;
-    private final static int VideoTaskInitDuration = 13;
-    private final static int VideoTaskInitCurrentPosition = 14;
+    private final static int VideoTaskGetDuration = 13;
+    private final static int VideoTaskGetCurrentPosition = 14;
     final static int KeyEventBack = 1000;
     
     static class VideoHandler extends Handler{
@@ -100,14 +100,14 @@ public class Cocos2dxVideoHelper {
                 helper._startVideo(msg.arg1);
                 break;
             }
-            case VideoTaskInitDuration: {
+            case VideoTaskGetDuration: {
                 Cocos2dxVideoHelper helper = mReference.get();
-                helper._initDuration(msg.arg1);
+                helper._getDuration(msg.arg1);
                 break;
             }
-            case VideoTaskInitCurrentPosition: {
+            case VideoTaskGetCurrentPosition: {
                 Cocos2dxVideoHelper helper = mReference.get();
-                helper._initCurrentPosition(msg.arg1);
+                helper._getCurrentPosition(msg.arg1);
                 break;
             }
             case VideoTaskSetRect: {
@@ -200,9 +200,9 @@ public class Cocos2dxVideoHelper {
     
     public static native void nativeExecuteVideoCallback(int index,int event);
 
-    public static native void nativeExecuteInitDuration(int duration);
+    public static native void nativeExecuteGetDuration(int duration);
 
-    public static native void nativeExecuteInitCurrentPosition(int currentPosition);
+    public static native void nativeExecuteGetCurrentPosition(int currentPosition);
 
     OnVideoEventListener videoEventListener = new OnVideoEventListener() {
         
@@ -321,33 +321,33 @@ public class Cocos2dxVideoHelper {
         }
     }
 
-    public static void initDuration(int index) {
+    public static void getDuration(int index) {
         Message msg = new Message();
-        msg.what = VideoTaskInitDuration;
+        msg.what = VideoTaskGetDuration;
         msg.arg1 = index;
         mVideoHandler.sendMessage(msg);
     }
 
-    private void _initDuration(int index) {
+    private void _getDuration(int index) {
         Cocos2dxVideoView videoView = sVideoViews.get(index);
         if (videoView != null) {
             int duration = videoView.getDuration();
-            nativeExecuteInitDuration(duration);
+            nativeExecuteGetDuration(duration);
         }
     }
 
-    public static void initCurrentPosition(int index) {
+    public static void getCurrentPosition(int index) {
         Message msg = new Message();
-        msg.what = VideoTaskInitCurrentPosition;
+        msg.what = VideoTaskGetCurrentPosition;
         msg.arg1 = index;
         mVideoHandler.sendMessage(msg);
     }
 
-    private void _initCurrentPosition(int index) {
+    private void _getCurrentPosition(int index) {
         Cocos2dxVideoView videoView = sVideoViews.get(index);
         if (videoView != null) {
             int currentPosition = videoView.getCurrentPosition();
-            nativeExecuteInitCurrentPosition(currentPosition);
+            nativeExecuteGetCurrentPosition(currentPosition);
         }
     }
     

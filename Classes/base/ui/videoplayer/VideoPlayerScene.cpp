@@ -6,6 +6,7 @@
 #include "cocos/ui/UIButton.h"
 
 using namespace ui;
+
 bool TestVideoPlayer::init() {
     if (!Scene::init()) {
         return false;
@@ -15,7 +16,7 @@ bool TestVideoPlayer::init() {
     _videoPlayer->setName("video");
     _videoPlayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     _videoPlayer->setPosition(Vec2(getContentSize().width / 2, getContentSize().height / 2));
-    _videoPlayer->setContentSize(getContentSize()/ 2);
+    _videoPlayer->setContentSize(getContentSize() / 2);
     addChild(_videoPlayer);
 
     _videoPlayer->setFileName("video/cocosvideo.mp4");
@@ -24,8 +25,6 @@ bool TestVideoPlayer::init() {
 
     _videoPlayer->play();
 //    _videoPlayer->seekTo(10);
-    _videoPlayer->initDuration();
-    _videoPlayer->getDuration();
 
     // 将会在videoplayer的上方显示
     auto layer = LayerColor::create(Color4B(192, 0, 0, 255), getContentSize().width,
@@ -39,21 +38,23 @@ bool TestVideoPlayer::init() {
     button->addClickEventListener(CC_CALLBACK_1(TestVideoPlayer::onButtonClick, this));
     addChild(button);
 
-//    scheduleUpdate();
+    scheduleUpdate();
     return true;
 }
 
-void TestVideoPlayer::onButtonClick(Ref* ref) {
-//    VideoPlayer *videoPlayer = dynamic_cast<VideoPlayer *>(getChildByName("video"));
-//    videoPlayer->initDuration();
-//    videoPlayer->getDuration();
-    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity", "changedActivityOrientation", 1);
+void TestVideoPlayer::onButtonClick(Ref *ref) {
 
+    VideoPlayer *videoPlayer = dynamic_cast<VideoPlayer *>(getChildByName("video"));
+//    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity", "changedActivityOrientation", 1);
+    int duration = videoPlayer->getDuration();
 
+    CCLOG("duration = %d", duration);
 }
 
 void TestVideoPlayer::update(float delta) {
+
     VideoPlayer *videoPlayer = dynamic_cast<VideoPlayer *>(getChildByName("video"));
-    videoPlayer->initCurrentPosition();
-    videoPlayer->getCurrentPosition();
+    int currentPosition = videoPlayer->getCurrentPosition();
+
+    CCLOG("currentPosition = %d", currentPosition);
 }

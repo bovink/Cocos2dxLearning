@@ -43,8 +43,8 @@ static const std::string videoHelperClassName = "org/cocos2dx/lib/Cocos2dxVideoH
 USING_NS_CC;
 
 static void executeVideoCallback(int index,int event);
-static void executeInitDuration(int duration);
-static void executeInitCurrentPosition(int currentPosition);
+static void executeGetDuration(int duration);
+static void executeGetCurrentPosition(int currentPosition);
 
 #define QUIT_FULLSCREEN 1000
 
@@ -53,12 +53,12 @@ extern "C" {
         executeVideoCallback(index,event);
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxVideoHelper_nativeExecuteInitDuration(JNIEnv * env, jobject obj, jint duration) {
-        executeInitDuration(duration);
+    void Java_org_cocos2dx_lib_Cocos2dxVideoHelper_nativeExecuteGetDuration(JNIEnv * env, jobject obj, jint duration) {
+        executeGetDuration(duration);
     }
 
-    void Java_org_cocos2dx_lib_Cocos2dxVideoHelper_nativeExecuteInitCurrentPosition(JNIEnv * env, jobject obj, jint currentPosition) {
-        executeInitCurrentPosition(currentPosition);
+    void Java_org_cocos2dx_lib_Cocos2dxVideoHelper_nativeExecuteGetCurrentPosition(JNIEnv * env, jobject obj, jint currentPosition) {
+        executeGetCurrentPosition(currentPosition);
     }
 }
 
@@ -206,36 +206,24 @@ void VideoPlayer::play()
     }
 }
 
-void VideoPlayer::initDuration() {
+int VideoPlayer::getDuration() {
 
     if (! _videoURL.empty())
     {
-        JniHelper::callStaticVoidMethod(videoHelperClassName, "initDuration", _videoPlayerIndex);
+        JniHelper::callStaticVoidMethod(videoHelperClassName, "getDuration", _videoPlayerIndex);
+        return s_duration;
     }
+    return 0;
 }
 
-void VideoPlayer::getDuration() {
-
-    int duration = s_duration;
-    CCLOG("==================");
-    CCLOG("duration:%d",duration);
-    CCLOG("==================");
-}
-
-void VideoPlayer::initCurrentPosition() {
+int VideoPlayer::getCurrentPosition() {
 
     if (! _videoURL.empty())
     {
-        JniHelper::callStaticVoidMethod(videoHelperClassName, "initCurrentPosition", _videoPlayerIndex);
+        JniHelper::callStaticVoidMethod(videoHelperClassName, "getCurrentPosition", _videoPlayerIndex);
+        return s_currentPosition;
     }
-}
-
-void VideoPlayer::getCurrentPosition() {
-
-    int currentPosition = s_currentPosition;
-    CCLOG("==================");
-    CCLOG("currentPosition:%d",currentPosition);
-    CCLOG("==================");
+    return 0;
 }
 
 void VideoPlayer::pause()
@@ -358,12 +346,12 @@ void executeVideoCallback(int index,int event)
     }
 }
 
-void executeInitDuration(int duration)
+void executeGetDuration(int duration)
 {
     s_duration = duration;
 }
 
-void executeInitCurrentPosition(int currentPosition)
+void executeGetCurrentPosition(int currentPosition)
 {
     s_currentPosition = currentPosition;
 }
