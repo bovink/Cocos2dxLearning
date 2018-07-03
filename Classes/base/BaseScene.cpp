@@ -23,6 +23,8 @@ void BaseScene::addKeyboardEventListener() {
     listener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event *event) {
 
         CCLOG("keycode %d pressed", keyCode);
+        JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
+                                        "changedActivityOrientation", 2);
         Director::getInstance()->popScene();
     };
 

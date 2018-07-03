@@ -233,6 +233,8 @@ void HelloWorld::tableCellTouched(TableView *table, TableViewCell *cell) {
             Director::getInstance()->pushScene(scene);
             break;
         case 1:
+            JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
+                                            "changedActivityOrientation", 1);
             scene = TestVideoPlayer::create();
 
             Director::getInstance()->pushScene(scene);
