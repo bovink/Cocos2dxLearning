@@ -228,8 +228,8 @@ public class Cocos2dxVideoHelper {
         FrameLayout.LayoutParams lParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);
-        mLayout.addView(videoView, lParams);
-        videoView.setZOrderOnTop(true);
+        videoView.setZOrderOnTop(false);
+        mLayout.addView(videoView, 0, lParams);
         videoView.setOnCompletionListener(videoEventListener);
     }
     

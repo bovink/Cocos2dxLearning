@@ -438,6 +438,7 @@ void Director::setOpenGLView(GLView *openGLView)
         }
         
         _defaultFBO = experimental::FrameBuffer::getOrCreateDefaultFBO(_openGLView);
+        _defaultFBO->setClearColor(cocos2d::Color4F(0.0,0.0,0.0,0.0));
         _defaultFBO->retain();
     }
 }
