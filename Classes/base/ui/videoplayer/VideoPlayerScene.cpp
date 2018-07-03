@@ -19,14 +19,20 @@ bool TestVideoPlayer::init() {
     auto _videoPlayer = VideoPlayer::create();
     _videoPlayer->setName(_NAME_VIDEO);
     _videoPlayer->setContentSize(getContentSize());
-    _videoPlayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    _videoPlayer->setPosition(Vec2(640, 360 + 600 - 40));
+    _videoPlayer->setPosition(Vec2(640, 360 + 560));
     addChild(_videoPlayer);
 
     _videoPlayer->setFileName("video/cocosvideo.mp4");
 
     _videoPlayer->play();
 
+    auto button = Button::create("animationbuttonnormal.png","animationbuttonpressed.png");
+    button->setPosition(Vec2(640, 360));
+    addChild(button);
+
+    auto image = ImageView::create("grossini_dance_08.png");
+    image->setPosition(Vec2(640, 360));
+    addChild(image);
     return true;
 }
 
