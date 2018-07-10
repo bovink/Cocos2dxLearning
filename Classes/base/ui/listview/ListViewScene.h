@@ -6,11 +6,13 @@
 #define PROJ_ANDROID_LISTVIEWSCENE_H
 
 
+#include <base/BaseScene.h>
 #include "cocos2d.h"
+#include "cocos/ui/UIButton.h"
 
 USING_NS_CC;
 
-class ListViewScene : public Scene {
+class ListViewScene : public BaseScene {
 public:
     bool init() override;
 
@@ -18,6 +20,8 @@ public:
 
     void onButtonClicked(Ref *ref);
 
+private:
+    ui::Button *generateButton();
 };
 
 

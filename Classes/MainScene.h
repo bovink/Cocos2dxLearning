@@ -16,6 +16,23 @@ public:
     bool init() override;
 
     CREATE_FUNC(MainScene)
+
+private:
+
+    void initListView();
+
+    void initListData();
+
+    Layout *generateLayout();
+
+    void onItemClickEvent(Ref* ref);
+
+private:
+
+//    Layout* _layoutItem;
+
+    const std::string _NAME_TITLE = "title";
+    const std::string _NAME_LIST = "list";
 };
 
 

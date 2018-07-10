@@ -9,73 +9,63 @@
 using namespace ui;
 
 bool ListViewScene::init() {
-    if (!Scene::init()) {
+    if (!BaseScene::init()) {
         return false;
     }
-    float _contentSizeWidth = getContentSize().width;
-    float _contentSizeHeight = getContentSize().height;
 
-    auto listView = ListView::create();
+    auto button1 = generateButton();
+    auto button2 = generateButton();
+    auto button3 = generateButton();
+    auto button4 = generateButton();
+    auto button5 = generateButton();
+
+    // 水平
+    auto layout = Layout::create();
+    layout->setLayoutType(Layout::Type::HORIZONTAL);
+    layout->setContentSize(Size(_contentSize.width,
+                                button1->getContentSize().height));
+    layout->setPosition(Vec2::ZERO);
+
+    layout->addChild(button1);
+    layout->addChild(button2);
+    layout->addChild(button3);
+    layout->addChild(button4);
+    layout->addChild(button5);
+
+    // 列表
+    ListView *listView = ListView::create();
     listView->setDirection(ScrollView::Direction::VERTICAL);
-    listView->setContentSize(Size(400, getContentSize().height));
-//    listView->setDirection(ScrollView::Direction::HORIZONTAL);
-//    listView->setContentSize(Size(getContentSize().width, 200));
-    listView->setPosition(Vec2(0, 0));
-    listView->setTag(123);
-    this->addChild(listView);
+    listView->setContentSize(_contentSize);
+    listView->setPosition(Vec2::ZERO);
+    addChild(listView);
 
-    Button *default_button = Button::create("animationbuttonnormal.png",
-                                            "animationbuttonpressed.png");
-    default_button->setName("Title Button");
+    listView->setItemModel(layout);
 
-    Button *default_button2 = Button::create("animationbuttonnormal.png",
-                                             "animationbuttonpressed.png");
-    default_button2->setName("Title Button2");
+    for (int i = 0; i < 10; i++) {
 
-    Layout *default_item = Layout::create();
-    default_item->setTouchEnabled(true);
-
-    default_item->setContentSize(Size(default_button->getContentSize().width * 2,
-                                      default_button->getContentSize().height));
-    default_button->setPosition(Vec2(default_button->getContentSize() / 2));
-    default_button2->setPosition(Vec2(default_button->getContentSize().width * 3 / 2,
-                                      default_button->getContentSize().height / 2));
-
-    default_item->addChild(default_button);
-    default_item->addChild(default_button2);
-
-    // set model
-    listView->setItemModel(default_item);
-
-
-    std::vector<std::string> _array;
-    for (int i = 0; i < 20; ++i) {
-        std::string ccstr = StringUtils::format("listview_item_%d", i);
-        _array.push_back(ccstr);
-    }
-
-    //initial the data
-    for (int i = 0; i < 20; ++i) {
-        Widget *item = default_item->clone();
+        Widget *item = layout->clone();
         item->setTag(i);
-        Button *btn = (Button *) item->getChildByName("Title Button");
-        btn->setTitleText(_array.at(i));
-        btn->setTitleFontSize(20);
-        btn->addClickEventListener(CC_CALLBACK_1(ListViewScene::onButtonClicked, this));
         listView->pushBackCustomItem(item);
     }
     return true;
 }
 
 void ListViewScene::onButtonClicked(Ref *ref) {
-    ListView *listView = dynamic_cast<ListView *>(this->getChildByTag(123));
-    for (Widget *item :listView->getItems()) {
 
-        Button *btn = (Button *) item->getChildByName("Title Button");
-        btn->setBrightStyle(Button::BrightStyle::NORMAL);
-    }
+}
 
-    Button *button = dynamic_cast<Button *>(ref);
-    button->setBrightStyle(Button::BrightStyle::HIGHLIGHT);
+Button *ListViewScene::generateButton() {
 
+    auto button = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
+    button->setContentSize(
+            Size((_contentSize.width - 20) / 5 - 20, button->getContentSize().height));
+    button->setUnifySizeEnabled(true);
+    button->setScale9Enabled(true);
+    button->ignoreContentAdaptWithSize(false);
+
+    auto params = LinearLayoutParameter::create();
+    params->setMargin(Margin(20, 0, 0, 0));
+    button->setLayoutParameter(params);
+
+    return button;
 }

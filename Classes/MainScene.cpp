@@ -2,51 +2,99 @@
 // Created by 吴宗刚 on 2018/6/14.
 //
 
+#include <base/ui/listview/ListViewScene.h>
 #include "MainScene.h"
+
+using namespace std;
 
 bool MainScene::init() {
     if (!Scene::init()) {
 
         return false;
     }
-    CCLOG("init main scene");
 
-//    Text *text = Text::create("test", "fonts/arial.ttf", 30);
-//    text->setName("title");
-    Button *button = Button::create("HelloWorld.png");
-    button->setName("title");
-//    text->setPosition(Vec2(_contentSize.width / 2, _contentSize.height / 2));
-//
-//    text->setString("hello world");
-//    this->addChild(text);
+    initListView();
 
-    Layout *layout = Layout::create();
-    layout->setLayoutType(Layout::Type::VERTICAL);
-    layout->setContentSize(button->getContentSize());
-    layout->setPosition(Vec2::ZERO);
-    layout->addChild(button);
-
-    ListView *listView = ListView::create();
-    listView->setDirection(ScrollView::Direction::VERTICAL);
-    listView->setContentSize(_contentSize);
-    listView->setPosition(Vec2::ZERO);
-    this->addChild(listView);
-
-    listView->setItemModel(layout);
-
-    std::vector<const std::string> titles;
-    titles.push_back("test1");
-    titles.push_back("test2");
-
-    for (std::string title : titles) {
-
-        Widget *item = layout->clone();
-        Button *titleText = dynamic_cast<Button *>(item->getChildByName("title"));
-        titleText->setTitleText(title);
-//        titleText->setString(title);
-        listView->pushBackCustomItem(item);
-    }
-
+    initListData();
 
     return true;
 }
+
+void MainScene::initListView() {
+
+    auto _layoutItem = generateLayout();
+
+    ListView *listView = ListView::create();
+    listView->setName(_NAME_LIST);
+    listView->setDirection(ScrollView::Direction::VERTICAL);
+    listView->setContentSize(_contentSize);
+    listView->setPosition(Vec2::ZERO);
+    addChild(listView);
+
+    listView->setItemModel(_layoutItem);
+}
+
+void MainScene::initListData() {
+
+    ListView *listView = dynamic_cast<ListView *>(getChildByName(_NAME_LIST));
+
+    std::vector<const std::string> titles;
+    titles.push_back("listview");
+    titles.push_back("touch2");
+    titles.push_back("touch3");
+    titles.push_back("touch4");
+    titles.push_back("touch5");
+
+    for (int i = 0; i < titles.size() - 1; i++) {
+        string title = titles.at(i);
+
+        Widget *item = generateLayout();
+        item->setTouchEnabled(true);
+        item->addClickEventListener(CC_CALLBACK_1(MainScene::onItemClickEvent, this));
+        item->setTag(i);
+        Text *titleText = dynamic_cast<Text *>(item->getChildByName(_NAME_TITLE));
+        titleText->setString(title);
+        listView->pushBackCustomItem(item);
+    }
+}
+
+Layout *MainScene::generateLayout() {
+
+    auto *text = Text::create("example", "fonts/arial.ttf", 50);
+    text->setName(_NAME_TITLE);
+
+    auto params = LinearLayoutParameter::create();
+    params->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    text->setLayoutParameter(params);
+
+    auto _layoutItem = Layout::create();
+    _layoutItem->setLayoutType(Layout::Type::VERTICAL);
+    _layoutItem->setPosition(Vec2::ZERO);
+    _layoutItem->setContentSize(Size(_contentSize.width, text->getContentSize().height));
+    _layoutItem->addChild(text);
+
+    return _layoutItem;
+}
+
+void MainScene::onItemClickEvent(Ref* ref) {
+    Layout *layout = dynamic_cast<Layout *>(ref);
+    int tag = layout->getTag();
+
+    Scene* scene;
+    switch (tag) {
+        case 0:
+            scene = ListViewScene::create();
+            _director->pushScene(scene);
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        default:
+            break;
+    }
+}
+
+
