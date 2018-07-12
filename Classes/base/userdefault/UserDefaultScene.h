@@ -9,8 +9,15 @@
 #include <base/BaseScene.h>
 
 class UserDefaultScene : public BaseScene {
+
 public:
+
     bool init() override;
+
+    CREATE_FUNC(UserDefaultScene)
+private:
+
+    void testSaveData();
 
 
 };

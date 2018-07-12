@@ -3,6 +3,7 @@
 //
 
 #include <base/ui/listview/ListViewScene.h>
+#include <base/userdefault/UserDefaultScene.h>
 #include "MainScene.h"
 
 using namespace std;
@@ -40,7 +41,7 @@ void MainScene::initListData() {
 
     std::vector<const std::string> titles;
     titles.push_back("listview");
-    titles.push_back("touch2");
+    titles.push_back("User Default");
     titles.push_back("touch3");
     titles.push_back("touch4");
     titles.push_back("touch5");
@@ -56,11 +57,13 @@ void MainScene::initListData() {
         titleText->setString(title);
         listView->pushBackCustomItem(item);
     }
+
+    listView->setItemsMargin(20);
 }
 
 Layout *MainScene::generateLayout() {
 
-    auto *text = Text::create("example", "fonts/arial.ttf", 50);
+    auto *text = Text::create("example", "fonts/arial.ttf", 80);
     text->setName(_NAME_TITLE);
 
     auto params = LinearLayoutParameter::create();
@@ -87,6 +90,8 @@ void MainScene::onItemClickEvent(Ref* ref) {
             _director->pushScene(scene);
             break;
         case 1:
+            scene = UserDefaultScene::create();
+            _director->pushScene(scene);
             break;
         case 2:
             break;
