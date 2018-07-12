@@ -4,6 +4,7 @@
 
 #include <base/ui/listview/ListViewScene.h>
 #include <base/userdefault/UserDefaultScene.h>
+#include <base/JniScene.h>
 #include "MainScene.h"
 
 using namespace std;
@@ -42,7 +43,7 @@ void MainScene::initListData() {
     std::vector<const std::string> titles;
     titles.push_back("listview");
     titles.push_back("User Default");
-    titles.push_back("touch3");
+    titles.push_back("JNI");
     titles.push_back("touch4");
     titles.push_back("touch5");
 
@@ -94,6 +95,8 @@ void MainScene::onItemClickEvent(Ref* ref) {
             _director->pushScene(scene);
             break;
         case 2:
+            scene = JniScene::create();
+            _director->pushScene(scene);
             break;
         case 3:
             break;

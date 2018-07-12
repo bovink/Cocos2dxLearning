@@ -34,6 +34,8 @@ public class AppActivity extends Cocos2dxActivity {
 
     private static Activity instance;
 
+    private RecordHelper recordHelper = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setEnableVirtualButton(false);
@@ -49,6 +51,11 @@ public class AppActivity extends Cocos2dxActivity {
         // DO OTHER INITIALIZATION BELOW
 
         instance = this;
+
+        if (recordHelper == null) {
+
+            recordHelper = new RecordHelper();
+        }
     }
 
     public static void changedActivityOrientation(int orientation) {
