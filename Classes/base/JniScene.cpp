@@ -33,6 +33,11 @@ bool JniScene::init() {
     play->addClickEventListener(CC_CALLBACK_1(JniScene::onPlayClick, this));
     play->setLayoutParameter(param);
 
+    auto process = Button::create("animationbuttonnormal.png");
+    process->setTitleText("process");
+    process->addClickEventListener(CC_CALLBACK_1(JniScene::onProcessClick, this));
+    process->setLayoutParameter(param);
+
     auto horizon = Layout::create();
     horizon->setLayoutType(Layout::Type::HORIZONTAL);
     horizon->setPosition(Vec2::ZERO);
@@ -41,6 +46,7 @@ bool JniScene::init() {
     horizon->addChild(start);
     horizon->addChild(stop);
     horizon->addChild(play);
+    horizon->addChild(process);
 
     addChild(horizon);
 
@@ -65,4 +71,10 @@ void JniScene::onPlayClick(Ref *ref) {
 
     JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/RecordHelper",
                                     "playAudio");
+}
+
+void JniScene::onProcessClick(Ref *ref) {
+
+    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/RecordHelper",
+                                    "process");
 }

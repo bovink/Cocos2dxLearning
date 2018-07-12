@@ -23,6 +23,8 @@ private:
     void onStopClick(Ref *ref);
 
     void onPlayClick(Ref *ref);
+
+    void onProcessClick(Ref *ref);
 };
 
 
