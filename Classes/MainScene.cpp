@@ -6,6 +6,7 @@
 #include <base/userdefault/UserDefaultScene.h>
 #include <base/JniScene.h>
 #include "MainScene.h"
+#include "ScrollViewScene.h"
 
 using namespace std;
 
@@ -44,7 +45,7 @@ void MainScene::initListData() {
     titles.push_back("listview");
     titles.push_back("User Default");
     titles.push_back("JNI");
-    titles.push_back("touch4");
+    titles.push_back("ScrollView");
     titles.push_back("touch5");
 
     for (int i = 0; i < titles.size() - 1; i++) {
@@ -99,6 +100,8 @@ void MainScene::onItemClickEvent(Ref* ref) {
             _director->pushScene(scene);
             break;
         case 3:
+            scene = ScrollViewScene::create();
+            _director->pushScene(scene);
             break;
         default:
             break;
