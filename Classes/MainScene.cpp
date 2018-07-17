@@ -7,6 +7,7 @@
 #include <base/JniScene.h>
 #include "MainScene.h"
 #include "ScrollViewScene.h"
+#include "DrawNodeScene.h"
 
 using namespace std;
 
@@ -46,9 +47,9 @@ void MainScene::initListData() {
     titles.push_back("User Default");
     titles.push_back("JNI");
     titles.push_back("ScrollView");
-    titles.push_back("touch5");
+    titles.push_back("Draw Node");
 
-    for (int i = 0; i < titles.size() - 1; i++) {
+    for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
 
         Widget *item = generateLayout();
@@ -101,6 +102,10 @@ void MainScene::onItemClickEvent(Ref* ref) {
             break;
         case 3:
             scene = ScrollViewScene::create();
+            _director->pushScene(scene);
+            break;
+        case 4:
+            scene = DrawNodeScene::create();
             _director->pushScene(scene);
             break;
         default:
