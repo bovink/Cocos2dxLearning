@@ -272,6 +272,11 @@ public:
      */
     void drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Color4F &color);
 
+    void drawSolidRoundedRect(const Vec2 &origin, const Vec2 &destination, float radius, unsigned int segments, const Color4F &color);
+
+    void drawRoundedRect(const Vec2 &origin, const Vec2 &destination, float radius, unsigned int segments, const Color4F &color);
+
+
     /** draw a quadratic bezier curve with color and number of segments, use drawQuadBezier instead.
      *
      * @param from The origin of the bezier path.
