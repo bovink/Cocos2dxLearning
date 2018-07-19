@@ -8,6 +8,7 @@
 #include "MainScene.h"
 #include "ScrollViewScene.h"
 #include "DrawNodeScene.h"
+#include "TestNetworkScene.h"
 
 using namespace std;
 
@@ -48,6 +49,7 @@ void MainScene::initListData() {
     titles.push_back("JNI");
     titles.push_back("ScrollView");
     titles.push_back("Draw Node");
+    titles.push_back("Network");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -106,6 +108,10 @@ void MainScene::onItemClickEvent(Ref* ref) {
             break;
         case 4:
             scene = DrawNodeScene::create();
+            _director->pushScene(scene);
+            break;
+        case 5:
+            scene = TestNetworkScene::create();
             _director->pushScene(scene);
             break;
         default:

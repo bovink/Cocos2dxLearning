@@ -3,13 +3,23 @@
 //
 
 #include "TestNetworkScene.h"
+#include "GoHttp.h"
 
 bool TestNetworkScene::init() {
     if (!Scene::init()) {
         return false;
     }
 
-    testNetworkGet();
+//    testNetworkGet();
+    auto goHttp = new GoHttp();
+
+    goHttp->create()
+            ->setUrl("http://59.175.213.78:30162/dolphinbooks/appLogin/appLoginByParams.do?loginName=herb&password=698d51a19d8a121ce581499d7b701668")
+            ->setRequestType(HttpRequest::Type::GET)
+            ->setTag("Test Something");
+
+    goHttp->send();
+
     return true;
 }
 
