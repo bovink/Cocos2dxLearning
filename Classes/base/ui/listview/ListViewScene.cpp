@@ -3,10 +3,6 @@
 //
 
 #include "ListViewScene.h"
-#include "cocos/ui/UIListView.h"
-#include "cocos/ui/UIButton.h"
-
-using namespace ui;
 
 bool ListViewScene::init() {
     if (!BaseScene::init()) {

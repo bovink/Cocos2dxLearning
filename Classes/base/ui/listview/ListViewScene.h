@@ -6,11 +6,8 @@
 #define PROJ_ANDROID_LISTVIEWSCENE_H
 
 
-#include <base/BaseScene.h>
-#include "cocos2d.h"
-#include "cocos/ui/UIButton.h"
+#include "BaseScene.h"
 
-USING_NS_CC;
 
 class ListViewScene : public BaseScene {
 public:

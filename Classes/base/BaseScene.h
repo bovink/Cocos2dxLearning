@@ -7,8 +7,10 @@
 
 
 #include "cocos2d.h"
+#include "cocos/ui/CocosGUI.h"
 
 USING_NS_CC;
+using namespace ui;
 
 class BaseScene : public Scene {
 public:
