@@ -2,13 +2,14 @@
 // Created by 吴宗刚 on 2018/6/14.
 //
 
-#include <base/ui/listview/ListViewScene.h>
-#include <base/userdefault/UserDefaultScene.h>
-#include <base/JniScene.h>
+#include "ListViewScene.h"
+#include "UserDefaultScene.h"
+#include "JniScene.h"
 #include "MainScene.h"
 #include "ScrollViewScene.h"
 #include "DrawNodeScene.h"
 #include "TestNetworkScene.h"
+#include "TableViewTestScene.h"
 
 using namespace std;
 
@@ -31,7 +32,7 @@ void MainScene::initListView() {
 
     ListView *listView = ListView::create();
     listView->setName(_NAME_LIST);
-    listView->setDirection(ScrollView::Direction::VERTICAL);
+    listView->setDirection(ui::ScrollView::Direction::VERTICAL);
     listView->setContentSize(_contentSize);
     listView->setPosition(Vec2::ZERO);
     addChild(listView);
@@ -50,6 +51,7 @@ void MainScene::initListData() {
     titles.push_back("ScrollView");
     titles.push_back("Draw Node");
     titles.push_back("Network");
+    titles.push_back("TableView");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -84,11 +86,11 @@ Layout *MainScene::generateLayout() {
     return _layoutItem;
 }
 
-void MainScene::onItemClickEvent(Ref* ref) {
+void MainScene::onItemClickEvent(Ref *ref) {
     Layout *layout = dynamic_cast<Layout *>(ref);
     int tag = layout->getTag();
 
-    Scene* scene;
+    Scene *scene;
     switch (tag) {
         case 0:
             scene = ListViewScene::create();
@@ -112,6 +114,10 @@ void MainScene::onItemClickEvent(Ref* ref) {
             break;
         case 5:
             scene = TestNetworkScene::create();
+            _director->pushScene(scene);
+            break;
+        case 6:
+            scene = TableViewTestScene::create();
             _director->pushScene(scene);
             break;
         default:

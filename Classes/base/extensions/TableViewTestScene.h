@@ -11,11 +11,32 @@
 USING_NS_CC;
 using namespace extension;
 
-class TableViewTestScene : Scene, TableViewDataSource, TableViewDelegate {
+class TableViewTestScene : public Scene, public TableViewDataSource, public TableViewDelegate {
 
 public:
 
     bool init() override;
+
+    Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
+
+    Size cellSizeForTable(TableView *table) override;
+
+    TableViewCell *tableCellAtIndex(TableView *table, ssize_t idx) override;
+
+    ssize_t numberOfCellsInTableView(TableView *table) override;
+
+    void tableCellTouched(TableView *table, TableViewCell *cell) override;
+
+    void tableCellHighlight(TableView *table, TableViewCell *cell) override;
+
+    void tableCellUnhighlight(TableView *table, TableViewCell *cell) override;
+
+    void tableCellWillRecycle(TableView *table, TableViewCell *cell) override;
+
+    CREATE_FUNC(TableViewTestScene)
+
+private:
+
 };
 
 
