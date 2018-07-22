@@ -122,4 +122,5 @@ dependencies {
     implementation project(':libcocos2dx')
     implementation project(':models')
     implementation project(':aars')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
 }

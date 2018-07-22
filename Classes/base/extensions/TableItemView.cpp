@@ -9,10 +9,18 @@ bool TableItemView::init() {
         return false;
     }
 
+
+    auto draw = DrawNode::create();
+    addChild(draw);
+
     auto image = Sprite::create("ccicon.png");
     image->setAnchorPoint(Vec2::ZERO);
     image->setPosition(Vec2::ZERO);
     addChild(image);
+
+    Rect r = image->getBoundingBox();
+    draw->drawRoundedRect(Vec2(r.getMinX(), r.getMinY()), Vec2(r.getMaxX(), r.getMaxY()), 30, 10000,
+                          Color4F::RED);
 
 
     auto string = StringUtils::format("%d", _index);
