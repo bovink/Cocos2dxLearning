@@ -4,6 +4,7 @@
 
 #include "ListViewScene.h"
 #include "UserDefaultScene.h"
+#include "TextScene.h"
 #include "JniScene.h"
 #include "MainScene.h"
 #include "ScrollViewScene.h"
@@ -52,6 +53,7 @@ void MainScene::initListData() {
     titles.push_back("Draw Node");
     titles.push_back("Network");
     titles.push_back("TableView");
+    titles.push_back("TextTest");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -118,6 +120,10 @@ void MainScene::onItemClickEvent(Ref *ref) {
             break;
         case 6:
             scene = TableViewTestScene::create();
+            _director->pushScene(scene);
+            break;
+        case 7:
+            scene = TextScene::create();
             _director->pushScene(scene);
             break;
         default:

@@ -25,7 +25,6 @@
 package org.cocos2dx.cpp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
@@ -58,8 +57,8 @@ public class AppActivity extends Cocos2dxActivity {
             recordHelper = new RecordHelper();
         }
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
 
     }
 

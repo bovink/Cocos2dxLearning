@@ -5,8 +5,15 @@
 #ifndef PROJ_ANDROID_TESTTEXT_H
 #define PROJ_ANDROID_TESTTEXT_H
 
+#include "BaseScene.h"
 
-class TestText {
+class TextScene : public BaseScene{
+
+public:
+
+    bool init() override;
+
+    CREATE_FUNC(TextScene)
 
 };
 
