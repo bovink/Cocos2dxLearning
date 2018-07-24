@@ -5,8 +5,15 @@
 #ifndef PROJ_ANDROID_TABCONTROLSCENE_H
 #define PROJ_ANDROID_TABCONTROLSCENE_H
 
+#include "ABaseScene.h"
 
-class TabControlScene {
+class TabControlScene : public ABaseScene {
+
+public:
+
+    void initViews() override;
+
+    CREATE_FUNC(TabControlScene)
 
 };
 

@@ -11,6 +11,7 @@
 #include "DrawNodeScene.h"
 #include "TestNetworkScene.h"
 #include "TableViewTestScene.h"
+#include "TabControlScene.h"
 
 using namespace std;
 
@@ -54,6 +55,7 @@ void MainScene::initListData() {
     titles.push_back("Network");
     titles.push_back("TableView");
     titles.push_back("TextTest");
+    titles.push_back("TabControl");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -126,6 +128,9 @@ void MainScene::onItemClickEvent(Ref *ref) {
             scene = TextScene::create();
             _director->pushScene(scene);
             break;
+        case 8:
+            scene = TabControlScene::create();
+            _director->pushScene(scene);
         default:
             break;
     }

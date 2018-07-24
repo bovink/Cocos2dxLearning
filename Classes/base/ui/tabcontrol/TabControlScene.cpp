@@ -3,3 +3,8 @@
 //
 
 #include "TabControlScene.h"
+
+void TabControlScene::initViews() {
+
+    __CCLOGWITHFUNCTION("initViews");
+}
