@@ -22,6 +22,7 @@ bool TestVideoPlayer::init() {
     _videoPlayer->setPosition(Vec2(640, 360 + 560));
     addChild(_videoPlayer);
 
+
     _videoPlayer->setFileName("video/cocosvideo.mp4");
 
     _videoPlayer->play();
@@ -33,6 +34,12 @@ bool TestVideoPlayer::init() {
     auto image = ImageView::create("grossini_dance_08.png");
     image->setPosition(Vec2(640, 360));
     addChild(image);
+    scheduleUpdate();
     return true;
 }
 
+void TestVideoPlayer::update(float delta) {
+    VideoPlayer *_videoPlayer = dynamic_cast<VideoPlayer *>(getChildByName(_NAME_VIDEO));
+    float duration = _videoPlayer->getDuration();
+    CCLOG("duration:%d",duration);
+}

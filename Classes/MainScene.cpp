@@ -12,6 +12,7 @@
 #include "TestNetworkScene.h"
 #include "TableViewTestScene.h"
 #include "TabControlScene.h"
+#include "VideoPlayerScene.h"
 
 using namespace std;
 
@@ -56,6 +57,7 @@ void MainScene::initListData() {
     titles.push_back("TableView");
     titles.push_back("TextTest");
     titles.push_back("TabControl");
+    titles.push_back("Video");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -130,6 +132,9 @@ void MainScene::onItemClickEvent(Ref *ref) {
             break;
         case 8:
             scene = TabControlScene::create();
+            _director->pushScene(scene);
+        case 9:
+            scene = TestVideoPlayer::create();
             _director->pushScene(scene);
         default:
             break;

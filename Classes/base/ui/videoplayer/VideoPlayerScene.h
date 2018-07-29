@@ -21,8 +21,12 @@ public:
 
     CREATE_FUNC(TestVideoPlayer)
 
+    void update(float delta) override;
+
 private:
     // 方法
+
+
 
 private:
     // 属性

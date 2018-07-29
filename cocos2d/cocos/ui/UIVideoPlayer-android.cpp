@@ -206,7 +206,7 @@ void VideoPlayer::play()
     }
 }
 
-int VideoPlayer::getDuration() {
+float VideoPlayer::getDuration() {
 
     if (! _videoURL.empty())
     {

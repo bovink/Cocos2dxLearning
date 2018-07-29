@@ -176,7 +176,7 @@ namespace experimental{
             virtual void onEnter() override;
             virtual void onExit() override;
 
-            virtual int getDuration();
+            virtual float getDuration();
 
             virtual int getCurrentPosition();
 
