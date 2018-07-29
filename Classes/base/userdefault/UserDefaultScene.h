@@ -6,7 +6,7 @@
 #define PROJ_ANDROID_USERDEFAULTSCENE_H
 
 
-#include <base/BaseScene.h>
+#include "BaseScene.h"
 
 class UserDefaultScene : public BaseScene {
 

@@ -6,7 +6,7 @@
 #define PROJ_ANDROID_LOGINCONTRACT_H
 
 
-#include <mvp/BasePresenter.h>
+#include "BasePresenter.h"
 #include <string>
 
 class LoginContract {

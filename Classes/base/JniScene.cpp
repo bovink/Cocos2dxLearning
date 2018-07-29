@@ -9,6 +9,7 @@
 #include "cocos/ui/UILayout.h"
 
 using namespace ui;
+
 bool JniScene::init() {
     if (!BaseScene::init()) {
         return false;
@@ -51,30 +52,38 @@ bool JniScene::init() {
     addChild(horizon);
 
 
-
     return true;
 }
 
 void JniScene::onStartClick(Ref *ref) {
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/RecordHelper",
                                     "startRecord");
+#endif
 }
 
 void JniScene::onStopClick(Ref *ref) {
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/RecordHelper",
                                     "stopRecord");
+#endif
 }
 
 void JniScene::onPlayClick(Ref *ref) {
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/RecordHelper",
                                     "playAudio");
+#endif
 }
 
 void JniScene::onProcessClick(Ref *ref) {
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
     JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/RecordHelper",
                                     "process");
+#endif
 }

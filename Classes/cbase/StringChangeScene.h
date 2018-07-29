@@ -6,7 +6,7 @@
 #define PROJ_ANDROID_STRINGCHANGESCENE_H
 
 
-#include <base/BaseScene.h>
+#include "BaseScene.h"
 
 class StringChangeScene : public BaseScene {
 public:

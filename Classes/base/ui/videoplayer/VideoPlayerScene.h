@@ -5,7 +5,7 @@
 #ifndef PROJ_ANDROID_TESTVIDEOPLAYER_H
 #define PROJ_ANDROID_TESTVIDEOPLAYER_H
 
-#include <base/BaseScene.h>
+#include "BaseScene.h"
 #include "cocos2d.h"
 #include "cocos/ui/CocosGUI.h"
 
