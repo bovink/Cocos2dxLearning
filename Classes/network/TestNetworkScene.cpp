@@ -8,10 +8,16 @@ bool TestNetworkScene::init() {
     if (!Scene::init()) {
         return false;
     }
+    auto stencil = DrawNode::create();
+    stencil->drawSolidCircle(_contentSize / 2, 50, 360, 10000, Color4F::BLACK);
+
+    auto clipNode = ClippingNode::create();
+    clipNode->setStencil(stencil);
 
     imageView = Sprite::create("HelloWorld.png");
     imageView->setPosition(_contentSize / 2);
-    addChild(imageView);
+    clipNode->addChild(imageView);
+    addChild(clipNode);
 
     auto button = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
     button->setPosition(Size(_contentSize.width / 2, 100));
@@ -25,7 +31,7 @@ bool TestNetworkScene::init() {
 
     goHttp->create()
             ->setUrl(
-                    "http://img0.imgtn.bdimg.com/it/u=889120611,3801177793&fm=27&gp=0.jpg")
+                    "http://img2.imgtn.bdimg.com/it/u=782046930,1105099424&fm=27&gp=0.jpg")
             ->setRequestType(HttpRequest::Type::GET)
             ->setTag("Test Something");
 
