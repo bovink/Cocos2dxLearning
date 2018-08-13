@@ -58,6 +58,11 @@ void GoHttp::onHttpRequestCompleted(HttpClient *sender, HttpResponse *response) 
 
     // 打印数据
     std::vector<char> *buffer = response->getResponseData();
+    if (_function) {
+
+        _function(buffer);
+    }
+
     std::string responseString;
     for (int i = 0; i < buffer->size(); ++i) {
         responseString += (*buffer)[i];
@@ -71,4 +76,9 @@ void GoHttp::send() {
     HttpClient::getInstance()->send(_hr);
     // don't forget to release it, pair to new
     _hr->release();
+}
+
+void GoHttp::setFunction(GoHttp::DataFunction function) {
+
+    _function = function;
 }

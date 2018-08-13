@@ -3,22 +3,46 @@
 //
 
 #include "TestNetworkScene.h"
-#include "GoHttp.h"
 
 bool TestNetworkScene::init() {
     if (!Scene::init()) {
         return false;
     }
 
-//    testNetworkGet();
-    auto goHttp = new GoHttp();
+    imageView = Sprite::create("HelloWorld.png");
+    imageView->setPosition(_contentSize / 2);
+    addChild(imageView);
+
+    auto button = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
+    button->setPosition(Size(_contentSize.width / 2, 100));
+    button->addClickEventListener([&](Ref *ref) {
+
+        goHttp->send();
+    });
+    addChild(button);
+
+    goHttp = new GoHttp();
 
     goHttp->create()
-            ->setUrl("http://59.175.213.78:30162/dolphinbooks/appLogin/appLoginByParams.do?loginName=herb&password=698d51a19d8a121ce581499d7b701668")
+            ->setUrl(
+                    "http://img0.imgtn.bdimg.com/it/u=889120611,3801177793&fm=27&gp=0.jpg")
             ->setRequestType(HttpRequest::Type::GET)
             ->setTag("Test Something");
 
-    goHttp->send();
+    goHttp->setFunction([&](vector<char> *buffer) {
+
+        Image *image = new Image();
+        image->initWithImageData((unsigned char *) buffer->data(), buffer->size());
+        auto texture2D = new Texture2D();
+        if (texture2D->initWithImage(image)) {
+
+            imageView->setContentSize(texture2D->getContentSize());
+            imageView->setTexture(texture2D);
+        }
+
+
+    });
+//    testNetworkGet();
 
     return true;
 }

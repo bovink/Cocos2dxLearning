@@ -12,6 +12,7 @@
 USING_NS_CC;
 using namespace network;
 
+using namespace std;
 class GoHttp {
 
 public:
@@ -27,6 +28,10 @@ public:
     GoHttp *setTag(const std::string &tag);
 
     void send();
+
+    typedef function<void(vector<char>*)> DataFunction;
+
+    void setFunction(DataFunction function);
 private:
 
     //Http Response Callback
@@ -34,6 +39,8 @@ private:
 
 private:
     HttpRequest *_hr;
+
+    DataFunction _function;
 };
 
 
