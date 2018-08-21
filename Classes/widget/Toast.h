@@ -5,9 +5,31 @@
 #ifndef PROJ_ANDROID_TOAST_H
 #define PROJ_ANDROID_TOAST_H
 
+#include "cocos2d.h"
+#include "cocos/ui/CocosGUI.h"
 
-class Toast {
+USING_NS_CC;
+using namespace ui;
+using namespace std;
 
+class Toast : public Layout {
+
+public:
+
+    CREATE_FUNC(Toast)
+
+    static Toast *newInstance(string message);
+
+    bool init() override;
+
+private:
+
+    string _message;
+    DrawNode *drawNode;
+    Text *text;
+
+
+    void initViews();
 };
 
 
