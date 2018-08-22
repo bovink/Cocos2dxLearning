@@ -5,9 +5,8 @@
 #ifndef PROJ_ANDROID_ERASERSCENE_H
 #define PROJ_ANDROID_ERASERSCENE_H
 
-#include "cocos2d.h"
+#include "BaseScene.h"
 
-USING_NS_CC;
 
 class EraserScene : public Scene {
 
@@ -29,5 +28,30 @@ public:
     int num;
 };
 
+
+class EraserScene2 : public BaseScene {
+
+public:
+
+    CREATE_FUNC(EraserScene2)
+
+    bool init() override;
+
+private:
+    void initView();
+
+    void setColor4B(int x, int y, int width, Color4B color, unsigned char *data);
+
+    void addTouchEventListener();
+
+    void onTouchMoved(Touch *touch, Event *event);
+
+    bool onTouchBegan(Touch *touch, Event *event);
+
+    Image *img;
+    unsigned char *data;
+    int width;
+    Sprite *sprite;
+};
 
 #endif //PROJ_ANDROID_ERASERSCENE_H

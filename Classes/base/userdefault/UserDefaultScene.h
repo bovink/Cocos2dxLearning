@@ -19,6 +19,12 @@ private:
 
     void testSaveData();
 
+    Image* img;
+    unsigned char* data;
+    Texture2D* texture;
+    Sprite* sprite;
+
+    void setColor4B(int x, int y, Color4B color, unsigned char *data);
 
 };
 

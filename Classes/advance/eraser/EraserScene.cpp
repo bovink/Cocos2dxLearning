@@ -89,3 +89,104 @@ void EraserScene::onTouchMoved(Touch *touch, Event *event) {
     _brush->visit();
     _canvas->end();
 }
+
+bool EraserScene2::init() {
+    if (!Scene::init()) {
+        return false;
+    }
+    initView();
+    return true;
+}
+
+void EraserScene2::initView() {
+
+    auto content = Layout::create();
+    content->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+    content->setBackGroundColor(Color3B::WHITE);
+    content->setContentSize(_contentSize);
+    addChild(content);
+
+    std::string filename = "HelloWorld.png";
+
+    // 背景
+    auto s = Sprite::create(filename);
+    s->setPosition(_contentSize / 2);
+    addChild(s);
+
+    img = new Image();
+    img->initWithImageFile(filename);
+
+    CCLOG("%s loaded. Size: %dx%d. Bits per pixel: %d", filename.c_str(), img->getWidth(),
+          img->getHeight(), img->getBitPerPixel());
+
+    data = img->getData(); //pixel data
+    width = img->getWidth();
+
+    for (int height = 0; height < img->getHeight(); ++height) {
+        for (int width = 0; width < img->getWidth(); ++width) {
+
+            setColor4B(width, height, img->getWidth(), Color4B::GRAY, data);
+        }
+    }
+
+    Texture2D *texture = new Texture2D();
+    texture->initWithImage(img);
+
+    // 遮罩
+    sprite = Sprite::createWithTexture(texture);
+    sprite->setPosition(_contentSize / 2);
+    addChild(sprite);
+
+    addTouchEventListener();
+}
+
+void EraserScene2::setColor4B(int x, int y, int width, Color4B color, unsigned char *data) {
+
+    int index = (x + y * width) << 2; //the same as * 4
+    data[index] = color.r;
+    data[index + 1] = color.g;
+    data[index + 2] = color.b;
+    data[index + 3] = color.a;
+}
+
+void EraserScene2::addTouchEventListener() {
+
+    auto listener = EventListenerTouchOneByOne::create();
+
+    listener->onTouchBegan = CC_CALLBACK_2(EraserScene2::onTouchBegan, this);
+
+    listener->onTouchMoved = CC_CALLBACK_2(EraserScene2::onTouchMoved, this);
+
+    listener->onTouchEnded = [](Touch *touch, Event *event) {
+
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+void EraserScene2::onTouchMoved(Touch *touch, Event *event) {
+
+    Vec2 pos = touch->getLocation();
+    Color4B alpha = Color4B(0, 0, 0, 0);
+    if (sprite->getBoundingBox().containsPoint(pos)) {
+
+        Vec2 pos1 = sprite->convertToNodeSpace(pos);
+        Vec2 pos2 = sprite->convertToNodeSpaceAR(pos);
+        CCLOG("pos1:%f,%f", pos1.x, pos1.y);
+        CCLOG("pos2:%f,%f", pos2.x, pos2.y);
+        for (int i = pos1.x - 10; i < pos1.x + 10; ++i) {
+            for (int j = pos1.y - 10; j < pos1.y + 10; ++j) {
+
+                setColor4B(i, img->getHeight() - j, img->getWidth(), alpha, data);
+            }
+
+        }
+        Texture2D *texture = new Texture2D();
+        texture->initWithImage(img);
+        sprite->setTexture(texture);
+    }
+}
+
+bool EraserScene2::onTouchBegan(Touch *touch, Event *event) {
+    return true;
+}
