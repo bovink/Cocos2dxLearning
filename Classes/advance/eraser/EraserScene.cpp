@@ -106,7 +106,7 @@ void EraserScene2::initView() {
     content->setContentSize(_contentSize);
     addChild(content);
 
-    std::string filename = "HelloWorld.png";
+    std::string filename = "ps_danci_k1.png";
 
     // 背景
     auto s = Sprite::create(filename);
@@ -125,7 +125,11 @@ void EraserScene2::initView() {
     for (int height = 0; height < img->getHeight(); ++height) {
         for (int width = 0; width < img->getWidth(); ++width) {
 
-            setColor4B(width, height, img->getWidth(), Color4B::GRAY, data);
+            Color4B alpha = Color4B(0, 0, 0, 0);
+            if (!expectColor4B(width, height, img->getWidth(), alpha, data)) {
+
+                setColor4B(width, height, img->getWidth(), Color4B::GRAY, data);
+            }
         }
     }
 
@@ -138,6 +142,8 @@ void EraserScene2::initView() {
     addChild(sprite);
 
     addTouchEventListener();
+
+    LatticePoint::getFromCircle(30, list);
 }
 
 void EraserScene2::setColor4B(int x, int y, int width, Color4B color, unsigned char *data) {
@@ -147,6 +153,16 @@ void EraserScene2::setColor4B(int x, int y, int width, Color4B color, unsigned c
     data[index + 1] = color.g;
     data[index + 2] = color.b;
     data[index + 3] = color.a;
+}
+
+bool EraserScene2::expectColor4B(int x, int y, int width, Color4B color, unsigned char *data) {
+
+    int index = (x + y * width) << 2; //the same as * 4
+
+    return data[index] == color.r &&
+           data[index + 1] == color.g &&
+           data[index + 2] == color.b &&
+           data[index + 3] == color.a;
 }
 
 void EraserScene2::addTouchEventListener() {
@@ -174,12 +190,24 @@ void EraserScene2::onTouchMoved(Touch *touch, Event *event) {
         Vec2 pos2 = sprite->convertToNodeSpaceAR(pos);
         CCLOG("pos1:%f,%f", pos1.x, pos1.y);
         CCLOG("pos2:%f,%f", pos2.x, pos2.y);
-        for (int i = pos1.x - 10; i < pos1.x + 10; ++i) {
-            for (int j = pos1.y - 10; j < pos1.y + 10; ++j) {
+//        for (int i = pos1.x - 10; i < pos1.x + 10; ++i) {
+//            for (int j = pos1.y - 10; j < pos1.y + 10; ++j) {
+//
+//                setColor4B(i, img->getHeight() - j, img->getWidth(), alpha, data);
+//            }
+//
+//        }
 
-                setColor4B(i, img->getHeight() - j, img->getWidth(), alpha, data);
+//        Vec2 center = Vec2(img->getWidth() / 2, img->getHeight() / 2);
+        for (int i = 0; i < list.size(); ++i) {
+            int x = static_cast<int>(list.at(i).x + pos1.x);
+            int y = static_cast<int>(list.at(i).y + img->getHeight() - pos1.y);
+            if (x < 0 || x > img->getWidth()) {
+
+                continue;
             }
 
+            setColor4B(x, y, img->getWidth(), alpha, data);
         }
         Texture2D *texture = new Texture2D();
         texture->initWithImage(img);
@@ -190,3 +218,4 @@ void EraserScene2::onTouchMoved(Touch *touch, Event *event) {
 bool EraserScene2::onTouchBegan(Touch *touch, Event *event) {
     return true;
 }
+
