@@ -14,6 +14,7 @@
 #include "TabControlScene.h"
 #include "VideoPlayerScene.h"
 #include "EraserScene.h"
+#include "ImageViewScene.h"
 
 using namespace std;
 
@@ -60,6 +61,7 @@ void MainScene::initListData() {
     titles.push_back("TabControl");
     titles.push_back("Video");
     titles.push_back("eraser");
+    titles.push_back("FrameAnimation");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -140,6 +142,9 @@ void MainScene::onItemClickEvent(Ref *ref) {
             _director->pushScene(scene);
         case 10:
             scene = EraserScene2::create();
+            _director->pushScene(scene);
+        case 11:
+            scene = TestFrameAnimation::create();
             _director->pushScene(scene);
         default:
             break;

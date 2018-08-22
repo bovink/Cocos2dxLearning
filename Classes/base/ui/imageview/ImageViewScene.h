@@ -6,7 +6,23 @@
 #define PROJ_ANDROID_TESTIMAGEVIEW_H
 
 
+#include "BaseScene.h"
+
 class TestImageView {
+
+};
+
+class TestFrameAnimation : public BaseScene {
+
+public:
+
+    CREATE_FUNC(TestFrameAnimation)
+
+    bool init() override;
+
+private:
+
+    void initViews();
 
 };
 
