@@ -62,6 +62,7 @@ private:
     int width;
     Sprite *sprite;
 
+    std::vector<Vec2> target;
     std::vector<Vector2> list;
 };
 

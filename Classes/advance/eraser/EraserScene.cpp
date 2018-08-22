@@ -106,7 +106,7 @@ void EraserScene2::initView() {
     content->setContentSize(_contentSize);
     addChild(content);
 
-    std::string filename = "ps_danci_k1.png";
+    std::string filename = "grossini_dance_08.png";
 
     // 背景
     auto s = Sprite::create(filename);
@@ -128,6 +128,7 @@ void EraserScene2::initView() {
             Color4B alpha = Color4B(0, 0, 0, 0);
             if (!expectColor4B(width, height, img->getWidth(), alpha, data)) {
 
+                target.push_back(Vec2(width, height));
                 setColor4B(width, height, img->getWidth(), Color4B::GRAY, data);
             }
         }
@@ -138,6 +139,7 @@ void EraserScene2::initView() {
 
     // 遮罩
     sprite = Sprite::createWithTexture(texture);
+    sprite->setTag(99);
     sprite->setPosition(_contentSize / 2);
     addChild(sprite);
 
@@ -184,34 +186,40 @@ void EraserScene2::onTouchMoved(Touch *touch, Event *event) {
 
     Vec2 pos = touch->getLocation();
     Color4B alpha = Color4B(0, 0, 0, 0);
-    if (sprite->getBoundingBox().containsPoint(pos)) {
+    if (getChildByTag(99) ) {
+
 
         Vec2 pos1 = sprite->convertToNodeSpace(pos);
-        Vec2 pos2 = sprite->convertToNodeSpaceAR(pos);
-        CCLOG("pos1:%f,%f", pos1.x, pos1.y);
-        CCLOG("pos2:%f,%f", pos2.x, pos2.y);
-//        for (int i = pos1.x - 10; i < pos1.x + 10; ++i) {
-//            for (int j = pos1.y - 10; j < pos1.y + 10; ++j) {
-//
-//                setColor4B(i, img->getHeight() - j, img->getWidth(), alpha, data);
-//            }
-//
-//        }
-
-//        Vec2 center = Vec2(img->getWidth() / 2, img->getHeight() / 2);
         for (int i = 0; i < list.size(); ++i) {
             int x = static_cast<int>(list.at(i).x + pos1.x);
             int y = static_cast<int>(list.at(i).y + img->getHeight() - pos1.y);
-            if (x < 0 || x > img->getWidth()) {
+            if (x < 0 || x > img->getWidth() || y < 0 || y > img->getHeight()) {
 
                 continue;
             }
 
             setColor4B(x, y, img->getWidth(), alpha, data);
         }
+        float now = 0;
+        for (int i = 0; i < target.size(); ++i) {
+
+            if (expectColor4B(target.at(i).x, target.at(i).y, img->getWidth(), Color4B::GRAY,
+                              data)) {
+
+                now++;
+            }
+        }
+        float percent = now / target.size();
+        CCLOG("percent:%f", percent);
+
+        if (percent < 0.9) {
+            removeChildByTag(99);
+            return;
+        }
         Texture2D *texture = new Texture2D();
         texture->initWithImage(img);
         sprite->setTexture(texture);
+
     }
 }
 
