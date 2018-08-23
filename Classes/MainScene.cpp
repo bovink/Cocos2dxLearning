@@ -15,6 +15,7 @@
 #include "VideoPlayerScene.h"
 #include "EraserScene.h"
 #include "ImageViewScene.h"
+#include "ButtonScene.h"
 
 using namespace std;
 
@@ -62,6 +63,7 @@ void MainScene::initListData() {
     titles.push_back("Video");
     titles.push_back("eraser");
     titles.push_back("FrameAnimation");
+    titles.push_back("ButtonScene");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -145,6 +147,9 @@ void MainScene::onItemClickEvent(Ref *ref) {
             _director->pushScene(scene);
         case 11:
             scene = TestFrameAnimation::create();
+            _director->pushScene(scene);
+        case 12:
+            scene = ButtonScene::create();
             _director->pushScene(scene);
         default:
             break;

@@ -5,16 +5,15 @@
 #ifndef PROJ_ANDROID_TESTBUTTONSCENE_H
 #define PROJ_ANDROID_TESTBUTTONSCENE_H
 
-#include "cocos2d.h"
+#include "BaseScene.h"
 
-USING_NS_CC;
+class ButtonScene : public BaseScene {
 
-class ButtonScene : public Scene {
 public:
+
     bool init() override;
 
     CREATE_FUNC(ButtonScene)
-
 };
 
 
