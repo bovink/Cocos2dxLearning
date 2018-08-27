@@ -26,7 +26,12 @@ package org.cocos2dx.cpp;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
@@ -38,7 +43,8 @@ public class AppActivity extends Cocos2dxActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.setEnableVirtualButton(false);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        super.setEnableVirtualButton(true);
         super.onCreate(savedInstanceState);
         // Workaround in https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
         if (!isTaskRoot()) {
@@ -60,7 +66,46 @@ public class AppActivity extends Cocos2dxActivity {
 //        Intent intent = new Intent(this, MainActivity.class);
 //        startActivity(intent);
 
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                getHeight();
+                int barHeight = getStatusBarHeight();
+                System.out.println("barHeight = " + barHeight);
+
+            }
+        }, 1000);
+        getHeight();
+        int barHeight = getStatusBarHeight();
+        System.out.println("barHeight = " + barHeight);
     }
+
+    public void getHeight() {
+        float density = getResources().getDisplayMetrics().density;
+        System.out.println("density = " + density);
+
+        Rect rectangle = new Rect();
+        Window window = getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+        int statusBarHeight = rectangle.top;
+        int contentViewTop =
+                window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        int titleBarHeight= contentViewTop - statusBarHeight;
+
+        Log.i("*** Elenasys :: ", "StatusBar Height= " + statusBarHeight + " , TitleBar Height = " + titleBarHeight);
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
 
     public static void changedActivityOrientation(int orientation) {
         switch (orientation) {

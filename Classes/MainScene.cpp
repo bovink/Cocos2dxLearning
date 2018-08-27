@@ -39,7 +39,7 @@ void MainScene::initListView() {
     ListView *listView = ListView::create();
     listView->setName(_NAME_LIST);
     listView->setDirection(ui::ScrollView::Direction::VERTICAL);
-    listView->setContentSize(_contentSize);
+    listView->setContentSize(Size(_contentSize.width, _contentSize.height - 48));
     listView->setPosition(Vec2::ZERO);
     addChild(listView);
 
