@@ -20,12 +20,14 @@ bool JniScene::init() {
     param->setMargin(Margin(20, 0, 0, 0));
 
     auto start = Button::create("animationbuttonnormal.png");
-    start->setTitleText("start");
+    start->setTitleText("hide");
+    start->setTitleFontSize(30);
     start->addClickEventListener(CC_CALLBACK_1(JniScene::onStartClick, this));
     start->setLayoutParameter(param);
 
     auto stop = Button::create("animationbuttonnormal.png");
-    stop->setTitleText("stop");
+    stop->setTitleText("show");
+    stop->setTitleFontSize(30);
     stop->addClickEventListener(CC_CALLBACK_1(JniScene::onStopClick, this));
     stop->setLayoutParameter(param);
 
@@ -58,17 +60,19 @@ bool JniScene::init() {
 void JniScene::onStartClick(Ref *ref) {
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/RecordHelper",
-                                    "startRecord");
+    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
+                                    "hide");
 #endif
+    _director->popScene();
 }
 
 void JniScene::onStopClick(Ref *ref) {
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/RecordHelper",
-                                    "stopRecord");
+    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
+                                    "show");
 #endif
+    _director->popScene();
 }
 
 void JniScene::onPlayClick(Ref *ref) {

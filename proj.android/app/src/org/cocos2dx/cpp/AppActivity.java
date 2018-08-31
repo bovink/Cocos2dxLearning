@@ -24,11 +24,12 @@
  ****************************************************************************/
 package org.cocos2dx.cpp;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,7 +38,7 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 
 public class AppActivity extends Cocos2dxActivity {
 
-    private static Activity instance;
+    private static AppActivity instance;
 
     private RecordHelper recordHelper = null;
 
@@ -92,7 +93,7 @@ public class AppActivity extends Cocos2dxActivity {
         int statusBarHeight = rectangle.top;
         int contentViewTop =
                 window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
-        int titleBarHeight= contentViewTop - statusBarHeight;
+        int titleBarHeight = contentViewTop - statusBarHeight;
 
         Log.i("*** Elenasys :: ", "StatusBar Height= " + statusBarHeight + " , TitleBar Height = " + titleBarHeight);
     }
@@ -104,6 +105,34 @@ public class AppActivity extends Cocos2dxActivity {
             result = getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    @SuppressLint("HandlerLeak")
+    public static Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+            if (msg.what == 0) {
+
+                instance.setEnableVirtualButton(false);
+                instance.hideVirtualButton();
+
+            } else {
+                instance.setEnableVirtualButton(true);
+                instance.hideVirtualButton();
+
+            }
+        }
+    };
+
+    public static void hide() {
+
+        mHandler.sendEmptyMessage(0);
+    }
+
+    public static void show() {
+
+        mHandler.sendEmptyMessage(1);
     }
 
 
