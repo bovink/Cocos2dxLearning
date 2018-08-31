@@ -42,6 +42,7 @@ public class AppActivity extends Cocos2dxActivity {
 
     private RecordHelper recordHelper = null;
 
+    public static native void changeSize(int height);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);

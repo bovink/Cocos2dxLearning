@@ -31,7 +31,9 @@ public class AndroidBug54971Workaround {
         //给View添加全局的布局监听器
         mViewObserved.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
-//                resetLayoutByUsableHeight(computeUsableHeight());
+                int height = computeUsableHeight();
+                resetLayoutByUsableHeight(height);
+                AppActivity.changeSize(height);
                 System.out.println("AndroidBug54971Workaround.onGlobalLayout");
             }
         });
@@ -39,6 +41,7 @@ public class AndroidBug54971Workaround {
     }
 
     private void resetLayoutByUsableHeight(int usableHeightNow) {
+        System.out.println("usableHeightNow = " + usableHeightNow);
         //比较布局变化前后的View的可用高度
         if (usableHeightNow != usableHeightPrevious) {
             //如果两次高度不一致

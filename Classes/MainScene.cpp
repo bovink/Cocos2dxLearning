@@ -19,6 +19,21 @@
 
 using namespace std;
 
+static void executeCheckOrderStatus(int height);
+
+static int mheight = 0;
+extern "C" {
+void Java_org_cocos2dx_cpp_AppActivity_changeSize(JNIEnv *env, jobject obj, jint height) {
+    executeCheckOrderStatus(height);
+}
+}
+
+void executeCheckOrderStatus(int height) {
+    mheight = height;
+
+    Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("test");
+}
+
 bool MainScene::init() {
     if (!Scene::init()) {
 
@@ -29,6 +44,20 @@ bool MainScene::init() {
 
     initListData();
 
+    auto checkListener = EventListenerCustom::create("test",
+                                                     [&](EventCustom *e) {
+
+//                                                         int height = reinterpret_cast<int>(e->getUserData());
+                                                         CCLOG("HEIGHT:%d", mheight);
+                                                         auto glView = _director->getOpenGLView();
+                                                         auto frameSize = glView->getFrameSize();
+                                                         glView->setFrameSize(frameSize.width,
+                                                                              mheight);
+                                                         glView->setDesignResolutionSize(720, 1280,
+                                                                                         ResolutionPolicy::EXACT_FIT);
+                                                     });
+
+    _eventDispatcher->addEventListenerWithFixedPriority(checkListener, 1);
     return true;
 }
 
