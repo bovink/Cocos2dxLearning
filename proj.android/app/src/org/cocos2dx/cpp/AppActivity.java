@@ -57,6 +57,8 @@ public class AppActivity extends Cocos2dxActivity {
         }
         // DO OTHER INITIALIZATION BELOW
 
+        AndroidBug54971Workaround.assistActivity(findViewById(android.R.id.content));
+
         instance = this;
 
         if (recordHelper == null) {
