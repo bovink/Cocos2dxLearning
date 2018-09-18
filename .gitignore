@@ -18,7 +18,8 @@ cocos2d/issue_template.md
 cocos2d/README.md
 
 # iOS
-proj.ios_mac
+xcuserdata/
+.DS_Store
 
 # Linux
 proj.linux

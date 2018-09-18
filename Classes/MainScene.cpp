@@ -22,11 +22,14 @@ using namespace std;
 static void executeCheckOrderStatus(int height);
 
 static int mheight = 0;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
 extern "C" {
-void Java_org_cocos2dx_cpp_AppActivity_changeSize(JNIEnv *env, jobject obj, jint height) {
-    executeCheckOrderStatus(height);
+    void Java_org_cocos2dx_cpp_AppActivity_changeSize(JNIEnv *env, jobject obj, jint height) {
+        executeCheckOrderStatus(height);
+    }
 }
-}
+#endif
 
 void executeCheckOrderStatus(int height) {
     mheight = height;
