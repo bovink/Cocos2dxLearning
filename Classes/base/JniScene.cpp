@@ -79,7 +79,8 @@ void JniScene::onStopClick(Ref *ref) {
 void JniScene::onPlayClick(Ref *ref) {
 
     auto callNative = new CallNativeInterface();
-    callNative->printInfoFromNative();
+    string s = "c++ call native show";
+    callNative->printInfoFromNative(s);
 }
 
 void JniScene::onProcessClick(Ref *ref) {

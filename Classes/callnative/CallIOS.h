@@ -10,7 +10,7 @@
 
 @interface IOSObject : NSObject
 
--(void) printInfo;
+-(void) printInfo:(string&) s;
 
 -(void) showToast;
 @end

@@ -12,10 +12,12 @@
 
 }
 
--(void) printInfo {
-    
-    NSLog(@"hello from the ios");
-    
+-(void) printInfo:(string&) s {
+
+    NSString *errorMessage = [NSString stringWithCString:s.c_str()
+                                           encoding:[NSString defaultCStringEncoding]];
+    NSLog(@"%@",errorMessage);
+
 }
 
 -(void) showToast {
@@ -36,9 +38,9 @@ CallNativeInterface::CallNativeInterface(){
     object = [IOSObject new];
 }
 
-void CallNativeInterface::printInfoFromNative() {
+void CallNativeInterface::printInfoFromNative(string &s) {
 
-    [((IOSObject*) object) printInfo];
+    [((IOSObject*) object) printInfo:s];
 }
 
 void CallNativeInterface::showToast() {

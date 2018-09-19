@@ -14,13 +14,14 @@ CallNativeInterface::CallNativeInterface() {
 
 }
 
-void CallNativeInterface::printInfoFromNative() {
+void CallNativeInterface::printInfoFromNative(string &s) {
     JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
-                                    "printInfo");
+                                    "printInfo", s);
 }
 
 void CallNativeInterface::showToast() {
     JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
                                     "showToast");
 }
+
 #endif

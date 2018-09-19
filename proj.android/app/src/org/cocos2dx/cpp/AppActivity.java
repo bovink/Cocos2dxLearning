@@ -140,8 +140,8 @@ public class AppActivity extends Cocos2dxActivity {
         mHandler.sendEmptyMessage(1);
     }
 
-    public static void printInfo() {
-        System.out.println("hello from the android ");
+    public static void printInfo(String s) {
+        System.out.println(s);
     }
 
     public static void showToast() {

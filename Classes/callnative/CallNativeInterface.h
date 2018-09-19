@@ -6,13 +6,17 @@
 #define PROJ_ANDROID_CALLNATIVEINTERFACE_H
 
 
+#include <string>
+
+using namespace std;
+
 class CallNativeInterface {
 
 public:
 
     CallNativeInterface();
 
-    void printInfoFromNative();
+    void printInfoFromNative(string &s);
 
     void showToast();
 
