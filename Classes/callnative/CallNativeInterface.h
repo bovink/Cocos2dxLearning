@@ -14,6 +14,8 @@ public:
 
     void printInfoFromNative();
 
+    void showToast();
+
 private:
 
     void* object;

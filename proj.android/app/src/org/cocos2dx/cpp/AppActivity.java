@@ -33,6 +33,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
@@ -43,6 +44,7 @@ public class AppActivity extends Cocos2dxActivity {
     private RecordHelper recordHelper = null;
 
     public static native void changeSize(int height);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
@@ -141,6 +143,24 @@ public class AppActivity extends Cocos2dxActivity {
     public static void printInfo() {
         System.out.println("hello from the android ");
     }
+
+    public static void showToast() {
+
+        mmHandler.sendEmptyMessage(0);
+    }
+
+    @SuppressLint("HandlerLeak")
+    public static Handler mmHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    Toast.makeText(instance, "showtoast", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
 
     public static void changedActivityOrientation(int orientation) {
         switch (orientation) {

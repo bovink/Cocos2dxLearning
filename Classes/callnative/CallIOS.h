@@ -12,6 +12,7 @@
 
 -(void) printInfo;
 
+-(void) showToast;
 @end
 
 

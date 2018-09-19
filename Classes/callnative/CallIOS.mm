@@ -18,6 +18,17 @@
     
 }
 
+-(void) showToast {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Do you want to say hello?"
+                                                    message:@"More info..."
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Say Hello",nil];
+    [alert show];
+    [alert release];
+    
+}
+
 @end
 
 CallNativeInterface::CallNativeInterface(){
@@ -30,6 +41,10 @@ void CallNativeInterface::printInfoFromNative() {
     [((IOSObject*) object) printInfo];
 }
 
+void CallNativeInterface::showToast() {
+
+    [((IOSObject*) object) showToast];
+}
 
 #endif
 

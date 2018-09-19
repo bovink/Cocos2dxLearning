@@ -19,4 +19,8 @@ void CallNativeInterface::printInfoFromNative() {
                                     "printInfo");
 }
 
+void CallNativeInterface::showToast() {
+    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
+                                    "showToast");
+}
 #endif

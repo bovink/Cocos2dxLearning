@@ -84,9 +84,6 @@ void JniScene::onPlayClick(Ref *ref) {
 
 void JniScene::onProcessClick(Ref *ref) {
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-
-    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/RecordHelper",
-                                    "process");
-#endif
+    auto callNative = new CallNativeInterface();
+    callNative->showToast();
 }
