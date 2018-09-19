@@ -7,6 +7,7 @@
 #include "cocos/ui/UIButton.h"
 #include "cocos/ui/UILayoutParameter.h"
 #include "cocos/ui/UILayout.h"
+#include "CallNativeInterface.h"
 
 using namespace ui;
 
@@ -77,10 +78,8 @@ void JniScene::onStopClick(Ref *ref) {
 
 void JniScene::onPlayClick(Ref *ref) {
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/RecordHelper",
-                                    "playAudio");
-#endif
+    auto callNative = new CallNativeInterface();
+    callNative->printInfoFromNative();
 }
 
 void JniScene::onProcessClick(Ref *ref) {
