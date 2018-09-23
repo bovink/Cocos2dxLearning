@@ -43,7 +43,7 @@ public class AppActivity extends Cocos2dxActivity {
 
     private RecordHelper recordHelper = null;
 
-    public static native void changeSize(int height);
+    public static native void changeSize(int width, int height);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

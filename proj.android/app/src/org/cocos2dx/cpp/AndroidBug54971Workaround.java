@@ -32,8 +32,9 @@ public class AndroidBug54971Workaround {
         mViewObserved.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
                 int height = computeUsableHeight();
+                int width = computeUsableWidth();
                 resetLayoutByUsableHeight(height);
-                AppActivity.changeSize(height);
+                AppActivity.changeSize(width, height);
                 System.out.println("AndroidBug54971Workaround.onGlobalLayout");
             }
         });
@@ -61,5 +62,11 @@ public class AndroidBug54971Workaround {
         Rect r = new Rect();
         mViewObserved.getWindowVisibleDisplayFrame(r);
         return (r.bottom - r.top);
+    }
+
+    private int computeUsableWidth() {
+        Rect r = new Rect();
+        mViewObserved.getWindowVisibleDisplayFrame(r);
+        return (r.right - r.left);
     }
 }

@@ -19,20 +19,26 @@
 
 using namespace std;
 
-static void executeCheckOrderStatus(int height);
+static void executeCheckOrderStatus(int width, int height);
 
 static int mheight = 0;
+
+static int screenWidth = 0;
+static int screenHeight = 0;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
 extern "C" {
-    void Java_org_cocos2dx_cpp_AppActivity_changeSize(JNIEnv *env, jobject obj, jint height) {
-        executeCheckOrderStatus(height);
-    }
+void
+Java_org_cocos2dx_cpp_AppActivity_changeSize(JNIEnv *env, jobject obj, jint width, jint height) {
+    executeCheckOrderStatus(width, height);
+}
 }
 #endif
 
-void executeCheckOrderStatus(int height) {
+void executeCheckOrderStatus(int width, int height) {
     mheight = height;
+    screenWidth = width;
+    screenHeight = height;
 
     Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("test");
 }
@@ -54,10 +60,12 @@ bool MainScene::init() {
                                                          CCLOG("HEIGHT:%d", mheight);
                                                          auto glView = _director->getOpenGLView();
                                                          auto frameSize = glView->getFrameSize();
-                                                         glView->setFrameSize(frameSize.width,
-                                                                              mheight);
-                                                         glView->setDesignResolutionSize(720, 1280,
-                                                                                         ResolutionPolicy::EXACT_FIT);
+                                                         glView->setFrameSize(screenWidth,
+                                                                              screenHeight);
+                                                         glView->setDesignResolutionSize(
+                                                                 glView->getDesignResolutionSize().width,
+                                                                 glView->getDesignResolutionSize().height,
+                                                                 ResolutionPolicy::FIXED_WIDTH);
                                                      });
 
     _eventDispatcher->addEventListenerWithFixedPriority(checkListener, 1);

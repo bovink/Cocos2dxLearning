@@ -16,6 +16,9 @@ public:
     bool init() override;
 
 private:
+
+
+    Scale9Sprite *scale9Sprite;
 };
 
 
