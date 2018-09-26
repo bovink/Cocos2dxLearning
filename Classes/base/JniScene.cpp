@@ -69,11 +69,14 @@ void JniScene::onStartClick(Ref *ref) {
 
 void JniScene::onStopClick(Ref *ref) {
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
-                                    "show");
-#endif
-    _director->popScene();
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+//    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
+//                                    "show");
+//#endif
+//    _director->popScene();
+
+    Text* text = NULL;
+    text->setString("sd");
 }
 
 void JniScene::onPlayClick(Ref *ref) {
