@@ -27,11 +27,11 @@ bool DrawNodeScene::init() {
 //    addChild(line);
 
     __CCLOGWITHFUNCTION("contentSize:%f,%f", _contentSize.width, _contentSize.height);
-    scale9Sprite = Scale9Sprite::create(Rect(43, 747, 506, 716), "ps_juxingbj.png");
-//    scale9Sprite->setAnchorPoint(Vec2(0, 0));
-    scale9Sprite->setContentSize(Size(589, 786));
-//    scale9Sprite->setPosition(Vec2(0, 0));
-    scale9Sprite->setPosition(_contentSize / 2);
+    scale9Sprite = Scale9Sprite::create(Rect(0, 1136 - 500, 640, 500), "ps_game10_bj.png");
+    scale9Sprite->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+    scale9Sprite->setContentSize(Size(640, 1136));
+    scale9Sprite->setPosition(Vec2(0, _contentSize.height));
+//    scale9Sprite->setPosition(_contentSize / 2);
     addChild(scale9Sprite);
 
     auto increaseWidth = Button::create("animationbuttonnormal.png");
