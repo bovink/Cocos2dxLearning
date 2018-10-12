@@ -104,6 +104,7 @@ void MainScene::initListData() {
     titles.push_back("eraser");
     titles.push_back("FrameAnimation");
     titles.push_back("ButtonScene");
+    titles.push_back("TestClipScene");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -190,6 +191,9 @@ void MainScene::onItemClickEvent(Ref *ref) {
             _director->pushScene(scene);
         case 12:
             scene = ButtonScene::create();
+            _director->pushScene(scene);
+        case 13:
+            scene = TestClipScene::create();
             _director->pushScene(scene);
         default:
             break;

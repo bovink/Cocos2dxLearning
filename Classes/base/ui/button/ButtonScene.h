@@ -16,5 +16,18 @@ public:
     CREATE_FUNC(ButtonScene)
 };
 
+class TestClipScene : public BaseScene {
+
+public:
+
+    CREATE_FUNC(TestClipScene)
+
+    bool init() override;
+
+    void setColor4B(int x, int y, int width, Color4B color, unsigned char *data);
+
+    bool expectColor4B(int x, int y, int width, Color4B color, unsigned char *data);
+};
+
 
 #endif //PROJ_ANDROID_TESTBUTTONSCENE_H

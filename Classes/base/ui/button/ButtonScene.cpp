@@ -57,3 +57,48 @@ bool ButtonScene::init() {
 
     return true;
 }
+
+bool TestClipScene::init() {
+    if (!BaseScene::init()) {
+        return false;
+    }
+
+    auto sprite = Sprite::create("ps_danci_k1.png");
+    sprite->setPosition(_contentSize / 2);
+
+    auto cutSprite = Sprite::create("testbg.png");
+    cutSprite->setContentSize(_contentSize);
+    cutSprite->setPosition(_contentSize / 2);
+
+    auto _texture = RenderTexture::create(_contentSize.width,
+                                          _contentSize.height,
+                                          Texture2D::PixelFormat::RGBA8888);
+    _texture->retain();
+    _texture->setPosition(_contentSize / 2);
+    addChild(_texture);
+
+    _texture->begin();
+    cutSprite->visit();
+    _texture->end();
+
+    BlendFunc func0 = {GL_ZERO, GL_ONE_MINUS_SRC_ALPHA};
+    sprite->setBlendFunc(func0);
+    _texture->begin();
+    sprite->visit();
+    _texture->end();
+
+
+
+
+
+
+    return true;
+}
+
+void TestClipScene::setColor4B(int x, int y, int width, Color4B color, unsigned char *data) {
+
+}
+
+bool TestClipScene::expectColor4B(int x, int y, int width, Color4B color, unsigned char *data) {
+    return false;
+}

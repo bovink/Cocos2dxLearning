@@ -72,18 +72,18 @@ public class AppActivity extends Cocos2dxActivity {
 //        Intent intent = new Intent(this, MainActivity.class);
 //        startActivity(intent);
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                getHeight();
-                int barHeight = getStatusBarHeight();
-                System.out.println("barHeight = " + barHeight);
-
-            }
-        }, 1000);
-        getHeight();
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                getHeight();
+//                int barHeight = getStatusBarHeight();
+//                System.out.println("barHeight = " + barHeight);
+//
+//            }
+//        }, 1000);
+//        getHeight();
         int barHeight = getStatusBarHeight();
         System.out.println("barHeight = " + barHeight);
     }
