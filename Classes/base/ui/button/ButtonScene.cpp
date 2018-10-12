@@ -63,10 +63,14 @@ bool TestClipScene::init() {
         return false;
     }
 
-    auto sprite = Sprite::create("ps_danci_k1.png");
+    auto renderer = _director->getRenderer();
+    auto &parentTransform = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+
+    auto sprite = ImageView::create("ps_danci_k1.png");
     sprite->setPosition(_contentSize / 2);
 
-    auto cutSprite = Sprite::create("testbg.png");
+    auto cutSprite = ImageView::create("testbg.png");
+    cutSprite->setScale9Enabled(true);
     cutSprite->setContentSize(_contentSize);
     cutSprite->setPosition(_contentSize / 2);
 
@@ -78,18 +82,15 @@ bool TestClipScene::init() {
     addChild(_texture);
 
     _texture->begin();
-    cutSprite->visit();
+    cutSprite->visit(renderer, parentTransform, true);
     _texture->end();
 
     BlendFunc func0 = {GL_ZERO, GL_ONE_MINUS_SRC_ALPHA};
     sprite->setBlendFunc(func0);
+
     _texture->begin();
-    sprite->visit();
+    sprite->visit(renderer, parentTransform, true);
     _texture->end();
-
-
-
-
 
 
     return true;
