@@ -96,10 +96,49 @@ bool TestClipScene::init() {
     return true;
 }
 
-void TestClipScene::setColor4B(int x, int y, int width, Color4B color, unsigned char *data) {
+bool TestListView::init() {
+    if (!BaseScene::init()) {
+        return false;
+    }
 
-}
+    listView = ListView::create();
+    listView->setBounceEnabled(true);
+    listView->setDirection(ScrollView::Direction::HORIZONTAL);
+    listView->setContentSize(Size(_contentSize.width, 300));
+//    listView->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+//    listView->setPosition(Vec2(_contentSize.width/2,0));
+    listView->setPosition(Vec2::ZERO);
 
-bool TestClipScene::expectColor4B(int x, int y, int width, Color4B color, unsigned char *data) {
-    return false;
+    addChild(listView);
+
+    for (int i = 0; i < 4; ++i) {
+
+        auto image = ImageView::create("testbg.png");
+        image->setScale9Enabled(true);
+        image->setContentSize(Size(200, 250));
+        image->setTag(i);
+        listView->pushBackCustomItem(image);
+    }
+    listView->setItemsMargin(40);
+    listView->setLeftPadding(640 / 2 - 100);
+    listView->setRightPadding(640 / 2 - 100);
+    schedule([&](float dt) {
+
+        __CCLOGWITHFUNCTION("%d", index);
+        listView->scrollToItem(index, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+        Widget *item;
+        for (int i = 0; i < listView->getItems().size(); ++i) {
+
+            item = listView->getItem(i);
+            item->runAction(ScaleTo::create(1, 1));
+        }
+        item = listView->getItem(index);
+        item->runAction(ScaleTo::create(1, 1.1));
+        index++;
+        if (index > 3) {
+            index = 0;
+        }
+    }, 2, "a");
+
+    return true;
 }

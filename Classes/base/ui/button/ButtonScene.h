@@ -24,9 +24,19 @@ public:
 
     bool init() override;
 
-    void setColor4B(int x, int y, int width, Color4B color, unsigned char *data);
+};
 
-    bool expectColor4B(int x, int y, int width, Color4B color, unsigned char *data);
+class TestListView : public BaseScene {
+
+public:
+
+    CREATE_FUNC(TestListView)
+
+    bool init() override;
+
+    int index = 0;
+    ListView *listView;
+
 };
 
 
