@@ -106,6 +106,7 @@ void MainScene::initListData() {
     titles.push_back("ButtonScene");
     titles.push_back("TestClipScene");
     titles.push_back("TestListView");
+    titles.push_back("SizeTest");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -181,24 +182,35 @@ void MainScene::onItemClickEvent(Ref *ref) {
         case 8:
             scene = TabControlScene::create();
             _director->pushScene(scene);
+            break;
         case 9:
             scene = TestVideoPlayer::create();
             _director->pushScene(scene);
+            break;
         case 10:
             scene = EraserScene2::create();
             _director->pushScene(scene);
+            break;
         case 11:
             scene = TestFrameAnimation::create();
             _director->pushScene(scene);
+            break;
         case 12:
             scene = ButtonScene::create();
             _director->pushScene(scene);
+            break;
         case 13:
             scene = TestClipScene::create();
             _director->pushScene(scene);
+            break;
         case 14:
             scene = TestListView::create();
             _director->pushScene(scene);
+            break;
+        case 15:
+            scene = SizeTest::create();
+            _director->pushScene(scene);
+            break;
         default:
             break;
     }

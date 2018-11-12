@@ -142,3 +142,65 @@ bool TestListView::init() {
 
     return true;
 }
+
+bool SizeTest::init() {
+    if (!BaseScene::init()) {
+        return false;
+    }
+
+    auto root = Layout::create();
+    root->setLayoutType(Layout::Type::VERTICAL);
+    root->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+    root->setBackGroundColor(Color3B::WHITE);
+    root->setContentSize(_contentSize);
+    root->setPosition(Vec2::ZERO);
+    addChild(root);
+
+    auto image1 = ImageView::create("testsize.png");
+    auto image1P = LinearLayoutParameter::create();
+    image1P->setMargin(Margin(0, 10, 0, 0));
+    image1P->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    image1->setLayoutParameter(image1P);
+    root->addChild(image1);
+
+    auto image2 = ImageView::create("testsize.png");
+    auto image2P = LinearLayoutParameter::create();
+    image2P->setMargin(Margin(0, 10, 0, 0));
+    image2P->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    image2->setLayoutParameter(image2P);
+    root->addChild(image2);
+
+    auto englishText1 = Text::create("abcdefghijklmnopqrstuvwxyz", "fonts/Roboto-Regular.ttf", 14);
+    englishText1->setTextColor(Color4B::BLACK);
+    auto englishText1P = LinearLayoutParameter::create();
+    englishText1P->setMargin(Margin(0, 10, 0, 0));
+    englishText1P->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    englishText1->setLayoutParameter(englishText1P);
+    root->addChild(englishText1);
+
+    auto englishText2 = Text::create("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "fonts/Roboto-Regular.ttf", 14);
+    englishText2->setTextColor(Color4B::BLACK);
+    auto englishText2P = LinearLayoutParameter::create();
+    englishText2P->setMargin(Margin(0, 10, 0, 0));
+    englishText2P->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    englishText2->setLayoutParameter(englishText2P);
+    root->addChild(englishText2);
+
+    auto numtext = Text::create("0123456789", "fonts/FZHTK.TTF", 14);
+    numtext->setTextColor(Color4B::BLACK);
+    auto numtextP = LinearLayoutParameter::create();
+    numtextP->setMargin(Margin(0, 10, 0, 0));
+    numtextP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    numtext->setLayoutParameter(numtextP);
+    root->addChild(numtext);
+
+    auto madarinText = Text::create("玉美松泉", "fonts/FZHTK.TTF", 14);
+    madarinText->setTextColor(Color4B::BLACK);
+    auto madarinTextP = LinearLayoutParameter::create();
+    madarinTextP->setMargin(Margin(0, 10, 0, 0));
+    madarinTextP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    madarinText->setLayoutParameter(madarinTextP);
+    root->addChild(madarinText);
+
+    return true;
+}

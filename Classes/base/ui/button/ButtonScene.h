@@ -39,5 +39,15 @@ public:
 
 };
 
+class SizeTest : public BaseScene {
+
+public:
+
+    CREATE_FUNC(SizeTest)
+
+    bool init() override;
+
+};
+
 
 #endif //PROJ_ANDROID_TESTBUTTONSCENE_H
