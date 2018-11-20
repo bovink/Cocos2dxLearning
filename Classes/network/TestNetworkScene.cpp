@@ -19,6 +19,9 @@ bool TestNetworkScene::init() {
     clipNode->addChild(imageView);
     addChild(clipNode);
 
+    auto moveBy = MoveBy::create(5, Vec2(-50, 0));
+    imageView->runAction(RepeatForever::create(Sequence::create(moveBy, moveBy->reverse(), nullptr)));
+
     auto button = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
     button->setPosition(Size(_contentSize.width / 2, 100));
     button->addClickEventListener([&](Ref *ref) {

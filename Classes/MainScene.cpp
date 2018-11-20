@@ -107,6 +107,7 @@ void MainScene::initListData() {
     titles.push_back("TestClipScene");
     titles.push_back("TestListView");
     titles.push_back("SizeTest");
+    titles.push_back("MarqueeText");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -209,6 +210,10 @@ void MainScene::onItemClickEvent(Ref *ref) {
             break;
         case 15:
             scene = SizeTest::create();
+            _director->pushScene(scene);
+            break;
+        case 16:
+            scene = MarqueeTextTest::create();
             _director->pushScene(scene);
             break;
         default:

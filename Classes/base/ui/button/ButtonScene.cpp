@@ -204,3 +204,38 @@ bool SizeTest::init() {
 
     return true;
 }
+
+bool MarqueeTextTest::init() {
+    if (!BaseScene::init()) {
+        return false;
+    }
+
+    auto root = Layout::create();
+    root->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+    root->setBackGroundColor(Color3B::WHITE);
+    root->setContentSize(Size(200, 40));
+    root->setPosition(Vec2(0, _contentSize.height / 2));
+    addChild(root);
+
+    auto node = DrawNode::create();
+    node->drawSolidRect(Vec2(0, 0), Vec2(200, 40), Color4F::WHITE);
+
+    auto clipNode = ClippingNode::create();
+    clipNode->setStencil(node);
+    clipNode->setPosition(Vec2(0, 0));
+    root->addChild(clipNode);
+
+
+    auto text = Text::create();
+    text->setAnchorPoint(Vec2(0, 0));
+    text->setString("vaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    text->setFontSize(20);
+    text->setTextColor(Color4B::RED);
+    text->setPosition(Vec2(0, 0));
+
+    auto moveBy = MoveBy::create(5, Vec2(-50, 0));
+//    text->runAction(RepeatForever::create(Sequence::create(moveBy, moveBy->reverse(), nullptr)));
+
+    clipNode->addChild(text);
+    return true;
+}

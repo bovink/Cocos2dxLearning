@@ -49,5 +49,14 @@ public:
 
 };
 
+class MarqueeTextTest: public BaseScene {
+
+public:
+
+    CREATE_FUNC(MarqueeTextTest)
+
+    bool init() override;
+};
+
 
 #endif //PROJ_ANDROID_TESTBUTTONSCENE_H
