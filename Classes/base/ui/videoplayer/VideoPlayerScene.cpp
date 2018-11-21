@@ -34,7 +34,7 @@ bool TestVideoPlayer::init() {
     auto image = ImageView::create("grossini_dance_08.png");
     image->setPosition(Vec2(640, 360));
     addChild(image);
-    scheduleUpdate();
+//    scheduleUpdate();
     return true;
 }
 
