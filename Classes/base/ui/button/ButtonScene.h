@@ -56,6 +56,8 @@ public:
     CREATE_FUNC(MarqueeTextTest)
 
     bool init() override;
+
+    void printSomething();
 };
 
 

@@ -4,6 +4,8 @@
 
 #include "ButtonScene.h"
 #include "cocos/ui/CocosGUI.h"
+#include <thread>
+#include <iostream>
 
 using namespace ui;
 
@@ -237,5 +239,33 @@ bool MarqueeTextTest::init() {
 //    text->runAction(RepeatForever::create(Sequence::create(moveBy, moveBy->reverse(), nullptr)));
 
     clipNode->addChild(text);
+
+    auto btn = Button::create();
+    btn->setTitleText("press the button");
+    btn->setPosition(_contentSize / 2);
+    btn->addClickEventListener([&](Ref *ref) {
+
+        std::thread t = std::thread(&MarqueeTextTest::printSomething, this);
+        t.detach();
+        __CCLOGWITHFUNCTION("end");
+
+    });
+
+    addChild(btn);
+
     return true;
+}
+
+
+void MarqueeTextTest::printSomething() {
+
+    for (int i = 0; i < 10; ++i) {
+
+//        std::cout << i << std::endl;
+
+        __CCLOGWITHFUNCTION("%d", i);
+
+        std::chrono::milliseconds duration(1000);
+        std::this_thread::sleep_for(duration);
+    }
 }
