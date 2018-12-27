@@ -283,6 +283,10 @@ bool DownloadTestScene::init() {
     __CCLOGWITHFUNCTION("DownloadTestScene");
     auto button = Button::create("ps_jsu_anniu7.png", "ps_jsu_anniu7.png");
     button->setPosition(_contentSize / 2);
+    button->addClickEventListener([&](Ref* ref){
+
+        __CCLOGWITHFUNCTION("click btn");
+    });
     addChild(button);
 
 
