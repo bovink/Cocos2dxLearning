@@ -269,3 +269,66 @@ void MarqueeTextTest::printSomething() {
         std::this_thread::sleep_for(duration);
     }
 }
+
+static const char *urlChar =
+        "http://video.dolphinmedia.cn/ef073948b5ba44d4b9691f2d9820b38b/08ac918f73e8434380388a8e664dbadf-5cc937797266cd387c1d7b65162819dd-ld.mp4";
+
+static const char *sNameList = "x.mp4";
+
+bool DownloadTestScene::init() {
+    if (!BaseScene::init()) {
+        return false;
+    }
+
+    __CCLOGWITHFUNCTION("DownloadTestScene");
+    auto button = Button::create("ps_jsu_anniu7.png", "ps_jsu_anniu7.png");
+    button->setPosition(_contentSize / 2);
+    addChild(button);
+
+
+    downloader.reset(new network::Downloader());
+    FileUtils::getInstance()->createDirectory(FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/");
+    auto path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/" +
+                sNameList;
+
+
+    downloader->createDownloadFileTask(urlChar, path, sNameList);
+
+    downloader->onTaskProgress = [this](const network::DownloadTask &task,
+                                        int64_t bytesReceived,
+                                        int64_t totalBytesReceived,
+                                        int64_t totalBytesExpected) {
+        float percent = float(totalBytesReceived * 100) / totalBytesExpected;
+        char buf[32];
+        sprintf(buf, "%.1f%%[total %d KB]", percent, int(totalBytesExpected / 1024));
+        __CCLOGWITHFUNCTION(buf, "%.1f%%[total %d KB]", percent, int(totalBytesExpected / 1024));
+    };
+
+    downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask &task,
+                                           std::vector<unsigned char> &data) {
+
+    };
+
+    downloader->onFileTaskSuccess = [this](const cocos2d::network::DownloadTask &task) {
+
+    };
+    downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask &task,
+                                           std::vector<unsigned char> &data) {
+
+    };
+
+    path = FileUtils::getInstance()->getWritablePath();
+    std::vector<std::string> files;
+    FileUtils::getInstance()->listFilesRecursively(path, &files);
+    __CCLOGWITHFUNCTION("xxxxxxxxxxxxxxxxxxxx");
+    for (int i = 0; i < files.size(); ++i) {
+
+        __CCLOGWITHFUNCTION("%s", files.at(i).c_str());
+    }
+    __CCLOGWITHFUNCTION("xxxxxxxxxxxxxxxxxxxx");
+    path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/" +
+           sNameList;
+    long length = FileUtils::getInstance()->getFileSize(path);
+    __CCLOGWITHFUNCTION("size:%ld", length);
+    return true;
+}

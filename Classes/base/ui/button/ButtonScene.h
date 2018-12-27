@@ -49,7 +49,7 @@ public:
 
 };
 
-class MarqueeTextTest: public BaseScene {
+class MarqueeTextTest : public BaseScene {
 
 public:
 
@@ -58,6 +58,22 @@ public:
     bool init() override;
 
     void printSomething();
+};
+
+#include "network/CCDownloader.h"
+
+class DownloadTestScene : public BaseScene {
+
+public:
+
+    CREATE_FUNC(DownloadTestScene)
+
+    bool init() override;
+
+
+private:
+    std::unique_ptr<network::Downloader> downloader;
+
 };
 
 

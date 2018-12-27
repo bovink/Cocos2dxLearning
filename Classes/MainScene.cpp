@@ -96,18 +96,22 @@ void MainScene::initListData() {
     titles.push_back("JNI");
     titles.push_back("ScrollView");
     titles.push_back("Draw Node");
+
     titles.push_back("Network");
     titles.push_back("TableView");
     titles.push_back("TextTest");
     titles.push_back("TabControl");
     titles.push_back("Video");
+
     titles.push_back("eraser");
     titles.push_back("FrameAnimation");
     titles.push_back("ButtonScene");
     titles.push_back("TestClipScene");
     titles.push_back("TestListView");
+
     titles.push_back("SizeTest");
     titles.push_back("MarqueeText");
+    titles.push_back("DownloadTest");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -216,9 +220,14 @@ void MainScene::onItemClickEvent(Ref *ref) {
             scene = MarqueeTextTest::create();
             _director->pushScene(scene);
             break;
+        case 17:
+            scene = DownloadTestScene::create();
+            _director->pushScene(scene);
+            break;
         default:
             break;
     }
 }
+
 
 
