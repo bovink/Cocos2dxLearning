@@ -273,7 +273,7 @@ void MarqueeTextTest::printSomething() {
 static const char *urlChar =
         "http://video.dolphinmedia.cn/ef073948b5ba44d4b9691f2d9820b38b/08ac918f73e8434380388a8e664dbadf-5cc937797266cd387c1d7b65162819dd-ld.mp4";
 
-static const char *sNameList = "x.mp4";
+static const char *sNameList[] = {"1.mp4", "2.mp4", "3.mp4"};
 
 bool DownloadTestScene::init() {
     if (!BaseScene::init()) {
@@ -283,20 +283,25 @@ bool DownloadTestScene::init() {
     __CCLOGWITHFUNCTION("DownloadTestScene");
     auto button = Button::create("ps_jsu_anniu7.png", "ps_jsu_anniu7.png");
     button->setPosition(_contentSize / 2);
-    button->addClickEventListener([&](Ref* ref){
+    button->addClickEventListener([&](Ref *ref) {
 
-        __CCLOGWITHFUNCTION("click btn");
+        __CCLOGWITHFUNCTION("create download task");
+//        FileUtils::getInstance()->createDirectory(FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/");
+        auto path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/" +
+                    sNameList[taskId];
+        downloader->createDownloadFileTask(urlChar, path, sNameList[taskId]);
+        taskId++;
     });
     addChild(button);
 
 
-    downloader.reset(new network::Downloader());
-    FileUtils::getInstance()->createDirectory(FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/");
-    auto path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/" +
-                sNameList;
+    network::DownloaderHints hint;
+    hint.countOfMaxProcessingTasks = 2;
+    hint.tempFileNameSuffix = "temp";
+    hint.timeoutInSeconds = 10;
+//    downloader = new network::Downloader(hint);
+    downloader.reset(new network::Downloader(hint));
 
-
-    downloader->createDownloadFileTask(urlChar, path, sNameList);
 
     downloader->onTaskProgress = [this](const network::DownloadTask &task,
                                         int64_t bytesReceived,
@@ -305,7 +310,8 @@ bool DownloadTestScene::init() {
         float percent = float(totalBytesReceived * 100) / totalBytesExpected;
         char buf[32];
         sprintf(buf, "%.1f%%[total %d KB]", percent, int(totalBytesExpected / 1024));
-        __CCLOGWITHFUNCTION(buf, "%.1f%%[total %d KB]", percent, int(totalBytesExpected / 1024));
+        __CCLOGWITHFUNCTION("taskName:%s,%.1f%%[total %d KB]", task.identifier.c_str(), percent,
+                            int(totalBytesExpected / 1024));
     };
 
     downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask &task,
@@ -321,7 +327,7 @@ bool DownloadTestScene::init() {
 
     };
 
-    path = FileUtils::getInstance()->getWritablePath();
+    auto path = FileUtils::getInstance()->getWritablePath();
     std::vector<std::string> files;
     FileUtils::getInstance()->listFilesRecursively(path, &files);
     __CCLOGWITHFUNCTION("xxxxxxxxxxxxxxxxxxxx");
@@ -330,9 +336,9 @@ bool DownloadTestScene::init() {
         __CCLOGWITHFUNCTION("%s", files.at(i).c_str());
     }
     __CCLOGWITHFUNCTION("xxxxxxxxxxxxxxxxxxxx");
-    path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/" +
-           sNameList;
-    long length = FileUtils::getInstance()->getFileSize(path);
-    __CCLOGWITHFUNCTION("size:%ld", length);
+//    path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/" +
+//           sNameList;
+//    long length = FileUtils::getInstance()->getFileSize(path);
+//    __CCLOGWITHFUNCTION("size:%ld", length);
     return true;
 }
