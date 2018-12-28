@@ -6,16 +6,33 @@
 #define PROJ_ANDROID_DOWNLOADMODULE_H
 
 #include <string>
+#include "network/CCDownloader.h"
 
 using namespace std;
+using namespace cocos2d;
 
 class DownloadHelper;
 
 class DownloadInfo;
 
 // 下载服务
-class DownlaodService {
+class DownloadService {
 
+public:
+
+    static DownloadService *getInstance();
+
+    static DownloadService *getInstance(network::DownloaderHints hints);
+
+private:
+
+    DownloadService();
+
+    DownloadService(network::DownloaderHints hints);
+
+    static DownloadService* downloadService;
+
+    unique_ptr<network::Downloader> downloader;
 };
 
 

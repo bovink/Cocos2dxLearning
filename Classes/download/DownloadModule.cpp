@@ -4,6 +4,36 @@
 
 #include "DownloadModule.h"
 
+DownloadService::DownloadService() {
+
+    network::DownloaderHints hints;
+    hints.countOfMaxProcessingTasks = 5;
+    hints.tempFileNameSuffix = "temp";
+    hints.timeoutInSeconds = 10;
+
+    downloader.reset(new network::Downloader(hints));
+}
+
+DownloadService::DownloadService(network::DownloaderHints hints) {
+
+    downloader.reset(new network::Downloader(hints));
+}
+
+DownloadService *DownloadService::getInstance() {
+    if (downloadService == nullptr) {
+        downloadService = new DownloadService();
+    }
+    return downloadService;
+}
+
+DownloadService *DownloadService::getInstance(network::DownloaderHints hints) {
+    if (downloadService == nullptr) {
+        downloadService = new DownloadService(hints);
+    }
+    return downloadService;
+}
+
+////////////////////////////////////////下载信息类////////////////////////////////////////
 const string &DownloadInfo::getStoragePath() const {
     return storagePath;
 }
