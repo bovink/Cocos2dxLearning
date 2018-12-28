@@ -25,13 +25,17 @@ public:
 
     static DownloadService *getInstance(network::DownloaderHints hints);
 
-    void startDownloadTask(DownloadInfo downloadInfo);
+    void startDownloadTask(const DownloadInfo &downloadInfo);
 
 private:
 
     DownloadService();
 
     DownloadService(network::DownloaderHints hints);
+
+    void init();
+
+private:
 
     static DownloadService *downloadService = nullptr;
 
@@ -85,6 +89,10 @@ public:
 
     void setDes(const string &des);
 
+    const string &getFileName() const;
+
+    void setFileName(const string &fileName);
+
 private:
 
     string storagePath;
@@ -93,6 +101,7 @@ private:
     string resourceVersion;
     string resourceID;
     string des;
+    string fileName;
 };
 
 

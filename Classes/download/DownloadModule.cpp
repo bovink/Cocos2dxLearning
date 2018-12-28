@@ -22,6 +22,7 @@ DownloadService::DownloadService(network::DownloaderHints hints) {
 DownloadService *DownloadService::getInstance() {
     if (downloadService == nullptr) {
         downloadService = new DownloadService();
+        downloadService->init();
     }
     return downloadService;
 }
@@ -29,12 +30,41 @@ DownloadService *DownloadService::getInstance() {
 DownloadService *DownloadService::getInstance(network::DownloaderHints hints) {
     if (downloadService == nullptr) {
         downloadService = new DownloadService(hints);
+        downloadService->init();
     }
     return downloadService;
 }
 
-void DownloadService::startDownloadTask(DownloadInfo downloadInfo) {
+void DownloadService::init() {
 
+    downloader->onTaskProgress = [this](const network::DownloadTask &task,
+                                        int64_t bytesReceived,
+                                        int64_t totalBytesReceived,
+                                        int64_t totalBytesExpected) {
+        float percent = float(totalBytesReceived * 100) / totalBytesExpected;
+        __CCLOGWITHFUNCTION("taskName:%s,%.1f%%[total %d KB]", task.identifier.c_str(), percent,
+                            int(totalBytesExpected / 1024));
+    };
+
+    downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask &task,
+                                           std::vector<unsigned char> &data) {
+
+    };
+
+    downloader->onFileTaskSuccess = [this](const cocos2d::network::DownloadTask &task) {
+
+        __CCLOGWITHFUNCTION("Task:%s Download Finish", task.identifier.c_str());
+    };
+    downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask &task,
+                                           std::vector<unsigned char> &data) {
+
+    };
+}
+
+void DownloadService::startDownloadTask(const DownloadInfo &downloadInfo) {
+
+    downloader->createDownloadFileTask(downloadInfo.getDownloadPath(),
+                                       downloadInfo.getStoragePath(), downloadInfo.getFileName());
 }
 
 ////////////////////////////////////////下载工具类////////////////////////////////////////
@@ -51,7 +81,7 @@ DownloadUtils *DownloadUtils::getInstance() {
 }
 
 void DownloadUtils::createPathIfNotExist(const string &dirPath) {
-    bool isPathExist =   FileUtils::getInstance()->isDirectoryExist(dirPath);
+    bool isPathExist = FileUtils::getInstance()->isDirectoryExist(dirPath);
     if (!isPathExist) {
         FileUtils::getInstance()->createDirectory(dirPath);
     }
@@ -104,4 +134,12 @@ const string &DownloadInfo::getDes() const {
 
 void DownloadInfo::setDes(const string &des) {
     DownloadInfo::des = des;
+}
+
+const string &DownloadInfo::getFileName() const {
+    return fileName;
+}
+
+void DownloadInfo::setFileName(const string &fileName) {
+    DownloadInfo::fileName = fileName;
 }
