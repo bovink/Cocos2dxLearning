@@ -321,7 +321,7 @@ bool StartScene::init() {
     auto text = Text::create("点击按钮观看视频", "FZLTXIHK_1.TTF", 26);
     text->setColor(Color3B::BLACK);
     auto textP = LinearLayoutParameter::create();
-    textP->setMargin(Margin(0, 350, 0, 0));
+    textP->setMargin(Margin(0, 250, 0, 0));
     textP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
     text->setLayoutParameter(textP);
     root->addChild(text);
@@ -375,6 +375,32 @@ bool StartScene::init() {
         queryData();
     });
     root->addChild(queryBtn);
+
+    auto deleteBtn = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
+    deleteBtn->setTitleText("删除数据");
+    auto deleteBtnP = LinearLayoutParameter::create();
+    deleteBtnP->setMargin(Margin(0, 50, 0, 0));
+    deleteBtnP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    deleteBtn->setLayoutParameter(deleteBtnP);
+    deleteBtn->addClickEventListener([&](Ref *ref) {
+
+        deleteData();
+    });
+    root->addChild(deleteBtn);
+
+    auto modifyBtn = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
+    modifyBtn->setTitleText("修改数据");
+    auto modifyBtnP = LinearLayoutParameter::create();
+    modifyBtnP->setMargin(Margin(0, 50, 0, 0));
+    modifyBtnP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    modifyBtn->setLayoutParameter(modifyBtnP);
+    modifyBtn->addClickEventListener([&](Ref *ref) {
+
+        modifyData();
+    });
+    root->addChild(modifyBtn);
+
+
 
     return true;
 }
@@ -482,4 +508,29 @@ void StartScene::queryData2() {
 
     // 记得是否查询表
     sqlite3_free_table(table);
+}
+
+void StartScene::deleteData() {
+
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
+    // 删除第一条记录
+    string sql = "delete from student where ID = 1";
+    int ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+    if (ret != SQLITE_OK) {
+        CCLOG("delete data failed!");
+    }
+}
+
+void StartScene::modifyData() {
+
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
+
+    // 修改第三条记录的 name 字段
+    string sql = "update student set name = 'hello' where ID = 3";
+    int ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+    if (ret != SQLITE_OK) {
+        CCLOG("update data failed!");
+    }
 }

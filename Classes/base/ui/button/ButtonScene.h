@@ -96,6 +96,10 @@ public:
 
     void queryData2();
 
+    void deleteData();
+
+    void modifyData();
+
 };
 
 
