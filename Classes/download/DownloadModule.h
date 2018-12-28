@@ -66,8 +66,7 @@ class DownloadInfo {
 public:
 
     DownloadInfo(const string &storagePath, const string &downloadPath, const string &MD5,
-                 const string &resourceVersion, const string &resourceID, const string &des,
-                 const string &fileName);
+                 int resourceVersion, int resourceID, const string &des, const string &fileName);
 
     const string &getStoragePath() const;
 
@@ -81,13 +80,13 @@ public:
 
     void setMD5(const string &MD5);
 
-    const string &getResourceVersion() const;
+    int getResourceVersion() const;
 
-    void setResourceVersion(const string &resourceVersion);
+    void setResourceVersion(int resourceVersion);
 
-    const string &getResourceID() const;
+    int getResourceID() const;
 
-    void setResourceID(const string &resourceID);
+    void setResourceID(int resourceID);
 
     const string &getDes() const;
 
@@ -102,8 +101,8 @@ private:
     string storagePath;
     string downloadPath;
     string MD5;
-    string resourceVersion;
-    string resourceID;
+    int resourceVersion;
+    int resourceID;
     string des;
     string fileName;
 };

@@ -93,11 +93,12 @@ void DownloadUtils::createPathIfNotExist(const string &dirPath) {
 ////////////////////////////////////////下载信息类////////////////////////////////////////
 
 DownloadInfo::DownloadInfo(const string &storagePath, const string &downloadPath, const string &MD5,
-                           const string &resourceVersion, const string &resourceID,
-                           const string &des, const string &fileName) : storagePath(storagePath),
-                                                                        downloadPath(downloadPath),
-                                                                        MD5(MD5), resourceVersion(
-                resourceVersion), resourceID(resourceID), des(des), fileName(fileName) {}
+                           int resourceVersion, int resourceID, const string &des,
+                           const string &fileName) : storagePath(storagePath),
+                                                     downloadPath(downloadPath), MD5(MD5),
+                                                     resourceVersion(resourceVersion),
+                                                     resourceID(resourceID), des(des),
+                                                     fileName(fileName) {}
 
 const string &DownloadInfo::getStoragePath() const {
     return storagePath;
@@ -123,19 +124,19 @@ void DownloadInfo::setMD5(const string &MD5) {
     DownloadInfo::MD5 = MD5;
 }
 
-const string &DownloadInfo::getResourceVersion() const {
+int DownloadInfo::getResourceVersion() const {
     return resourceVersion;
 }
 
-void DownloadInfo::setResourceVersion(const string &resourceVersion) {
+void DownloadInfo::setResourceVersion(int resourceVersion) {
     DownloadInfo::resourceVersion = resourceVersion;
 }
 
-const string &DownloadInfo::getResourceID() const {
+int DownloadInfo::getResourceID() const {
     return resourceID;
 }
 
-void DownloadInfo::setResourceID(const string &resourceID) {
+void DownloadInfo::setResourceID(int resourceID) {
     DownloadInfo::resourceID = resourceID;
 }
 

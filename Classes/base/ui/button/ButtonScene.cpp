@@ -290,8 +290,8 @@ bool DownloadTestScene::init() {
         string storagePath = FileUtils::getInstance()->getWritablePath() + "Download/" + fileName;
         string downloadPath = urlChar;
         string MD5 = "";
-        string resourceVersion = "0.1";
-        string resourceID = "0.1";
+        int resourceVersion = 100;
+        int resourceID = 1;
         string des = "下载测试描述";
         DownloadInfo downloadInfo = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
                                                  resourceID, des, fileName);
