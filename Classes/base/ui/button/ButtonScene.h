@@ -61,6 +61,7 @@ public:
 };
 
 #include "network/CCDownloader.h"
+#include "DownloadModule.h"
 
 class DownloadTestScene : public BaseScene {
 
@@ -72,8 +73,6 @@ public:
 
 
 private:
-    std::unique_ptr<network::Downloader> downloader;
-    int taskId = 0;
 
 };
 

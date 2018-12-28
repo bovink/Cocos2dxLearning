@@ -37,7 +37,7 @@ private:
 
 private:
 
-    static DownloadService *downloadService = nullptr;
+    static DownloadService *downloadService;
 
     unique_ptr<network::Downloader> downloader;
 };
@@ -56,7 +56,7 @@ private:
 
     DownloadUtils();
 
-    static DownloadUtils *downloadUtils = nullptr;
+    static DownloadUtils *downloadUtils;
 
 };
 
@@ -64,6 +64,10 @@ private:
 class DownloadInfo {
 
 public:
+
+    DownloadInfo(const string &storagePath, const string &downloadPath, const string &MD5,
+                 const string &resourceVersion, const string &resourceID, const string &des,
+                 const string &fileName);
 
     const string &getStoragePath() const;
 

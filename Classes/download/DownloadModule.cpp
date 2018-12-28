@@ -88,6 +88,14 @@ void DownloadUtils::createPathIfNotExist(const string &dirPath) {
 }
 
 ////////////////////////////////////////下载信息类////////////////////////////////////////
+
+DownloadInfo::DownloadInfo(const string &storagePath, const string &downloadPath, const string &MD5,
+                           const string &resourceVersion, const string &resourceID,
+                           const string &des, const string &fileName) : storagePath(storagePath),
+                                                                        downloadPath(downloadPath),
+                                                                        MD5(MD5), resourceVersion(
+                resourceVersion), resourceID(resourceID), des(des), fileName(fileName) {}
+
 const string &DownloadInfo::getStoragePath() const {
     return storagePath;
 }
