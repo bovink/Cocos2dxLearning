@@ -76,6 +76,8 @@ private:
 
 };
 
+#include "sqlite3.h"
+
 class StartScene : public BaseScene {
 
 public:
@@ -84,9 +86,11 @@ public:
 
     bool init() override;
 
-    void createDataBase();
+    void openDatabase(sqlite3 **ppDb);
 
     void createTable();
+
+    void insertData();
 
 };
 

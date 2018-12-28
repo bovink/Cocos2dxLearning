@@ -6,7 +6,6 @@
 #include "cocos/ui/CocosGUI.h"
 #include <thread>
 #include <iostream>
-#include "sqlite3.h"
 
 using namespace ui;
 
@@ -334,21 +333,19 @@ bool StartScene::init() {
     btn->setLayoutParameter(btnP);
     btn->addClickEventListener([&](Ref *ref) {
 
-        createDataBase();
+        sqlite3 *pdb = NULL;
+        openDatabase(&pdb);
     });
     root->addChild(btn);
 
     return true;
 }
 
-void StartScene::createDataBase() {
-
-    sqlite3 *pdb;
-    pdb = NULL;
+void StartScene::openDatabase(sqlite3 **ppDb) {
 
     std::string dbPath = cocos2d::FileUtils::getInstance()->getWritablePath() + "mydatabase.db";
 
-    int result = sqlite3_open(dbPath.c_str(), &pdb);
+    int result = sqlite3_open(dbPath.c_str(), ppDb);
 
     if (result == SQLITE_OK)
         __CCLOGWITHFUNCTION("open database successful!");
@@ -357,5 +354,43 @@ void StartScene::createDataBase() {
 }
 
 void StartScene::createTable() {
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
 
+    // 创建表的sql语句：create table
+    string sql = "create table student(ID integer primary key autoincrement, name text, sex text)";
+
+    // 执行sql语句：sqlite3_exec
+    int ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+
+    if (ret != SQLITE_OK) {
+        __CCLOGWITHFUNCTION("create table failed");
+    }
+}
+
+void StartScene::insertData() {
+
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
+
+    // (1 , 'student1' , 'male')
+    string sql = "insert into student values(1, 'student1', 'male')";
+    int ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+    if (ret != SQLITE_OK) {
+        __CCLOGWITHFUNCTION("insert data failed!");
+    }
+
+    // (2 , 'student3' , 'female')
+    sql = "insert into student values(2, 'student2', 'female')";
+    ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+    if (ret != SQLITE_OK) {
+        __CCLOGWITHFUNCTION("insert data failed!");
+    }
+
+    // (3 , 'student3' , 'male')
+    sql = "insert into student values(3, 'student3', 'male')";
+    ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+    if (ret != SQLITE_OK) {
+        __CCLOGWITHFUNCTION("insert data failed!");
+    }
 }
