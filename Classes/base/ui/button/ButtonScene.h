@@ -94,6 +94,8 @@ public:
 
     void queryData();
 
+    void queryData2();
+
 };
 
 

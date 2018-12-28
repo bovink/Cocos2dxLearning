@@ -433,12 +433,36 @@ void StartScene::insertData() {
     }
 }
 
+// 回调函数
+int callback(void *para, int col_num, char **col_value, char **col_name) {
+    CCLOG("%s : 总共有 %d 个字段", (char *) para, col_num);
+
+    for (int i = 0; i < col_num; i++) {
+        CCLOG("%s = %s", col_name[i], col_value[i]);
+    }
+
+    CCLOG("------------------------------"); // 分隔符
+
+    return 0;
+}
+
 void StartScene::queryData() {
 
     sqlite3 *pdb = NULL;
     openDatabase(&pdb);
 
-    char** table; // 查询结果
+    // 查询语句
+    string sql = "select * from student";
+    int ret = sqlite3_exec(pdb, sql.c_str(), &callback, (void *) "para", nullptr);
+
+}
+
+void StartScene::queryData2() {
+
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
+
+    char **table; // 查询结果
     int r, c;     // 行数、列数
 
     string sql = "select * from student";
@@ -449,8 +473,8 @@ void StartScene::queryData() {
     // 第0行（0 ~ c-1），为字段名
     // 第1行（c ~ 2*c-1），第一条记录
     // ......
-    for(int i = 0; i <= r; i++) {
-        for(int j = 0; j < c; j++) {
+    for (int i = 0; i <= r; i++) {
+        for (int j = 0; j < c; j++) {
             CCLOG("%s", table[i * c + j]);
         }
         CCLOG("------------------------------");
