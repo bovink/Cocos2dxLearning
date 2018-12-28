@@ -6,6 +6,7 @@
 #include "cocos/ui/CocosGUI.h"
 #include <thread>
 #include <iostream>
+#include "sqlite3.h"
 
 using namespace ui;
 
@@ -326,12 +327,35 @@ bool StartScene::init() {
     text->setLayoutParameter(textP);
     root->addChild(text);
 
-    auto btn = Button::create("animationbuttonnormal.png","animationbuttonpressed.png");
+    auto btn = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
     auto btnP = LinearLayoutParameter::create();
     btnP->setMargin(Margin(0, 50, 0, 0));
     btnP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
     btn->setLayoutParameter(btnP);
+    btn->addClickEventListener([&](Ref *ref) {
+
+        createDataBase();
+    });
     root->addChild(btn);
 
     return true;
+}
+
+void StartScene::createDataBase() {
+
+    sqlite3 *pdb;
+    pdb = NULL;
+
+    std::string dbPath = cocos2d::FileUtils::getInstance()->getWritablePath() + "mydatabase.db";
+
+    int result = sqlite3_open(dbPath.c_str(), &pdb);
+
+    if (result == SQLITE_OK)
+        __CCLOGWITHFUNCTION("open database successful!");
+    else
+        __CCLOGWITHFUNCTION("open database failed!");
+}
+
+void StartScene::createTable() {
+
 }

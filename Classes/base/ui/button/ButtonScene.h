@@ -84,6 +84,10 @@ public:
 
     bool init() override;
 
+    void createDataBase();
+
+    void createTable();
+
 };
 
 
