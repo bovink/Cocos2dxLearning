@@ -92,6 +92,8 @@ public:
 
     void insertData();
 
+    void queryData();
+
 };
 
 

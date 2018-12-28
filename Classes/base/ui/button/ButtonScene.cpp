@@ -326,17 +326,55 @@ bool StartScene::init() {
     text->setLayoutParameter(textP);
     root->addChild(text);
 
-    auto btn = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
-    auto btnP = LinearLayoutParameter::create();
-    btnP->setMargin(Margin(0, 50, 0, 0));
-    btnP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
-    btn->setLayoutParameter(btnP);
-    btn->addClickEventListener([&](Ref *ref) {
+    auto createDatabaseBtn = Button::create("animationbuttonnormal.png",
+                                            "animationbuttonpressed.png");
+    createDatabaseBtn->setTitleText("打开数据库");
+    auto createDatabaseBtnP = LinearLayoutParameter::create();
+    createDatabaseBtnP->setMargin(Margin(0, 50, 0, 0));
+    createDatabaseBtnP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    createDatabaseBtn->setLayoutParameter(createDatabaseBtnP);
+    createDatabaseBtn->addClickEventListener([&](Ref *ref) {
 
         sqlite3 *pdb = NULL;
         openDatabase(&pdb);
     });
-    root->addChild(btn);
+    root->addChild(createDatabaseBtn);
+
+    auto createTableBtn = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
+    createTableBtn->setTitleText("创建表");
+    auto createTableBtnP = LinearLayoutParameter::create();
+    createTableBtnP->setMargin(Margin(0, 50, 0, 0));
+    createTableBtnP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    createTableBtn->setLayoutParameter(createTableBtnP);
+    createTableBtn->addClickEventListener([&](Ref *ref) {
+
+        createTable();
+    });
+    root->addChild(createTableBtn);
+
+    auto insertBtn = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
+    insertBtn->setTitleText("插入数据");
+    auto insertBtnP = LinearLayoutParameter::create();
+    insertBtnP->setMargin(Margin(0, 50, 0, 0));
+    insertBtnP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    insertBtn->setLayoutParameter(insertBtnP);
+    insertBtn->addClickEventListener([&](Ref *ref) {
+
+        insertData();
+    });
+    root->addChild(insertBtn);
+
+    auto queryBtn = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
+    queryBtn->setTitleText("查询数据");
+    auto queryBtnP = LinearLayoutParameter::create();
+    queryBtnP->setMargin(Margin(0, 50, 0, 0));
+    queryBtnP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    queryBtn->setLayoutParameter(queryBtnP);
+    queryBtn->addClickEventListener([&](Ref *ref) {
+
+        queryData();
+    });
+    root->addChild(queryBtn);
 
     return true;
 }
@@ -393,4 +431,31 @@ void StartScene::insertData() {
     if (ret != SQLITE_OK) {
         __CCLOGWITHFUNCTION("insert data failed!");
     }
+}
+
+void StartScene::queryData() {
+
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
+
+    char** table; // 查询结果
+    int r, c;     // 行数、列数
+
+    string sql = "select * from student";
+    sqlite3_get_table(pdb, sql.c_str(), &table, &r, &c, nullptr);
+
+    CCLOG("行数 is %d , 列数 is %d", r, c);
+
+    // 第0行（0 ~ c-1），为字段名
+    // 第1行（c ~ 2*c-1），第一条记录
+    // ......
+    for(int i = 0; i <= r; i++) {
+        for(int j = 0; j < c; j++) {
+            CCLOG("%s", table[i * c + j]);
+        }
+        CCLOG("------------------------------");
+    }
+
+    // 记得是否查询表
+    sqlite3_free_table(table);
 }
