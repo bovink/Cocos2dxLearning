@@ -33,6 +33,30 @@ DownloadService *DownloadService::getInstance(network::DownloaderHints hints) {
     return downloadService;
 }
 
+void DownloadService::startDownloadTask(DownloadInfo downloadInfo) {
+
+}
+
+////////////////////////////////////////下载工具类////////////////////////////////////////
+
+DownloadUtils::DownloadUtils() {
+
+}
+
+DownloadUtils *DownloadUtils::getInstance() {
+    if (downloadUtils == nullptr) {
+        downloadUtils = new DownloadUtils();
+    }
+    return downloadUtils;
+}
+
+void DownloadUtils::createPathIfNotExist(const string &dirPath) {
+    bool isPathExist =   FileUtils::getInstance()->isDirectoryExist(dirPath);
+    if (!isPathExist) {
+        FileUtils::getInstance()->createDirectory(dirPath);
+    }
+}
+
 ////////////////////////////////////////下载信息类////////////////////////////////////////
 const string &DownloadInfo::getStoragePath() const {
     return storagePath;

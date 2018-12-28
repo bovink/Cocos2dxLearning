@@ -7,11 +7,12 @@
 
 #include <string>
 #include "network/CCDownloader.h"
+#include "cocos2d.h"
 
 using namespace std;
 using namespace cocos2d;
 
-class DownloadHelper;
+class DownloadUtils;
 
 class DownloadInfo;
 
@@ -24,21 +25,34 @@ public:
 
     static DownloadService *getInstance(network::DownloaderHints hints);
 
+    void startDownloadTask(DownloadInfo downloadInfo);
+
 private:
 
     DownloadService();
 
     DownloadService(network::DownloaderHints hints);
 
-    static DownloadService* downloadService;
+    static DownloadService *downloadService = nullptr;
 
     unique_ptr<network::Downloader> downloader;
 };
 
 
 // 下载帮助类
-class DownloadHelper {
+class DownloadUtils {
 
+public:
+
+    static DownloadUtils *getInstance();
+
+    void createPathIfNotExist(const string &dirPath);
+
+private:
+
+    DownloadUtils();
+
+    static DownloadUtils *downloadUtils = nullptr;
 
 };
 
