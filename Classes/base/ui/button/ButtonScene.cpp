@@ -304,3 +304,34 @@ bool DownloadTestScene::init() {
 
     return true;
 }
+
+bool StartScene::init() {
+    if (!BaseScene::init()) {
+        return false;
+    }
+
+    auto root = Layout::create();
+    root->setLayoutType(Layout::Type::VERTICAL);
+    root->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+    root->setBackGroundColor(Color3B::WHITE);
+    root->setContentSize(_contentSize);
+    root->setPosition(Vec2::ZERO);
+    addChild(root);
+
+    auto text = Text::create("点击按钮观看视频", "FZLTXIHK_1.TTF", 26);
+    text->setColor(Color3B::BLACK);
+    auto textP = LinearLayoutParameter::create();
+    textP->setMargin(Margin(0, 350, 0, 0));
+    textP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    text->setLayoutParameter(textP);
+    root->addChild(text);
+
+    auto btn = Button::create("animationbuttonnormal.png","animationbuttonpressed.png");
+    auto btnP = LinearLayoutParameter::create();
+    btnP->setMargin(Margin(0, 50, 0, 0));
+    btnP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    btn->setLayoutParameter(btnP);
+    root->addChild(btn);
+
+    return true;
+}

@@ -76,5 +76,15 @@ private:
 
 };
 
+class StartScene : public BaseScene {
+
+public:
+
+    CREATE_FUNC(StartScene)
+
+    bool init() override;
+
+};
+
 
 #endif //PROJ_ANDROID_TESTBUTTONSCENE_H

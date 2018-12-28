@@ -112,6 +112,7 @@ void MainScene::initListData() {
     titles.push_back("SizeTest");
     titles.push_back("MarqueeText");
     titles.push_back("DownloadTest");
+    titles.push_back("StartScene");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -222,6 +223,10 @@ void MainScene::onItemClickEvent(Ref *ref) {
             break;
         case 17:
             scene = DownloadTestScene::create();
+            _director->pushScene(scene);
+            break;
+        case 18:
+            scene = StartScene::create();
             _director->pushScene(scene);
             break;
         default:
