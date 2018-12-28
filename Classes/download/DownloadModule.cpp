@@ -4,6 +4,9 @@
 
 #include "DownloadModule.h"
 
+DownloadService* DownloadService::downloadService = nullptr;
+DownloadUtils* DownloadUtils::downloadUtils = nullptr;
+
 DownloadService::DownloadService() {
 
     network::DownloaderHints hints;
