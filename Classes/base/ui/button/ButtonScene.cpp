@@ -408,7 +408,7 @@ bool StartScene::init() {
     return true;
 }
 
-void StartScene::initDownloadList() {
+void StartScene::initFakeNetworkData() {
     string fileName = sNameList[0];
     string storagePath = FileUtils::getInstance()->getWritablePath() + "Download/" + fileName;
     string downloadPath = urlChar;
@@ -432,7 +432,11 @@ void StartScene::checkDownloadResource() {
             continue;
         }
         // 需要下载
-        DownloadService::getInstance()->startDownloadTask(info);
+        if (info.getDownloadState() == 1 || info.getDownloadState() == -1) {
+            // 当资源处于未下载或者暂停下载时则开始下载数据
+
+            DownloadService::getInstance()->startDownloadTask(info);
+        }
 
 
 

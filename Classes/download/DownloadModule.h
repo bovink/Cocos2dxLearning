@@ -96,6 +96,10 @@ public:
 
     void setFileName(const string &fileName);
 
+    int getDownloadState() const;
+
+    void setDownloadState(int downloadState);
+
 private:
 
     string storagePath;
@@ -105,6 +109,7 @@ private:
     int resourceID;
     string des;
     string fileName;
+    int downloadState = -1;// 默认为未下载-1 未知状态为-2 下载中为0 暂停下载为1 下载完毕为2
 };
 
 

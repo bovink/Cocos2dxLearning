@@ -157,3 +157,11 @@ const string &DownloadInfo::getFileName() const {
 void DownloadInfo::setFileName(const string &fileName) {
     DownloadInfo::fileName = fileName;
 }
+
+int DownloadInfo::getDownloadState() const {
+    return downloadState;
+}
+
+void DownloadInfo::setDownloadState(int downloadState) {
+    DownloadInfo::downloadState = downloadState;
+}

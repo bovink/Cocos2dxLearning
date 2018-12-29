@@ -88,7 +88,8 @@ public:
 
     bool init() override;
 
-    void initDownloadList();
+    // 模拟从服务器获取的数据
+    void initFakeNetworkData();
 
     void checkDownloadResource();
 
