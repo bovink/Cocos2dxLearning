@@ -94,6 +94,31 @@ void DatabaseModule::queryData2(sqlite3 *pDb, string sql, char **table, int *r, 
     sqlite3_free_table(table);
 }
 
+void DatabaseModule::checkTableExist(sqlite3 *pDb, string name) {
+    char **table; // 查询结果
+    int r, c;     // 行数、列数
+
+    string sql = StringUtils::format(
+            "SELECT count(*) FROM sqlite_master WHERE type = \"table\" AND name = \"%s\"",
+            name.c_str());
+    sqlite3_get_table(pDb, sql.c_str(), &table, &r, &c, nullptr);
+
+    CCLOG("行数 is %d , 列数 is %d", r, c);
+
+    // 第0行（0 ~ c-1），为字段名
+    // 第1行（c ~ 2*c-1），第一条记录
+    // ......
+    for (int i = 0; i <= r; i++) {
+        for (int j = 0; j < c; j++) {
+            CCLOG("%s", table[i * c + j]);
+        }
+        CCLOG("------------------------------");
+    }
+
+    // 必须释放查询表
+    sqlite3_free_table(table);
+}
+
 void DatabaseModule::deleteData(sqlite3 *pDb, string sql) {
 
     // 删除第一条记录

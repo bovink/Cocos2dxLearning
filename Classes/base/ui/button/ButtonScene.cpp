@@ -346,6 +346,9 @@ bool StartScene::init() {
     createDatabaseBtn->setLayoutParameter(createDatabaseBtnP);
     createDatabaseBtn->addClickEventListener([&](Ref *ref) {
 
+        sqlite3 *pDb = NULL;
+        DatabaseModule::getInstance()->openDatabase(&pDb);
+        DatabaseModule::getInstance()->checkTableExist(pDb, "testb");
     });
     root->addChild(createDatabaseBtn);
 
@@ -357,6 +360,11 @@ bool StartScene::init() {
     createTableBtn->setLayoutParameter(createTableBtnP);
     createTableBtn->addClickEventListener([&](Ref *ref) {
 
+        sqlite3 *pDb = NULL;
+        DatabaseModule::getInstance()->openDatabase(&pDb);
+
+        string sql = "create table testb(ID integer primary key autoincrement, name text, sex text)";
+        DatabaseModule::getInstance()->createTable(pDb, sql);
     });
     root->addChild(createTableBtn);
 

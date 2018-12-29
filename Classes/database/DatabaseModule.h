@@ -22,6 +22,8 @@ public:
 
     void createTable(sqlite3 *pDb, string sql);
 
+    void checkTableExist(sqlite3 *pDb, string name);
+
     void insertData(sqlite3 *pDb, string sql);
 
     void queryData(sqlite3 *pDb, string sql);
