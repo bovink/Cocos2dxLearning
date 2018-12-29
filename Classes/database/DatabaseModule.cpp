@@ -68,27 +68,27 @@ void DatabaseModule::queryData(sqlite3 *pDb, string sql) {
     }
 }
 
-void DatabaseModule::queryData2(sqlite3 *pDb) {
+void DatabaseModule::queryData2(sqlite3 *pDb, string sql, char **table, int *r, int *c) {
 
-    char **table; // 查询结果
-    int r, c;     // 行数、列数
+//    char **table; // 查询结果
+//    int r, c;     // 行数、列数
 
-    string sql = "select * from student";
-    sqlite3_get_table(pDb, sql.c_str(), &table, &r, &c, nullptr);
+//    string sql = "select * from student";
+    sqlite3_get_table(pDb, sql.c_str(), &table, r, c, nullptr);
 
-    CCLOG("行数 is %d , 列数 is %d", r, c);
+//    CCLOG("行数 is %d , 列数 is %d", r, c);
+//
+//    // 第0行（0 ~ c-1），为字段名
+//    // 第1行（c ~ 2*c-1），第一条记录
+//    // ......
+//    for (int i = 0; i <= r; i++) {
+//        for (int j = 0; j < c; j++) {
+//            CCLOG("%s", table[i * c + j]);
+//        }
+//        CCLOG("------------------------------");
+//    }
 
-    // 第0行（0 ~ c-1），为字段名
-    // 第1行（c ~ 2*c-1），第一条记录
-    // ......
-    for (int i = 0; i <= r; i++) {
-        for (int j = 0; j < c; j++) {
-            CCLOG("%s", table[i * c + j]);
-        }
-        CCLOG("------------------------------");
-    }
-
-    // 记得是否查询表
+    // 必须释放查询表
     sqlite3_free_table(table);
 }
 
