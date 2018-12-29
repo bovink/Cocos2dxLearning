@@ -18,17 +18,17 @@ public:
 
     void openDatabase(sqlite3 **ppDb);
 
-    void createTable();
+    void createTable(sqlite3 *pDb);
 
-    void insertData();
+    void insertData(sqlite3 *pDb);
 
-    void queryData();
+    void queryData(sqlite3 *pDb);
 
-    void queryData2();
+    void queryData2(sqlite3 *pDb);
 
-    void deleteData();
+    void deleteData(sqlite3 *pDb);
 
-    void modifyData();
+    void modifyData(sqlite3 *pDb);
 };
 
 
