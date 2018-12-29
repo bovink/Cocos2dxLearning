@@ -3,3 +3,132 @@
 //
 
 #include "DatabaseModule.h"
+
+void DatabaseModule::openDatabase(sqlite3 **ppDb) {
+
+    string dbPath = FileUtils::getInstance()->getWritablePath() + "mydatabase.db";
+
+    int result = sqlite3_open(dbPath.c_str(), ppDb);
+
+    if (result == SQLITE_OK)
+        __CCLOGWITHFUNCTION("open database successful!");
+    else
+        __CCLOGWITHFUNCTION("open database failed!");
+
+}
+
+void DatabaseModule::createTable() {
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
+
+    // 创建表的sql语句：create table
+    string sql = "create table student(ID integer primary key autoincrement, name text, sex text)";
+
+    // 执行sql语句：sqlite3_exec
+    int ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+
+    if (ret != SQLITE_OK) {
+        __CCLOGWITHFUNCTION("create table failed");
+    }
+}
+
+void DatabaseModule::insertData() {
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
+
+    // (1 , 'student1' , 'male')
+    string sql = "insert into student values(1, 'student1', 'male')";
+    int ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+    if (ret != SQLITE_OK) {
+        __CCLOGWITHFUNCTION("insert data failed!");
+    }
+
+    // (2 , 'student3' , 'female')
+    sql = "insert into student values(2, 'student2', 'female')";
+    ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+    if (ret != SQLITE_OK) {
+        __CCLOGWITHFUNCTION("insert data failed!");
+    }
+
+    // (3 , 'student3' , 'male')
+    sql = "insert into student values(3, 'student3', 'male')";
+    ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+    if (ret != SQLITE_OK) {
+        __CCLOGWITHFUNCTION("insert data failed!");
+    }
+}
+
+// 回调函数
+int callback(void *para, int col_num, char **col_value, char **col_name) {
+    CCLOG("%s : 总共有 %d 个字段", (char *) para, col_num);
+
+    for (int i = 0; i < col_num; i++) {
+        CCLOG("%s = %s", col_name[i], col_value[i]);
+    }
+
+    CCLOG("------------------------------"); // 分隔符
+
+    return 0;
+}
+
+void DatabaseModule::queryData() {
+
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
+
+    // 查询语句
+    string sql = "select * from student";
+    int ret = sqlite3_exec(pdb, sql.c_str(), &callback, (void *) "para", nullptr);
+
+}
+
+void DatabaseModule::queryData2() {
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
+
+    char **table; // 查询结果
+    int r, c;     // 行数、列数
+
+    string sql = "select * from student";
+    sqlite3_get_table(pdb, sql.c_str(), &table, &r, &c, nullptr);
+
+    CCLOG("行数 is %d , 列数 is %d", r, c);
+
+    // 第0行（0 ~ c-1），为字段名
+    // 第1行（c ~ 2*c-1），第一条记录
+    // ......
+    for (int i = 0; i <= r; i++) {
+        for (int j = 0; j < c; j++) {
+            CCLOG("%s", table[i * c + j]);
+        }
+        CCLOG("------------------------------");
+    }
+
+    // 记得是否查询表
+    sqlite3_free_table(table);
+}
+
+void DatabaseModule::deleteData() {
+
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
+    // 删除第一条记录
+    string sql = "delete from student where ID = 1";
+    int ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+    if (ret != SQLITE_OK) {
+        CCLOG("delete data failed!");
+    }
+}
+
+void DatabaseModule::modifyData() {
+
+    sqlite3 *pdb = NULL;
+    openDatabase(&pdb);
+
+    // 修改第三条记录的 name 字段
+    string sql = "update student set name = 'hello' where ID = 3";
+    int ret = sqlite3_exec(pdb, sql.c_str(), nullptr, nullptr, nullptr);
+    if (ret != SQLITE_OK) {
+        CCLOG("update data failed!");
+    }
+}

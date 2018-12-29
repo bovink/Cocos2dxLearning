@@ -6,8 +6,29 @@
 #define PROJ_ANDROID_DATABASEMODULE_H
 
 
+#include "cocos2d.h"
+#include "sqlite3.h"
+
+USING_NS_CC;
+using namespace std;
+
 class DatabaseModule {
 
+public:
+
+    void openDatabase(sqlite3 **ppDb);
+
+    void createTable();
+
+    void insertData();
+
+    void queryData();
+
+    void queryData2();
+
+    void deleteData();
+
+    void modifyData();
 };
 
 
