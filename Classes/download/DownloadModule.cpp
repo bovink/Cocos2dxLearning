@@ -4,8 +4,8 @@
 
 #include "DownloadModule.h"
 
-DownloadService* DownloadService::downloadService = nullptr;
-DownloadUtils* DownloadUtils::downloadUtils = nullptr;
+DownloadService *DownloadService::downloadService = nullptr;
+DownloadUtils *DownloadUtils::downloadUtils = nullptr;
 
 ////////////////////////////////////////下载服务类////////////////////////////////////////
 DownloadService::DownloadService() {
@@ -66,9 +66,10 @@ void DownloadService::init() {
 }
 
 void DownloadService::startDownloadTask(const DownloadInfo &downloadInfo) {
-
+    DownloadUtils::getInstance()->createPathIfNotExist(downloadInfo.getStoragePath());
     downloader->createDownloadFileTask(downloadInfo.getDownloadPath(),
-                                       downloadInfo.getStoragePath(), downloadInfo.getFileName());
+                                       downloadInfo.getStoragePath() + downloadInfo.getFileName(),
+                                       downloadInfo.getFileName());
 }
 
 ////////////////////////////////////////下载工具类////////////////////////////////////////

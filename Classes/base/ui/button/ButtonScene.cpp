@@ -287,7 +287,7 @@ bool DownloadTestScene::init() {
     button->setPosition(_contentSize / 2);
     button->addClickEventListener([&](Ref *ref) {
         string fileName = sNameList[0];
-        string storagePath = FileUtils::getInstance()->getWritablePath() + "Download/" + fileName;
+        string storagePath = FileUtils::getInstance()->getWritablePath() + "Download/";
         string downloadPath = urlChar;
         string MD5 = "";
         int resourceVersion = 100;
@@ -301,6 +301,15 @@ bool DownloadTestScene::init() {
     });
     addChild(button);
 
+    auto path = FileUtils::getInstance()->getWritablePath() ;
+    std::vector<std::string> files;
+    FileUtils::getInstance()->listFilesRecursively(path, &files);
+    __CCLOGWITHFUNCTION("xxxxxxxxxxxxxxxxxxxx");
+    for (int i = 0; i < files.size(); ++i) {
+
+        __CCLOGWITHFUNCTION("%s", files.at(i).c_str());
+    }
+    __CCLOGWITHFUNCTION("xxxxxxxxxxxxxxxxxxxx");
 
     return true;
 }
