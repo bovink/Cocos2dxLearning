@@ -413,8 +413,18 @@ void StartScene::initDownloadList() {
 }
 
 void StartScene::checkDownloadResource() {
+    // 暂时不考虑离线模式
     for (int i = 0; i < downloadList.size(); ++i) {
-        //
+        DownloadInfo info = downloadList.at(i);
+        // 检查路径文件是否存在
+        bool needDownload = FileUtils::getInstance()->isFileExist(info.getStoragePath());
+        if (!needDownload) {
+            // 不需要下载，继续检测下一个下载数据
+            continue;
+        }
+        // 需要下载
+        DownloadService::getInstance()->startDownloadTask(info);
+
 
 
     }// 遍历下载列表
