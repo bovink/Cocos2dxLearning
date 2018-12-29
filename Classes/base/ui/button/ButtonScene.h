@@ -91,6 +91,9 @@ public:
     // 模拟从服务器获取的数据
     void initFakeNetworkData();
 
+    // 根据服务器获取的数据更新本地数据
+    void updateLocalData(DownloadInfo downloadInfo);
+
     void checkDownloadResource();
 
 private:

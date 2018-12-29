@@ -301,7 +301,7 @@ bool DownloadTestScene::init() {
     });
     addChild(button);
 
-    auto path = FileUtils::getInstance()->getWritablePath() ;
+    auto path = FileUtils::getInstance()->getWritablePath();
     std::vector<std::string> files;
     FileUtils::getInstance()->listFilesRecursively(path, &files);
     __CCLOGWITHFUNCTION("xxxxxxxxxxxxxxxxxxxx");
@@ -319,7 +319,7 @@ bool StartScene::init() {
         return false;
     }
 
-    initDownloadList();
+    initFakeNetworkData();
 
     auto root = Layout::create();
     root->setLayoutType(Layout::Type::VERTICAL);
@@ -410,7 +410,7 @@ bool StartScene::init() {
 
 void StartScene::initFakeNetworkData() {
     string fileName = sNameList[0];
-    string storagePath = FileUtils::getInstance()->getWritablePath() + "Download/" + fileName;
+    string storagePath = FileUtils::getInstance()->getWritablePath() + "Download/";
     string downloadPath = urlChar;
     string MD5 = "";
     int resourceVersion = 100;
@@ -418,7 +418,12 @@ void StartScene::initFakeNetworkData() {
     string des = "下载测试描述";
     DownloadInfo downloadInfo = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
                                              resourceID, des, fileName);
-    downloadList.push_back(downloadInfo);
+//    downloadList.push_back(downloadInfo);
+    updateLocalData(downloadInfo);
+}
+
+void StartScene::updateLocalData(DownloadInfo downloadInfo) {
+
 }
 
 void StartScene::checkDownloadResource() {
@@ -437,7 +442,6 @@ void StartScene::checkDownloadResource() {
 
             DownloadService::getInstance()->startDownloadTask(info);
         }
-
 
 
     }// 遍历下载列表
