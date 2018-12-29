@@ -17,10 +17,10 @@ void DatabaseModule::openDatabase(sqlite3 **ppDb) {
 
 }
 
-void DatabaseModule::createTable(sqlite3 *pDb) {
+void DatabaseModule::createTable(sqlite3 *pDb, string sql) {
 
     // 创建表的sql语句：create table
-    string sql = "create table student(ID integer primary key autoincrement, name text, sex text)";
+//    string sql = "create table student(ID integer primary key autoincrement, name text, sex text)";
 
     // 执行sql语句：sqlite3_exec
     int ret = sqlite3_exec(pDb, sql.c_str(), nullptr, nullptr, nullptr);
@@ -30,28 +30,17 @@ void DatabaseModule::createTable(sqlite3 *pDb) {
     }
 }
 
-void DatabaseModule::insertData(sqlite3 *pDb) {
+void DatabaseModule::insertData(sqlite3 *pDb, string sql) {
 
     // (1 , 'student1' , 'male')
-    string sql = "insert into student values(1, 'student1', 'male')";
+//    string sql = "insert into student values(1, 'student1', 'male')";
+
     int ret = sqlite3_exec(pDb, sql.c_str(), nullptr, nullptr, nullptr);
+
     if (ret != SQLITE_OK) {
         __CCLOGWITHFUNCTION("insert data failed!");
     }
 
-    // (2 , 'student3' , 'female')
-    sql = "insert into student values(2, 'student2', 'female')";
-    ret = sqlite3_exec(pDb, sql.c_str(), nullptr, nullptr, nullptr);
-    if (ret != SQLITE_OK) {
-        __CCLOGWITHFUNCTION("insert data failed!");
-    }
-
-    // (3 , 'student3' , 'male')
-    sql = "insert into student values(3, 'student3', 'male')";
-    ret = sqlite3_exec(pDb, sql.c_str(), nullptr, nullptr, nullptr);
-    if (ret != SQLITE_OK) {
-        __CCLOGWITHFUNCTION("insert data failed!");
-    }
 }
 
 // 回调函数
@@ -67,12 +56,16 @@ int callback(void *para, int col_num, char **col_value, char **col_name) {
     return 0;
 }
 
-void DatabaseModule::queryData(sqlite3 *pDb) {
+void DatabaseModule::queryData(sqlite3 *pDb, string sql) {
 
     // 查询语句
-    string sql = "select * from student";
+//    string sql = "select * from student";
+
     int ret = sqlite3_exec(pDb, sql.c_str(), &callback, (void *) "para", nullptr);
 
+    if (ret != SQLITE_OK) {
+        CCLOG("query data failed!");
+    }
 }
 
 void DatabaseModule::queryData2(sqlite3 *pDb) {
@@ -99,22 +92,26 @@ void DatabaseModule::queryData2(sqlite3 *pDb) {
     sqlite3_free_table(table);
 }
 
-void DatabaseModule::deleteData(sqlite3 *pDb) {
+void DatabaseModule::deleteData(sqlite3 *pDb, string sql) {
 
     // 删除第一条记录
-    string sql = "delete from student where ID = 1";
+//    string sql = "delete from student where ID = 1";
+
     int ret = sqlite3_exec(pDb, sql.c_str(), nullptr, nullptr, nullptr);
+
     if (ret != SQLITE_OK) {
         CCLOG("delete data failed!");
     }
 }
 
-void DatabaseModule::modifyData(sqlite3 *pDb) {
+void DatabaseModule::modifyData(sqlite3 *pDb, string sql) {
 
 
     // 修改第三条记录的 name 字段
-    string sql = "update student set name = 'hello' where ID = 3";
+//    string sql = "update student set name = 'hello' where ID = 3";
+
     int ret = sqlite3_exec(pDb, sql.c_str(), nullptr, nullptr, nullptr);
+
     if (ret != SQLITE_OK) {
         CCLOG("update data failed!");
     }
