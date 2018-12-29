@@ -76,6 +76,8 @@ private:
 
 };
 
+#include "DatabaseModule.h"
+
 #include "sqlite3.h"
 
 class StartScene : public BaseScene {
@@ -86,7 +88,13 @@ public:
 
     bool init() override;
 
+    void initDownloadList();
 
+    void checkDownloadResource();
+
+private:
+
+    vector<DownloadInfo> downloadList;
 };
 
 

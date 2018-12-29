@@ -310,6 +310,8 @@ bool StartScene::init() {
         return false;
     }
 
+    initDownloadList();
+
     auto root = Layout::create();
     root->setLayoutType(Layout::Type::VERTICAL);
     root->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
@@ -394,7 +396,27 @@ bool StartScene::init() {
     root->addChild(modifyBtn);
 
 
-
     return true;
 }
 
+void StartScene::initDownloadList() {
+    string fileName = sNameList[0];
+    string storagePath = FileUtils::getInstance()->getWritablePath() + "Download/" + fileName;
+    string downloadPath = urlChar;
+    string MD5 = "";
+    int resourceVersion = 100;
+    int resourceID = 1;
+    string des = "下载测试描述";
+    DownloadInfo downloadInfo = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
+                                             resourceID, des, fileName);
+    downloadList.push_back(downloadInfo);
+}
+
+void StartScene::checkDownloadResource() {
+    for (int i = 0; i < downloadList.size(); ++i) {
+        //
+
+
+    }// 遍历下载列表
+
+}
