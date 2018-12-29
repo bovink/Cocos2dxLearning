@@ -7,6 +7,7 @@
 DownloadService* DownloadService::downloadService = nullptr;
 DownloadUtils* DownloadUtils::downloadUtils = nullptr;
 
+////////////////////////////////////////下载服务类////////////////////////////////////////
 DownloadService::DownloadService() {
 
     network::DownloaderHints hints;
