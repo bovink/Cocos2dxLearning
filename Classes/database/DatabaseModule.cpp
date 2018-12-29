@@ -4,6 +4,8 @@
 
 #include "DatabaseModule.h"
 
+DatabaseModule *DatabaseModule::databaseModule = nullptr;
+
 void DatabaseModule::openDatabase(sqlite3 **ppDb) {
 
     string dbPath = FileUtils::getInstance()->getWritablePath() + "mydatabase.db";
@@ -115,4 +117,15 @@ void DatabaseModule::modifyData(sqlite3 *pDb, string sql) {
     if (ret != SQLITE_OK) {
         CCLOG("update data failed!");
     }
+}
+
+DatabaseModule *DatabaseModule::getInstance() {
+    if (databaseModule == nullptr) {
+        databaseModule = new DatabaseModule();
+    }
+    return databaseModule;
+}
+
+DatabaseModule::DatabaseModule() {
+
 }

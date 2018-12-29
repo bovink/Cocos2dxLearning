@@ -16,6 +16,8 @@ class DatabaseModule {
 
 public:
 
+    static DatabaseModule *getInstance();
+
     void openDatabase(sqlite3 **ppDb);
 
     void createTable(sqlite3 *pDb, string sql);
@@ -29,6 +31,12 @@ public:
     void deleteData(sqlite3 *pDb, string sql);
 
     void modifyData(sqlite3 *pDb, string sql);
+
+private:
+
+    DatabaseModule();
+
+    static DatabaseModule *databaseModule;
 };
 
 
