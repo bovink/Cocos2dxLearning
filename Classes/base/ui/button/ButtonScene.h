@@ -86,19 +86,6 @@ public:
 
     bool init() override;
 
-    void openDatabase(sqlite3 **ppDb);
-
-    void createTable();
-
-    void insertData();
-
-    void queryData();
-
-    void queryData2();
-
-    void deleteData();
-
-    void modifyData();
 
 };
 
