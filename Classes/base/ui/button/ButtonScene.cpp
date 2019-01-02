@@ -450,21 +450,27 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
 
 
     // 根据resourceId搜索数据是否存在，不存在则插入数据，状态为-1
-    string insertSql = "INSERT INTO resource (storagePath, downloadPath, MD5, resourceVersion, resourceID, des, fileName, downloadState) "
-            "VALUES ('Resource/Course/Course1/', "
-            "'http://video.dolphinmedia.cn/ef073948b5ba44d4b9691f2d9820b38b/08ac918f73e8434380388a8e664dbadf-5cc937797266cd387c1d7b65162819dd-ld.mp4', "
-            "'unknow', "
-            "100, "
-            "1, "
-            "'测试资源', "
-            "'video.mp4', "
-            "-1)";
-//    DatabaseModule::getInstance()->insertData(pDb, insertSql);
+    string selectSql = StringUtils::format(
+            "SELECT resourceVersion FROM resource WHERE resourceID = %d",
+            downloadInfo.getResourceID());
 
-    string selectSql = "SELECT * FROM resource WHERE resourceID = 1";
     char **table;
     int r, c;
     DatabaseModule::getInstance()->queryData2(pDb, selectSql, &table, &r, &c);
+    if (r == 0 && c == 0) {
+        // 数据不存在，直接插入数据
+
+        string insertSql = "INSERT INTO resource (storagePath, downloadPath, MD5, resourceVersion, resourceID, des, fileName, downloadState) "
+                "VALUES ('Resource/Course/Course1/', "
+                "'http://video.dolphinmedia.cn/ef073948b5ba44d4b9691f2d9820b38b/08ac918f73e8434380388a8e664dbadf-5cc937797266cd387c1d7b65162819dd-ld.mp4', "
+                "'unknow', "
+                "100, "
+                "1, "
+                "'测试资源', "
+                "'video.mp4', "
+                "-1)";
+        DatabaseModule::getInstance()->insertData(pDb, insertSql);
+    }
 
     CCLOG("行数 is %d , 列数 is %d", r, c);
 
