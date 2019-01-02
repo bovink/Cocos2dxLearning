@@ -470,6 +470,25 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
                 "'video.mp4', "
                 "-1)";
         DatabaseModule::getInstance()->insertData(pDb, insertSql);
+    } else {
+        // 数据存在，对比资源版本，如果新数据的resourceVersion要大，则覆盖数据，状态为-1
+
+        int resourceVersion = stoi(table[r * c]);
+        if (downloadInfo.getResourceVersion() > resourceVersion) {
+            // 修改数据
+            string updateSql = "UPDATE resource SET "
+                    "storagePath = 'Resource/Course/Course1/', "
+                    "downloadPath = 'http://video.dolphinmedia.cn/ef073948b5ba44d4b9691f2d9820b38b/08ac918f73e8434380388a8e664dbadf-5cc937797266cd387c1d7b65162819dd-ld.mp4', "
+                    "MD5 = 'unknow', "
+                    "resourceVersion = 100, "
+                    "des = '测试资源', "
+                    "fileName = 'video.mp4', "
+                    "downloadState = -1 "
+                    "WHERE resourceID = 1";
+
+            DatabaseModule::getInstance()->modifyData(pDb, updateSql);
+        }
+
     }
 
     CCLOG("行数 is %d , 列数 is %d", r, c);
@@ -488,10 +507,8 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
     sqlite3_free_table(table);
 
 
-    // 如果存在则先对比资源版本，如果新数据的resourceVersion要大，则覆盖数据，状态为-1
     // 初始化本地私有变量
 
-    // 如果相同资源版本，则检测下载状态，如果不为0也不为2（下载中和下载完成），则开始下载数据
 }
 
 void StartScene::checkDownloadResource() {
