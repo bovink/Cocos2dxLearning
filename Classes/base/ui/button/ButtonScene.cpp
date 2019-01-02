@@ -439,8 +439,15 @@ void StartScene::initFakeNetworkData() {
 void StartScene::updateLocalData(DownloadInfo downloadInfo) {
 
     sqlite3 *pDb = NULL;
-    DatabaseModule::getInstance()->openDatabase(&pDb, "resource");
-    // 检查表是否存在
+    DatabaseModule::getInstance()->openDatabase(&pDb, "resourceDb");
+    // 检查表是否存在，不存在则创建表
+    if (!DatabaseModule::getInstance()->checkTableExist(pDb, "resource")) {
+
+        string sql = "create table resource(ID integer primary key autoincrement, storagePath text, downloadPath text, MD5 text, resourceVersion integer, "
+                "resourceID integer, des text, fileName text, downloadState integer)";
+        DatabaseModule::getInstance()->createTable(pDb, sql);
+    }
+
 
     // 根据resourceId搜索数据是否存在，不存在则插入数据，状态为-1
 
