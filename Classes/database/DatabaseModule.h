@@ -22,7 +22,7 @@ public:
 
     void createTable(sqlite3 *pDb, string sql);
 
-    void checkTableExist(sqlite3 *pDb, string name);
+    bool checkTableExist(sqlite3 *pDb, string name);
 
     void insertData(sqlite3 *pDb, string sql);
 

@@ -94,7 +94,7 @@ void DatabaseModule::queryData2(sqlite3 *pDb, string sql, char **table, int *r, 
     sqlite3_free_table(table);
 }
 
-void DatabaseModule::checkTableExist(sqlite3 *pDb, string name) {
+bool DatabaseModule::checkTableExist(sqlite3 *pDb, string name) {
     char **table; // 查询结果
     int r, c;     // 行数、列数
 
@@ -114,9 +114,12 @@ void DatabaseModule::checkTableExist(sqlite3 *pDb, string name) {
         }
         CCLOG("------------------------------");
     }
+    CCLOG("表数量:%s", table[r * c]);
+    string s = StringUtils::format("%s", table[r * c]);
 
     // 必须释放查询表
     sqlite3_free_table(table);
+    return s == "1";
 }
 
 void DatabaseModule::deleteData(sqlite3 *pDb, string sql) {

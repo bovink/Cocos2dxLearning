@@ -348,7 +348,13 @@ bool StartScene::init() {
 
         sqlite3 *pDb = NULL;
         DatabaseModule::getInstance()->openDatabase(&pDb);
-        DatabaseModule::getInstance()->checkTableExist(pDb, "testb");
+        if (DatabaseModule::getInstance()->checkTableExist(pDb, "testm")) {
+
+            __CCLOGWITHFUNCTION("存在");
+        } else {
+            __CCLOGWITHFUNCTION("不存在");
+
+        }
     });
     root->addChild(createDatabaseBtn);
 
@@ -363,7 +369,7 @@ bool StartScene::init() {
         sqlite3 *pDb = NULL;
         DatabaseModule::getInstance()->openDatabase(&pDb);
 
-        string sql = "create table testb(ID integer primary key autoincrement, name text, sex text)";
+        string sql = "create table testm(ID integer primary key autoincrement, name text, sex text)";
         DatabaseModule::getInstance()->createTable(pDb, sql);
     });
     root->addChild(createTableBtn);
