@@ -18,7 +18,7 @@ public:
 
     static DatabaseModule *getInstance();
 
-    void openDatabase(sqlite3 **ppDb);
+    void openDatabase(sqlite3 **ppDb, string databaseName);
 
     void createTable(sqlite3 *pDb, string sql);
 

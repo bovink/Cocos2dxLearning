@@ -6,9 +6,9 @@
 
 DatabaseModule *DatabaseModule::databaseModule = nullptr;
 
-void DatabaseModule::openDatabase(sqlite3 **ppDb) {
+void DatabaseModule::openDatabase(sqlite3 **ppDb, string databaseName) {
 
-    string dbPath = FileUtils::getInstance()->getWritablePath() + "mydatabase.db";
+    string dbPath = FileUtils::getInstance()->getWritablePath() + databaseName + ".db";
 
     int result = sqlite3_open(dbPath.c_str(), ppDb);
 

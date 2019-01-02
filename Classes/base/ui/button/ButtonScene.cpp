@@ -347,7 +347,7 @@ bool StartScene::init() {
     createDatabaseBtn->addClickEventListener([&](Ref *ref) {
 
         sqlite3 *pDb = NULL;
-        DatabaseModule::getInstance()->openDatabase(&pDb);
+        DatabaseModule::getInstance()->openDatabase(&pDb, "database");
         if (DatabaseModule::getInstance()->checkTableExist(pDb, "testm")) {
 
             __CCLOGWITHFUNCTION("存在");
@@ -367,7 +367,7 @@ bool StartScene::init() {
     createTableBtn->addClickEventListener([&](Ref *ref) {
 
         sqlite3 *pDb = NULL;
-        DatabaseModule::getInstance()->openDatabase(&pDb);
+        DatabaseModule::getInstance()->openDatabase(&pDb, "database");
 
         string sql = "create table testm(ID integer primary key autoincrement, name text, sex text)";
         DatabaseModule::getInstance()->createTable(pDb, sql);
