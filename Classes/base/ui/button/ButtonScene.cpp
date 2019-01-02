@@ -438,6 +438,17 @@ void StartScene::initFakeNetworkData() {
 
 void StartScene::updateLocalData(DownloadInfo downloadInfo) {
 
+    sqlite3 *pDb = NULL;
+    DatabaseModule::getInstance()->openDatabase(&pDb, "resource");
+    // 检查表是否存在
+
+    // 根据resourceId搜索数据是否存在，不存在则插入数据，状态为-1
+
+
+    // 如果存在则先对比资源版本，如果新数据的resourceVersion要大，则覆盖数据，状态为-1
+    // 初始化本地私有变量
+
+    // 如果相同资源版本，则检测下载状态，如果不为0也不为2（下载中和下载完成），则开始下载数据
 }
 
 void StartScene::checkDownloadResource() {
@@ -451,7 +462,7 @@ void StartScene::checkDownloadResource() {
             continue;
         }
         // 需要下载
-        if (info.getDownloadState() == 1 || info.getDownloadState() == -1) {
+        if (info.getDownloadState() != 0 && info.getDownloadState() != 2) {
             // 当资源处于未下载或者暂停下载时则开始下载数据
 
             DownloadService::getInstance()->startDownloadTask(info);
