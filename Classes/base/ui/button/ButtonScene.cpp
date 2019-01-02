@@ -451,7 +451,7 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
 
     // 根据resourceId搜索数据是否存在，不存在则插入数据，状态为-1
     string selectSql = StringUtils::format(
-            "SELECT resourceVersion FROM resource WHERE resourceID = %d",
+            "SELECT resourceVersion, downloadState FROM resource WHERE resourceID = %d",
             downloadInfo.getResourceID());
 
     char **table;
@@ -470,10 +470,12 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
                 "'video.mp4', "
                 "-1)";
         DatabaseModule::getInstance()->insertData(pDb, insertSql);
+        // 下载数据
+        // 同时更新数据的下载状态
     } else {
         // 数据存在，对比资源版本，如果新数据的resourceVersion要大，则覆盖数据，状态为-1
 
-        int resourceVersion = stoi(table[r * c]);
+        int resourceVersion = stoi(table[r * c - 1]);
         if (downloadInfo.getResourceVersion() > resourceVersion) {
             // 修改数据
             string updateSql = "UPDATE resource SET "
@@ -487,6 +489,17 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
                     "WHERE resourceID = 1";
 
             DatabaseModule::getInstance()->modifyData(pDb, updateSql);
+            // 下载数据
+            // 同时更新数据的下载状态
+        }else {
+            // 根据本地数据的状态来决定是否下载
+            int downloadState = stoi(table[r * c]);
+            if (downloadState != 0 && downloadState != 2) {
+                // 下载数据
+                // 同时更新数据的下载状态
+
+            }
+
         }
 
     }
