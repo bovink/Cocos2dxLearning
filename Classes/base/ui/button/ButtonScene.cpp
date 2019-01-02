@@ -471,6 +471,7 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
                 "-1)";
         DatabaseModule::getInstance()->insertData(pDb, insertSql);
         // 下载数据
+        checkDownloadResource(downloadInfo);
         // 同时更新数据的下载状态
     } else {
         // 数据存在，对比资源版本，如果新数据的resourceVersion要大，则覆盖数据，状态为-1
@@ -490,15 +491,13 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
 
             DatabaseModule::getInstance()->modifyData(pDb, updateSql);
             // 下载数据
+            checkDownloadResource(downloadInfo);
             // 同时更新数据的下载状态
-        }else {
+        } else {
             // 根据本地数据的状态来决定是否下载
             int downloadState = stoi(table[r * c]);
-            if (downloadState != 0 && downloadState != 2) {
-                // 下载数据
-                // 同时更新数据的下载状态
-
-            }
+            checkDownloadResource(downloadInfo, downloadState);
+            // 同时更新数据的下载状态
 
         }
 
@@ -524,24 +523,10 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
 
 }
 
-void StartScene::checkDownloadResource() {
-    // 暂时不考虑离线模式
-    for (int i = 0; i < downloadList.size(); ++i) {
-        DownloadInfo info = downloadList.at(i);
-        // 检查路径文件是否存在
-        bool needDownload = FileUtils::getInstance()->isFileExist(info.getStoragePath());
-        if (!needDownload) {
-            // 不需要下载，继续检测下一个下载数据
-            continue;
-        }
-        // 需要下载
-        if (info.getDownloadState() != 0 && info.getDownloadState() != 2) {
-            // 当资源处于未下载或者暂停下载时则开始下载数据
+void StartScene::checkDownloadResource(DownloadInfo info, int downloadState) {
+    // 当资源处于未下载或者暂停下载时则开始下载数据
+    if (downloadState != 0 && downloadState != 2) {
 
-            DownloadService::getInstance()->startDownloadTask(info);
-        }
-
-
-    }// 遍历下载列表
-
+        DownloadService::getInstance()->startDownloadTask(info);
+    }
 }

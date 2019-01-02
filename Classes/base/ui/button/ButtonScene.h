@@ -94,7 +94,7 @@ public:
     // 根据服务器获取的数据更新本地数据
     void updateLocalData(DownloadInfo downloadInfo);
 
-    void checkDownloadResource();
+    void checkDownloadResource(DownloadInfo info, int downloadState = -1);
 
 private:
 
