@@ -70,13 +70,13 @@ void DatabaseModule::queryData(sqlite3 *pDb, string sql) {
     }
 }
 
-void DatabaseModule::queryData2(sqlite3 *pDb, string sql, char **table, int *r, int *c) {
+void DatabaseModule::queryData2(sqlite3 *pDb, string sql, char ***table, int *r, int *c) {
 
 //    char **table; // 查询结果
 //    int r, c;     // 行数、列数
 
 //    string sql = "select * from student";
-    sqlite3_get_table(pDb, sql.c_str(), &table, r, c, nullptr);
+    sqlite3_get_table(pDb, sql.c_str(), table, r, c, nullptr);
 
 //    CCLOG("行数 is %d , 列数 is %d", r, c);
 //
@@ -90,8 +90,8 @@ void DatabaseModule::queryData2(sqlite3 *pDb, string sql, char **table, int *r, 
 //        CCLOG("------------------------------");
 //    }
 
-    // 必须释放查询表
-    sqlite3_free_table(table);
+//    // 必须释放查询表
+//    sqlite3_free_table(table);
 }
 
 bool DatabaseModule::checkTableExist(sqlite3 *pDb, string name) {

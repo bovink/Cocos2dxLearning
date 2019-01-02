@@ -28,7 +28,7 @@ public:
 
     void queryData(sqlite3 *pDb, string sql);
 
-    void queryData2(sqlite3 *pDb, string sql, char **table, int *r, int *c);
+    void queryData2(sqlite3 *pDb, string sql, char ***table, int *r, int *c);
 
     void deleteData(sqlite3 *pDb, string sql);
 

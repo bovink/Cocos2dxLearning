@@ -459,10 +459,27 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
             "'测试资源', "
             "'video.mp4', "
             "-1)";
-    DatabaseModule::getInstance()->insertData(pDb, insertSql);
+//    DatabaseModule::getInstance()->insertData(pDb, insertSql);
 
     string selectSql = "SELECT * FROM resource WHERE resourceID = 1";
-    DatabaseModule::getInstance()->queryData(pDb, selectSql);
+    char **table;
+    int r, c;
+    DatabaseModule::getInstance()->queryData2(pDb, selectSql, &table, &r, &c);
+
+    CCLOG("行数 is %d , 列数 is %d", r, c);
+
+    // 第0行（0 ~ c-1），为字段名
+    // 第1行（c ~ 2*c-1），第一条记录
+    // ......
+    for (int i = 0; i <= r; i++) {
+        for (int j = 0; j < c; j++) {
+            CCLOG("%s", table[i * c + j]);
+        }
+        CCLOG("------------------------------");
+    }
+
+    // 必须释放查询表
+    sqlite3_free_table(table);
 
 
     // 如果存在则先对比资源版本，如果新数据的resourceVersion要大，则覆盖数据，状态为-1
