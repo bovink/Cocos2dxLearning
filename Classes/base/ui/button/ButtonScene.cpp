@@ -443,9 +443,7 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
     // 检查表是否存在，不存在则创建表
     if (!DatabaseModule::getInstance()->checkTableExist(pDb, "resource")) {
 
-        string sql = "create table resource(ID integer primary key autoincrement, storagePath text, downloadPath text, MD5 text, resourceVersion integer, "
-                "resourceID integer, des text, fileName text, downloadState integer)";
-        DatabaseModule::getInstance()->createTable(pDb, sql);
+        createTable(pDb);
     }
 
 
@@ -529,4 +527,11 @@ void StartScene::checkDownloadResource(DownloadInfo info, int downloadState) {
 
         DownloadService::getInstance()->startDownloadTask(info);
     }
+}
+
+void StartScene::createTable(sqlite3* pDb) {
+
+    string sql = "create table resource(ID integer primary key autoincrement, storagePath text, downloadPath text, MD5 text, resourceVersion integer, "
+            "resourceID integer, des text, fileName text, downloadState integer)";
+    DatabaseModule::getInstance()->createTable(pDb, sql);
 }

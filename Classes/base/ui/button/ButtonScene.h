@@ -96,6 +96,8 @@ public:
 
     void checkDownloadResource(DownloadInfo info, int downloadState = -1);
 
+    void createTable(sqlite3* pDb);
+
 private:
 
     vector<DownloadInfo> downloadList;
