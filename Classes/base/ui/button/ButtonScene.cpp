@@ -270,10 +270,11 @@ void MarqueeTextTest::printSomething() {
     }
 }
 
-static const char *urlChar =
-        "http://video.dolphinmedia.cn/ef073948b5ba44d4b9691f2d9820b38b/08ac918f73e8434380388a8e664dbadf-5cc937797266cd387c1d7b65162819dd-ld.mp4";
+static const char *urlChar[] = {"http://dl.ppt123.net/pptbj/51/20181115/scivdgiyjht.jpg",
+                                "http://img03.tooopen.com/uploadfile/downs/images/20110714/sy_20110714135215645030.jpg"};
 
-static const char *sNameList[] = {"1.mp4", "2.mp4", "3.mp4"};
+
+static const char *sNameList[] = {"1.jpg", "2.jpg"};
 
 bool DownloadTestScene::init() {
     if (!BaseScene::init()) {
@@ -288,7 +289,7 @@ bool DownloadTestScene::init() {
     button->addClickEventListener([&](Ref *ref) {
         string fileName = sNameList[0];
         string storagePath = FileUtils::getInstance()->getWritablePath() + "Download/";
-        string downloadPath = urlChar;
+        string downloadPath = urlChar[0];
         string MD5 = "";
         int resourceVersion = 100;
         int resourceID = 1;
@@ -319,7 +320,6 @@ bool StartScene::init() {
         return false;
     }
 
-    initFakeNetworkData();
 
     auto root = Layout::create();
     root->setLayoutType(Layout::Type::VERTICAL);
@@ -339,38 +339,25 @@ bool StartScene::init() {
 
     auto createDatabaseBtn = Button::create("animationbuttonnormal.png",
                                             "animationbuttonpressed.png");
-    createDatabaseBtn->setTitleText("打开数据库");
+    createDatabaseBtn->setTitleText("下载图片");
     auto createDatabaseBtnP = LinearLayoutParameter::create();
     createDatabaseBtnP->setMargin(Margin(0, 50, 0, 0));
     createDatabaseBtnP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
     createDatabaseBtn->setLayoutParameter(createDatabaseBtnP);
     createDatabaseBtn->addClickEventListener([&](Ref *ref) {
 
-        sqlite3 *pDb = NULL;
-        DatabaseModule::getInstance()->openDatabase(&pDb, "database");
-        if (DatabaseModule::getInstance()->checkTableExist(pDb, "testm")) {
-
-            __CCLOGWITHFUNCTION("存在");
-        } else {
-            __CCLOGWITHFUNCTION("不存在");
-
-        }
+        initFakeNetworkData();
     });
     root->addChild(createDatabaseBtn);
 
     auto createTableBtn = Button::create("animationbuttonnormal.png", "animationbuttonpressed.png");
-    createTableBtn->setTitleText("创建表");
+    createTableBtn->setTitleText("显示图片");
     auto createTableBtnP = LinearLayoutParameter::create();
     createTableBtnP->setMargin(Margin(0, 50, 0, 0));
     createTableBtnP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
     createTableBtn->setLayoutParameter(createTableBtnP);
     createTableBtn->addClickEventListener([&](Ref *ref) {
 
-        sqlite3 *pDb = NULL;
-        DatabaseModule::getInstance()->openDatabase(&pDb, "database");
-
-        string sql = "create table testm(ID integer primary key autoincrement, name text, sex text)";
-        DatabaseModule::getInstance()->createTable(pDb, sql);
     });
     root->addChild(createTableBtn);
 
@@ -415,6 +402,10 @@ bool StartScene::init() {
     modifyBtn->setLayoutParameter(modifyBtnP);
     modifyBtn->addClickEventListener([&](Ref *ref) {
 
+        string sql = "SELECT * FROM resource WHERE resourceID >= 6";
+        sqlite3* pDb = NULL;
+        DatabaseModule::getInstance()->openDatabase(&pDb, "resourceDb");
+        DatabaseModule::getInstance()->queryData(pDb, sql);
     });
     root->addChild(modifyBtn);
 
@@ -423,17 +414,36 @@ bool StartScene::init() {
 }
 
 void StartScene::initFakeNetworkData() {
+    // 数据1
     string fileName = sNameList[0];
     string storagePath = FileUtils::getInstance()->getWritablePath() + "Download/";
-    string downloadPath = urlChar;
+    string downloadPath = urlChar[0];
     string MD5 = "";
     int resourceVersion = 100;
-    int resourceID = 3;
-    string des = "下载测试描述";
-    DownloadInfo downloadInfo = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
-                                             resourceID, des, fileName);
-//    downloadList.push_back(downloadInfo);
-    updateLocalData(downloadInfo);
+    int resourceID = 6;
+    string des = "图片1";
+    DownloadInfo info1 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
+                                      resourceID, des, fileName);
+
+    downloadList.push_back(info1);
+
+    // 数据2
+    fileName = sNameList[1];
+    storagePath = FileUtils::getInstance()->getWritablePath() + "Download/";
+    downloadPath = urlChar[1];
+    MD5 = "";
+    resourceVersion = 100;
+    resourceID = 7;
+    des = "图片2";
+    DownloadInfo info2 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
+                                      resourceID, des, fileName);
+
+    downloadList.push_back(info2);
+    for (int i = 0; i < downloadList.size(); ++i) {
+        DownloadInfo info = downloadList.at(i);
+
+        updateLocalData(info);
+    }
 }
 
 void StartScene::updateLocalData(DownloadInfo downloadInfo) {
