@@ -39,6 +39,12 @@ DownloadService *DownloadService::getInstance(network::DownloaderHints hints) {
     return downloadService;
 }
 
+void DownloadService::stopAllTasks() {
+
+    delete this;
+    downloadService = nullptr;
+}
+
 void DownloadService::init() {
 
     downloader->onTaskProgress = [this](const network::DownloadTask &task,

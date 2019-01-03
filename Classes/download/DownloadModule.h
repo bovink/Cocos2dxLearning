@@ -27,6 +27,7 @@ public:
 
     void startDownloadTask(const DownloadInfo &downloadInfo);
 
+    void stopAllTasks();
 private:
 
     DownloadService();
