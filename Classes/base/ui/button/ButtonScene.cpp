@@ -468,17 +468,7 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
         int resourceVersion = stoi(table[r * c - 1]);
         if (downloadInfo.getResourceVersion() > resourceVersion) {
             // 修改数据
-            string updateSql = "UPDATE resource SET "
-                    "storagePath = 'Resource/Course/Course1/', "
-                    "downloadPath = 'http://video.dolphinmedia.cn/ef073948b5ba44d4b9691f2d9820b38b/08ac918f73e8434380388a8e664dbadf-5cc937797266cd387c1d7b65162819dd-ld.mp4', "
-                    "MD5 = 'unknow', "
-                    "resourceVersion = 100, "
-                    "des = '测试资源', "
-                    "fileName = 'video.mp4', "
-                    "downloadState = -1 "
-                    "WHERE resourceID = 1";
-
-            DatabaseModule::getInstance()->modifyData(pDb, updateSql);
+            updateData(pDb, downloadInfo);
             // 下载数据
             checkDownloadResource(downloadInfo);
             // 同时更新数据的下载状态
@@ -542,4 +532,23 @@ void StartScene::insertData(sqlite3 *pDb, DownloadInfo info) {
             info.getResourceVersion(), info.getResourceID(), info.getDes(), info.getFileName(),
             info.getDownloadState());
     DatabaseModule::getInstance()->insertData(pDb, insertSql);
+}
+
+void StartScene::updateData(sqlite3 *pDb, DownloadInfo info) {
+
+    string updateSql = StringUtils::format("UPDATE resource SET "
+                                                   "storagePath = '%s', "
+                                                   "downloadPath = '%s', "
+                                                   "MD5 = '%s', "
+                                                   "resourceVersion = %d, "
+                                                   "des = '%s', "
+                                                   "fileName = '%s', "
+                                                   "downloadState = %d "
+                                                   "WHERE resourceID = %d", info.getStoragePath(),
+                                           info.getDownloadPath(), info.getMD5(),
+                                           info.getResourceVersion(), info.getDes(),
+                                           info.getFileName(), info.getDownloadState(),
+                                           info.getResourceID());
+
+    DatabaseModule::getInstance()->modifyData(pDb, updateSql);
 }

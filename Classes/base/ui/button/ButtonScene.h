@@ -100,6 +100,8 @@ public:
 
     void insertData(sqlite3* pDb, DownloadInfo info);
 
+    void updateData(sqlite3* pDb, DownloadInfo info);
+
 private:
 
     vector<DownloadInfo> downloadList;
