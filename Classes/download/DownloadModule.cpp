@@ -59,9 +59,12 @@ void DownloadService::init() {
 
         __CCLOGWITHFUNCTION("Task:%s Download Finish", task.identifier.c_str());
     };
-    downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask &task,
-                                           std::vector<unsigned char> &data) {
+    downloader->onTaskError = [this](const cocos2d::network::DownloadTask &task,
+                                     int errorCode,
+                                     int errorCodeInternal,
+                                     const std::string &errorStr) {
 
+        __CCLOGWITHFUNCTION("Task:%s Download Failed", task.identifier.c_str());
     };
 }
 
