@@ -457,17 +457,8 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
     DatabaseModule::getInstance()->queryData2(pDb, selectSql, &table, &r, &c);
     if (r == 0 && c == 0) {
         // 数据不存在，直接插入数据
+        insertData(pDb, downloadInfo);
 
-        string insertSql = "INSERT INTO resource (storagePath, downloadPath, MD5, resourceVersion, resourceID, des, fileName, downloadState) "
-                "VALUES ('Resource/Course/Course1/', "
-                "'http://video.dolphinmedia.cn/ef073948b5ba44d4b9691f2d9820b38b/08ac918f73e8434380388a8e664dbadf-5cc937797266cd387c1d7b65162819dd-ld.mp4', "
-                "'unknow', "
-                "100, "
-                "1, "
-                "'测试资源', "
-                "'video.mp4', "
-                "-1)";
-        DatabaseModule::getInstance()->insertData(pDb, insertSql);
         // 下载数据
         checkDownloadResource(downloadInfo);
         // 同时更新数据的下载状态
@@ -529,9 +520,26 @@ void StartScene::checkDownloadResource(DownloadInfo info, int downloadState) {
     }
 }
 
-void StartScene::createTable(sqlite3* pDb) {
+void StartScene::createTable(sqlite3 *pDb) {
 
     string sql = "create table resource(ID integer primary key autoincrement, storagePath text, downloadPath text, MD5 text, resourceVersion integer, "
             "resourceID integer, des text, fileName text, downloadState integer)";
     DatabaseModule::getInstance()->createTable(pDb, sql);
+}
+
+void StartScene::insertData(sqlite3 *pDb, DownloadInfo info) {
+
+    string insertSql = StringUtils::format(
+            "INSERT INTO resource (storagePath, downloadPath, MD5, resourceVersion, resourceID, des, fileName, downloadState) "
+                    "VALUES ('%s', "
+                    "'%s', "
+                    "'%s', "
+                    "%d, "
+                    "%d, "
+                    "'%s', "
+                    "'%s', "
+                    "%d)", info.getStoragePath(), info.getDownloadPath(), info.getMD5(),
+            info.getResourceVersion(), info.getResourceID(), info.getDes(), info.getFileName(),
+            info.getDownloadState());
+    DatabaseModule::getInstance()->insertData(pDb, insertSql);
 }

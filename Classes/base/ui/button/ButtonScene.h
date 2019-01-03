@@ -98,6 +98,8 @@ public:
 
     void createTable(sqlite3* pDb);
 
+    void insertData(sqlite3* pDb, DownloadInfo info);
+
 private:
 
     vector<DownloadInfo> downloadList;
