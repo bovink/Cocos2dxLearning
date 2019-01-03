@@ -21,6 +21,8 @@ class DownloadService {
 
 public:
 
+    typedef function<void(const network::DownloadTask& task)> OnFileDownloadFinish;
+
     static DownloadService *getInstance();
 
     static DownloadService *getInstance(network::DownloaderHints hints);
@@ -28,6 +30,9 @@ public:
     void startDownloadTask(const DownloadInfo &downloadInfo);
 
     void stopAllTasks();
+
+    void setOnFileDownloadFinish(const OnFileDownloadFinish &onFileDownloadFinish);
+
 private:
 
     DownloadService();
@@ -41,6 +46,8 @@ private:
     static DownloadService *downloadService;
 
     unique_ptr<network::Downloader> downloader;
+
+    OnFileDownloadFinish onFileDownloadFinish = 0;
 };
 
 

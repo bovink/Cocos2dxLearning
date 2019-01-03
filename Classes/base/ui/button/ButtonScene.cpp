@@ -433,7 +433,7 @@ void StartScene::initFakeNetworkData() {
     string downloadPath = urlChar[0];
     string MD5 = "";
     int resourceVersion = 100;
-    int resourceID = 8;
+    int resourceID = 118;
     string des = "图片1";
     DownloadInfo info1 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
                                       resourceID, des, fileName);
@@ -446,7 +446,7 @@ void StartScene::initFakeNetworkData() {
     downloadPath = urlChar[1];
     MD5 = "";
     resourceVersion = 100;
-    resourceID = 9;
+    resourceID = 119;
     des = "图片2";
     DownloadInfo info2 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
                                       resourceID, des, fileName);
@@ -457,6 +457,10 @@ void StartScene::initFakeNetworkData() {
 
         updateLocalData(info);
     }
+
+    DownloadService::getInstance()->setOnFileDownloadFinish([&](const cocos2d::network::DownloadTask &task){
+        __CCLOGWITHFUNCTION("下载完成");
+    });
 }
 
 void StartScene::updateLocalData(DownloadInfo downloadInfo) {

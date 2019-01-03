@@ -64,6 +64,9 @@ void DownloadService::init() {
     downloader->onFileTaskSuccess = [this](const cocos2d::network::DownloadTask &task) {
 
         __CCLOGWITHFUNCTION("Task:%s Download Finish", task.identifier.c_str());
+        if (onFileDownloadFinish) {
+            onFileDownloadFinish(task);
+        }
     };
     downloader->onTaskError = [this](const cocos2d::network::DownloadTask &task,
                                      int errorCode,
@@ -79,6 +82,11 @@ void DownloadService::startDownloadTask(const DownloadInfo &downloadInfo) {
     downloader->createDownloadFileTask(downloadInfo.getDownloadPath(),
                                        downloadInfo.getStoragePath() + downloadInfo.getFileName(),
                                        downloadInfo.getFileName());
+}
+
+void DownloadService::setOnFileDownloadFinish(
+        const DownloadService::OnFileDownloadFinish &onFileDownloadFinish) {
+    DownloadService::onFileDownloadFinish = onFileDownloadFinish;
 }
 
 ////////////////////////////////////////下载工具类////////////////////////////////////////
