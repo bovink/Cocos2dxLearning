@@ -21,7 +21,15 @@ class DownloadService {
 
 public:
 
-    typedef function<void(const network::DownloadTask& task)> OnFileDownloadFinish;
+    typedef function<void(const network::DownloadTask &task,
+                          int64_t bytesReceived,
+                          int64_t totalBytesReceived,
+                          int64_t totalBytesExpected)> OnTaskProgress;
+    typedef function<void(const network::DownloadTask& task)> OnTaskSuccess;
+    typedef function<void(const cocos2d::network::DownloadTask &task,
+                          int errorCode,
+                          int errorCodeInternal,
+                          const std::string &errorStr)> OnTaskError;
 
     static DownloadService *getInstance();
 
@@ -31,7 +39,11 @@ public:
 
     void stopAllTasks();
 
-    void setOnFileDownloadFinish(const OnFileDownloadFinish &onFileDownloadFinish);
+    void setOnTaskProgress(const OnTaskProgress &onTaskProgress);
+
+    void setOnTaskSuccess(const OnTaskSuccess &onTaskSuccess);
+
+    void setOnTaskError(const OnTaskError &onTaskError);
 
 private:
 
@@ -47,7 +59,9 @@ private:
 
     unique_ptr<network::Downloader> downloader;
 
-    OnFileDownloadFinish onFileDownloadFinish = 0;
+    OnTaskProgress onTaskProgress = 0;
+    OnTaskSuccess onTaskSuccess = 0;
+    OnTaskError onTaskError = 0;
 };
 
 

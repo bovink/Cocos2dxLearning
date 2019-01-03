@@ -54,6 +54,9 @@ void DownloadService::init() {
         float percent = float(totalBytesReceived * 100) / totalBytesExpected;
         __CCLOGWITHFUNCTION("taskName:%s,%.1f%%[total %d KB]", task.identifier.c_str(), percent,
                             int(totalBytesExpected / 1024));
+        if (onTaskProgress) {
+            onTaskProgress(task, bytesReceived, totalBytesReceived, totalBytesExpected);
+        }
     };
 
     downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask &task,
@@ -64,14 +67,17 @@ void DownloadService::init() {
     downloader->onFileTaskSuccess = [this](const cocos2d::network::DownloadTask &task) {
 
         __CCLOGWITHFUNCTION("Task:%s Download Finish", task.identifier.c_str());
-        if (onFileDownloadFinish) {
-            onFileDownloadFinish(task);
+        if (onTaskSuccess) {
+            onTaskSuccess(task);
         }
     };
     downloader->onTaskError = [this](const cocos2d::network::DownloadTask &task,
                                      int errorCode,
                                      int errorCodeInternal,
                                      const std::string &errorStr) {
+        if (onTaskError) {
+            onTaskError(task, errorCode, errorCodeInternal, errorStr);
+        }
 
         __CCLOGWITHFUNCTION("Task:%s Download Failed", task.identifier.c_str());
     };
@@ -84,9 +90,17 @@ void DownloadService::startDownloadTask(const DownloadInfo &downloadInfo) {
                                        downloadInfo.getFileName());
 }
 
-void DownloadService::setOnFileDownloadFinish(
-        const DownloadService::OnFileDownloadFinish &onFileDownloadFinish) {
-    DownloadService::onFileDownloadFinish = onFileDownloadFinish;
+void DownloadService::setOnTaskProgress(const DownloadService::OnTaskProgress &onTaskProgress) {
+    DownloadService::onTaskProgress = onTaskProgress;
+}
+
+void DownloadService::setOnTaskSuccess(
+        const DownloadService::OnTaskSuccess &onTaskSuccess) {
+    DownloadService::onTaskSuccess = onTaskSuccess;
+}
+
+void DownloadService::setOnTaskError(const DownloadService::OnTaskError &onTaskError) {
+    DownloadService::onTaskError = onTaskError;
 }
 
 ////////////////////////////////////////下载工具类////////////////////////////////////////

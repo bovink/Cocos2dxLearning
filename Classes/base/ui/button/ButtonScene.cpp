@@ -338,8 +338,6 @@ bool StartScene::init() {
     addChild(img1);
 
 
-
-
     auto text = Text::create("点击按钮观看视频", "FZLTXIHK_1.TTF", 26);
     text->setColor(Color3B::BLACK);
     auto textP = LinearLayoutParameter::create();
@@ -416,7 +414,7 @@ bool StartScene::init() {
     modifyBtn->addClickEventListener([&](Ref *ref) {
 
         string sql = "SELECT * FROM resource WHERE resourceID >= 6";
-        sqlite3* pDb = NULL;
+        sqlite3 *pDb = NULL;
         DatabaseModule::getInstance()->openDatabase(&pDb, "resourceDb");
         DatabaseModule::getInstance()->queryData(pDb, sql);
     });
@@ -458,8 +456,30 @@ void StartScene::initFakeNetworkData() {
         updateLocalData(info);
     }
 
-    DownloadService::getInstance()->setOnFileDownloadFinish([&](const cocos2d::network::DownloadTask &task){
-        __CCLOGWITHFUNCTION("下载完成");
+    DownloadService::getInstance()->setOnTaskSuccess(
+            [&](const cocos2d::network::DownloadTask &task) {
+                __CCLOGWITHFUNCTION("下载完成");
+                string sql = StringUtils::format(
+                        "UPDATE resource SET downloadState = 2 WHERE downloadPath = '%s'",
+                        task.requestURL.c_str());
+
+                sqlite3 *pDb = NULL;
+                DatabaseModule::getInstance()->openDatabase(&pDb, "resourceDb");
+                DatabaseModule::getInstance()->modifyData(pDb, sql);
+            });
+
+    DownloadService::getInstance()->setOnTaskError([&](const cocos2d::network::DownloadTask &task,
+                                                       int errorCode,
+                                                       int errorCodeInternal,
+                                                       const std::string &errorStr){
+        __CCLOGWITHFUNCTION("下载异常");
+        string sql = StringUtils::format(
+                "UPDATE resource SET downloadState = 1 WHERE downloadPath = '%s'",
+                task.requestURL.c_str());
+
+        sqlite3 *pDb = NULL;
+        DatabaseModule::getInstance()->openDatabase(&pDb, "resourceDb");
+        DatabaseModule::getInstance()->modifyData(pDb, sql);
     });
 }
 
