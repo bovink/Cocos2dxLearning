@@ -329,6 +329,17 @@ bool StartScene::init() {
     root->setPosition(Vec2::ZERO);
     addChild(root);
 
+
+    auto img1 = ImageView::create();
+    img1->setName("img1");
+    img1->ignoreContentAdaptWithSize(false);
+    img1->setContentSize(Size(200, 100));
+    img1->setPosition(Vec2(_contentSize.width / 2, 100));
+    addChild(img1);
+
+
+
+
     auto text = Text::create("点击按钮观看视频", "FZLTXIHK_1.TTF", 26);
     text->setColor(Color3B::BLACK);
     auto textP = LinearLayoutParameter::create();
@@ -391,6 +402,8 @@ bool StartScene::init() {
     deleteBtn->setLayoutParameter(deleteBtnP);
     deleteBtn->addClickEventListener([&](Ref *ref) {
 
+        ImageView *image1 = dynamic_cast<ImageView *>(getChildByName("img1"));
+        image1->loadTexture(FileUtils::getInstance()->getWritablePath() + "Download/1.jpg");
     });
     root->addChild(deleteBtn);
 
@@ -420,7 +433,7 @@ void StartScene::initFakeNetworkData() {
     string downloadPath = urlChar[0];
     string MD5 = "";
     int resourceVersion = 100;
-    int resourceID = 6;
+    int resourceID = 8;
     string des = "图片1";
     DownloadInfo info1 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
                                       resourceID, des, fileName);
@@ -433,7 +446,7 @@ void StartScene::initFakeNetworkData() {
     downloadPath = urlChar[1];
     MD5 = "";
     resourceVersion = 100;
-    resourceID = 7;
+    resourceID = 9;
     des = "图片2";
     DownloadInfo info2 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
                                       resourceID, des, fileName);
