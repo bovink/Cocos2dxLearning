@@ -464,7 +464,7 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
     } else {
         // 数据存在，对比资源版本，如果新数据的resourceVersion要大，则覆盖数据，状态为-1
 
-        int resourceVersion = stoi(table[r * c - 1]);
+        int resourceVersion = stoi(table[r * c]);
         if (downloadInfo.getResourceVersion() > resourceVersion) {
             // 修改数据
             updateData(pDb, downloadInfo);
@@ -473,7 +473,7 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
             // 同时更新数据的下载状态
         } else {
             // 根据本地数据的状态来决定是否下载
-            int downloadState = stoi(table[r * c]);
+            int downloadState = stoi(table[r * c + 1]);
             checkDownloadResource(pDb, downloadInfo, downloadState);
             // 同时更新数据的下载状态
 
@@ -529,8 +529,8 @@ void StartScene::insertData(sqlite3 *pDb, DownloadInfo info) {
                     "%d, "
                     "'%s', "
                     "'%s', "
-                    "%d)", info.getStoragePath(), info.getDownloadPath(), info.getMD5(),
-            info.getResourceVersion(), info.getResourceID(), info.getDes(), info.getFileName(),
+                    "%d)", info.getStoragePath().c_str(), info.getDownloadPath().c_str(), info.getMD5().c_str(),
+            info.getResourceVersion(), info.getResourceID(), info.getDes().c_str(), info.getFileName().c_str(),
             info.getDownloadState());
     DatabaseModule::getInstance()->insertData(pDb, insertSql);
 }
@@ -545,10 +545,10 @@ void StartScene::updateData(sqlite3 *pDb, DownloadInfo info) {
                                                    "des = '%s', "
                                                    "fileName = '%s', "
                                                    "downloadState = %d "
-                                                   "WHERE resourceID = %d", info.getStoragePath(),
-                                           info.getDownloadPath(), info.getMD5(),
-                                           info.getResourceVersion(), info.getDes(),
-                                           info.getFileName(), info.getDownloadState(),
+                                                   "WHERE resourceID = %d", info.getStoragePath().c_str(),
+                                           info.getDownloadPath().c_str(), info.getMD5().c_str(),
+                                           info.getResourceVersion(), info.getDes().c_str(),
+                                           info.getFileName().c_str(), info.getDownloadState(),
                                            info.getResourceID());
 
     DatabaseModule::getInstance()->modifyData(pDb, updateSql);
