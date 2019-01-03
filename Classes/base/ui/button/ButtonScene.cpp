@@ -484,23 +484,9 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
 
     }
 
-    CCLOG("行数 is %d , 列数 is %d", r, c);
-
-    // 第0行（0 ~ c-1），为字段名
-    // 第1行（c ~ 2*c-1），第一条记录
-    // ......
-    for (int i = 0; i <= r; i++) {
-        for (int j = 0; j < c; j++) {
-            CCLOG("%s", table[i * c + j]);
-        }
-        CCLOG("------------------------------");
-    }
-
     // 必须释放查询表
     sqlite3_free_table(table);
 
-
-    // 初始化本地私有变量
 
 }
 

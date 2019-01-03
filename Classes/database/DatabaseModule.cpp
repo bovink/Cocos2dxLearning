@@ -108,13 +108,13 @@ bool DatabaseModule::checkTableExist(sqlite3 *pDb, string name) {
     // 第0行（0 ~ c-1），为字段名
     // 第1行（c ~ 2*c-1），第一条记录
     // ......
-    for (int i = 0; i <= r; i++) {
-        for (int j = 0; j < c; j++) {
-            CCLOG("%s", table[i * c + j]);
-        }
-        CCLOG("------------------------------");
-    }
-    CCLOG("表数量:%s", table[r * c]);
+//    for (int i = 0; i <= r; i++) {
+//        for (int j = 0; j < c; j++) {
+//            CCLOG("%s", table[i * c + j]);
+//        }
+//        CCLOG("------------------------------");
+//    }
+//    CCLOG("表数量:%s", table[r * c]);
     string s = StringUtils::format("%s", table[r * c]);
 
     // 必须释放查询表

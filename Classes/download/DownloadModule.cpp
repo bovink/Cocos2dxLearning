@@ -12,7 +12,7 @@ DownloadService::DownloadService() {
 
     network::DownloaderHints hints;
     hints.countOfMaxProcessingTasks = 5;
-    hints.tempFileNameSuffix = "temp";
+    hints.tempFileNameSuffix = ".temp";
     hints.timeoutInSeconds = 10;
 
     downloader.reset(new network::Downloader(hints));
