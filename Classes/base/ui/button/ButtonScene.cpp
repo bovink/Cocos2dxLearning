@@ -460,8 +460,7 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
         insertData(pDb, downloadInfo);
 
         // 下载数据
-        checkDownloadResource(downloadInfo);
-        // 同时更新数据的下载状态
+        checkDownloadResource(pDb, downloadInfo);
     } else {
         // 数据存在，对比资源版本，如果新数据的resourceVersion要大，则覆盖数据，状态为-1
 
@@ -470,12 +469,12 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
             // 修改数据
             updateData(pDb, downloadInfo);
             // 下载数据
-            checkDownloadResource(downloadInfo);
+            checkDownloadResource(pDb, downloadInfo);
             // 同时更新数据的下载状态
         } else {
             // 根据本地数据的状态来决定是否下载
             int downloadState = stoi(table[r * c]);
-            checkDownloadResource(downloadInfo, downloadState);
+            checkDownloadResource(pDb, downloadInfo, downloadState);
             // 同时更新数据的下载状态
 
         }
@@ -502,11 +501,13 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
 
 }
 
-void StartScene::checkDownloadResource(DownloadInfo info, int downloadState) {
+void StartScene::checkDownloadResource(sqlite3 *pDb, DownloadInfo info, int downloadState) {
     // 当资源处于未下载或者暂停下载时则开始下载数据
     if (downloadState != 0 && downloadState != 2) {
 
         DownloadService::getInstance()->startDownloadTask(info);
+
+        updateDownloadState(pDb, 0, info.getResourceID());
     }
 }
 
@@ -551,4 +552,13 @@ void StartScene::updateData(sqlite3 *pDb, DownloadInfo info) {
                                            info.getResourceID());
 
     DatabaseModule::getInstance()->modifyData(pDb, updateSql);
+}
+
+void StartScene::updateDownloadState(sqlite3 *pDb, int downloadState, int resourceID) {
+
+
+    string sql = StringUtils::format("UPDATE resource SET downloadState = %d WHERE resourceID = %d",
+                                     downloadState, resourceID);
+
+    DatabaseModule::getInstance()->modifyData(pDb, sql);
 }

@@ -94,13 +94,15 @@ public:
     // 根据服务器获取的数据更新本地数据
     void updateLocalData(DownloadInfo downloadInfo);
 
-    void checkDownloadResource(DownloadInfo info, int downloadState = -1);
+    void checkDownloadResource(sqlite3 *pDb, DownloadInfo info, int downloadState = -1);
 
-    void createTable(sqlite3* pDb);
+    void createTable(sqlite3 *pDb);
 
-    void insertData(sqlite3* pDb, DownloadInfo info);
+    void insertData(sqlite3 *pDb, DownloadInfo info);
 
-    void updateData(sqlite3* pDb, DownloadInfo info);
+    void updateData(sqlite3 *pDb, DownloadInfo info);
+
+    void updateDownloadState(sqlite3 *pDb, int downloadState, int resourceID);
 
 private:
 
