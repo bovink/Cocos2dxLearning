@@ -40,6 +40,11 @@ using namespace cocos2d::experimental;
 using namespace CocosDenshion;
 #endif
 
+#include "DatabaseModule.h"
+#include "sqlite3.h"
+
+using namespace std;
+
 USING_NS_CC;
 
 static cocos2d::Size designResolutionSize = cocos2d::Size(640, 1136);
@@ -50,23 +55,29 @@ static cocos2d::Size largeResolutionSize = cocos2d::Size(1080, 1920);
 //static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 //static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 
-AppDelegate::AppDelegate()
-{
+AppDelegate::AppDelegate() {
 }
 
-AppDelegate::~AppDelegate() 
-{
+AppDelegate::~AppDelegate() {
 #if USE_AUDIO_ENGINE
     AudioEngine::end();
 #elif USE_SIMPLE_AUDIO_ENGINE
     SimpleAudioEngine::end();
 #endif
+    setAllTaskPaused();
+}
+
+void AppDelegate::setAllTaskPaused() {
+    string sql = "UPDATE resource SET downloadState = 1 WHERE downloadState = 0";
+
+    sqlite3 *pDb = NULL;
+    DatabaseModule::getInstance()->openDatabase(&pDb, "resourceDb");
+    DatabaseModule::getInstance()->modifyData(pDb, sql);
 }
 
 // if you want a different context, modify the value of glContextAttrs
 // it will affect all platforms
-void AppDelegate::initGLContextAttrs()
-{
+void AppDelegate::initGLContextAttrs() {
     // set OpenGL context attributes: red,green,blue,alpha,depth,stencil,multisamplesCount
     GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8, 0};
 
@@ -75,8 +86,7 @@ void AppDelegate::initGLContextAttrs()
 
 // if you want to use the package manager to install more packages,  
 // don't modify or remove this function
-static int register_all_packages()
-{
+static int register_all_packages() {
     return 0; //flag for packages manager
 }
 
@@ -84,7 +94,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
-    if(!glview) {
+    if (!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         glview = GLViewImpl::createWithRect("Cocos2dxLearning", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
@@ -100,9 +110,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0f / 60);
 
     // Set the design resolution
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_WIDTH);
+    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height,
+                                    ResolutionPolicy::FIXED_WIDTH);
     auto frameSize = glview->getFrameSize();
-    CCLOG("width:%f,height:%f",frameSize.width,frameSize.height);
+    CCLOG("width:%f,height:%f", frameSize.width, frameSize.height);
     // if the frame's height is larger than the height of medium size.
 //    if (frameSize.height > mediumResolutionSize.height)
 //    {
