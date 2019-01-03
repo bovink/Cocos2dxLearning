@@ -332,7 +332,7 @@ bool StartScene::init() {
     auto text = Text::create("点击按钮观看视频", "FZLTXIHK_1.TTF", 26);
     text->setColor(Color3B::BLACK);
     auto textP = LinearLayoutParameter::create();
-    textP->setMargin(Margin(0, 250, 0, 0));
+    textP->setMargin(Margin(0, 50, 0, 0));
     textP->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
     text->setLayoutParameter(textP);
     root->addChild(text);
@@ -428,7 +428,7 @@ void StartScene::initFakeNetworkData() {
     string downloadPath = urlChar;
     string MD5 = "";
     int resourceVersion = 100;
-    int resourceID = 1;
+    int resourceID = 3;
     string des = "下载测试描述";
     DownloadInfo downloadInfo = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
                                              resourceID, des, fileName);
@@ -461,11 +461,13 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
 
         // 下载数据
         checkDownloadResource(pDb, downloadInfo);
+        __CCLOGWITHFUNCTION("插入数据");
     } else {
         // 数据存在，对比资源版本，如果新数据的resourceVersion要大，则覆盖数据，状态为-1
 
         int resourceVersion = stoi(table[r * c]);
         if (downloadInfo.getResourceVersion() > resourceVersion) {
+            __CCLOGWITHFUNCTION("修改数据");
             // 修改数据
             updateData(pDb, downloadInfo);
             // 下载数据
@@ -474,6 +476,7 @@ void StartScene::updateLocalData(DownloadInfo downloadInfo) {
         } else {
             // 根据本地数据的状态来决定是否下载
             int downloadState = stoi(table[r * c + 1]);
+            __CCLOGWITHFUNCTION("是否下载:%d", downloadState);
             checkDownloadResource(pDb, downloadInfo, downloadState);
             // 同时更新数据的下载状态
 
@@ -529,8 +532,10 @@ void StartScene::insertData(sqlite3 *pDb, DownloadInfo info) {
                     "%d, "
                     "'%s', "
                     "'%s', "
-                    "%d)", info.getStoragePath().c_str(), info.getDownloadPath().c_str(), info.getMD5().c_str(),
-            info.getResourceVersion(), info.getResourceID(), info.getDes().c_str(), info.getFileName().c_str(),
+                    "%d)", info.getStoragePath().c_str(), info.getDownloadPath().c_str(),
+            info.getMD5().c_str(),
+            info.getResourceVersion(), info.getResourceID(), info.getDes().c_str(),
+            info.getFileName().c_str(),
             info.getDownloadState());
     DatabaseModule::getInstance()->insertData(pDb, insertSql);
 }
@@ -545,7 +550,8 @@ void StartScene::updateData(sqlite3 *pDb, DownloadInfo info) {
                                                    "des = '%s', "
                                                    "fileName = '%s', "
                                                    "downloadState = %d "
-                                                   "WHERE resourceID = %d", info.getStoragePath().c_str(),
+                                                   "WHERE resourceID = %d",
+                                           info.getStoragePath().c_str(),
                                            info.getDownloadPath().c_str(), info.getMD5().c_str(),
                                            info.getResourceVersion(), info.getDes().c_str(),
                                            info.getFileName().c_str(), info.getDownloadState(),
@@ -561,4 +567,17 @@ void StartScene::updateDownloadState(sqlite3 *pDb, int downloadState, int resour
                                      downloadState, resourceID);
 
     DatabaseModule::getInstance()->modifyData(pDb, sql);
+}
+
+void StartScene::setAllTaskPaused() {
+    DownloadService::getInstance()->stopAllTasks();
+    string sql = "UPDATE resource SET downloadState = 1 WHERE downloadState = 0";
+
+    sqlite3 *pDb = NULL;
+    DatabaseModule::getInstance()->openDatabase(&pDb, "resourceDb");
+    DatabaseModule::getInstance()->modifyData(pDb, sql);
+}
+
+StartScene::~StartScene() {
+    setAllTaskPaused();
 }

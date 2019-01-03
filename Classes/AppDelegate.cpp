@@ -41,6 +41,7 @@ using namespace CocosDenshion;
 #endif
 
 #include "DatabaseModule.h"
+#include "DownloadModule.h"
 #include "sqlite3.h"
 
 using namespace std;
@@ -68,6 +69,7 @@ AppDelegate::~AppDelegate() {
 }
 
 void AppDelegate::setAllTaskPaused() {
+    DownloadService::getInstance()->stopAllTasks();
     string sql = "UPDATE resource SET downloadState = 1 WHERE downloadState = 0";
 
     sqlite3 *pDb = NULL;

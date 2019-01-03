@@ -86,6 +86,8 @@ public:
 
     CREATE_FUNC(StartScene)
 
+    ~StartScene();
+
     bool init() override;
 
     // 模拟从服务器获取的数据
@@ -104,6 +106,7 @@ public:
 
     void updateDownloadState(sqlite3 *pDb, int downloadState, int resourceID);
 
+    void setAllTaskPaused();
 private:
 
     vector<DownloadInfo> downloadList;
