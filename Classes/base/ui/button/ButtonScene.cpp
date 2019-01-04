@@ -271,8 +271,9 @@ void MarqueeTextTest::printSomething() {
     }
 }
 
-static const char *urlChar[] = {"http://img.zcool.cn/community/01f9ea56e282836ac72531cbe0233b.jpg@2o.jpg",
-                                "http://img03.tooopen.com/uploadfile/downs/images/20110714/sy_20110714135215645030.jpg"};
+static const char *urlChar[] = {
+        "http://img.zcool.cn/community/01f9ea56e282836ac72531cbe0233b.jpg@2o.jpg",
+        "http://img03.tooopen.com/uploadfile/downs/images/20110714/sy_20110714135215645030.jpg"};
 
 
 static const char *sNameList[] = {"1.jpg", "2.jpg"};
@@ -392,7 +393,7 @@ bool StartScene::init() {
 
         string fileName = FileUtils::getInstance()->getWritablePath() + "Download/1.jpg";
         string fileMd5 = md5file(fileName.c_str());
-        __CCLOGWITHFUNCTION("filemd5:%s",fileMd5.c_str());
+        __CCLOGWITHFUNCTION("filemd5:%s", fileMd5.c_str());
     });
     root->addChild(queryBtn);
 
@@ -417,7 +418,7 @@ bool StartScene::init() {
     modifyBtn->setLayoutParameter(modifyBtnP);
     modifyBtn->addClickEventListener([&](Ref *ref) {
 
-        string sql = "SELECT * FROM resource WHERE resourceID >= 6";
+        string sql = "SELECT * FROM resource";
         sqlite3 *pDb = NULL;
         DatabaseModule::getInstance()->openDatabase(&pDb, "resourceDb");
         DatabaseModule::getInstance()->queryData(pDb, sql);
@@ -433,9 +434,9 @@ void StartScene::initFakeNetworkData() {
     string fileName = sNameList[0];
     string storagePath = FileUtils::getInstance()->getWritablePath() + "Download/";
     string downloadPath = urlChar[0];
-    string MD5 = "";
+    string MD5 = "3acfaea5a847c7216f02df314c967070";
     int resourceVersion = 100;
-    int resourceID = 128;
+    int resourceID = 1;
     string des = "图片1";
     DownloadInfo info1 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
                                       resourceID, des, fileName);
@@ -448,7 +449,7 @@ void StartScene::initFakeNetworkData() {
     downloadPath = urlChar[1];
     MD5 = "";
     resourceVersion = 100;
-    resourceID = 129;
+    resourceID = 2;
     des = "图片2";
     DownloadInfo info2 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
                                       resourceID, des, fileName);
@@ -462,20 +463,45 @@ void StartScene::initFakeNetworkData() {
 
     DownloadService::getInstance()->setOnTaskSuccess(
             [&](const cocos2d::network::DownloadTask &task) {
-                __CCLOGWITHFUNCTION("下载完成");
-                string sql = StringUtils::format(
-                        "UPDATE resource SET downloadState = 2 WHERE downloadPath = '%s'",
+                __CCLOGWITHFUNCTION("下载完成:%s", task.identifier.c_str());
+                // 检查下载文件的md5值
+                string selectSql = StringUtils::format(
+                        "SELECT MD5 FROM resource WHERE downloadPath = '%s'",
                         task.requestURL.c_str());
-
+                char **table;
+                int r, c;
                 sqlite3 *pDb = NULL;
                 DatabaseModule::getInstance()->openDatabase(&pDb, "resourceDb");
-                DatabaseModule::getInstance()->modifyData(pDb, sql);
+                DatabaseModule::getInstance()->queryData2(pDb, selectSql, &table, &r, &c);
+
+                // 必须释放查询表
+                string originMD5 = table[r * c];
+                __CCLOGWITHFUNCTION("查询md5为:%s", originMD5.c_str());
+                string fileMd5 = md5file(task.storagePath.c_str());
+                __CCLOGWITHFUNCTION("文件md5为:%s", fileMd5.c_str());
+                sqlite3_free_table(table);
+                // 对比md5
+                if (fileMd5 == originMD5) {// MD5相同
+
+                    string sql = StringUtils::format(
+                            "UPDATE resource SET downloadState = 2 WHERE downloadPath = '%s'",
+                            task.requestURL.c_str());
+
+                    DatabaseModule::getInstance()->modifyData(pDb, sql);
+                } else {
+                    string sql = StringUtils::format(
+                            "DELETE FROM resource WHERE downloadPath = '%s'",
+                            task.requestURL.c_str());
+
+                    DatabaseModule::getInstance()->deleteData(pDb, sql);
+                }
+
             });
 
     DownloadService::getInstance()->setOnTaskError([&](const cocos2d::network::DownloadTask &task,
                                                        int errorCode,
                                                        int errorCodeInternal,
-                                                       const std::string &errorStr){
+                                                       const std::string &errorStr) {
         __CCLOGWITHFUNCTION("下载异常");
         string sql = StringUtils::format(
                 "UPDATE resource SET downloadState = 1 WHERE downloadPath = '%s'",
