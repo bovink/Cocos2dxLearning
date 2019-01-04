@@ -272,7 +272,7 @@ void MarqueeTextTest::printSomething() {
 }
 
 static const char *urlChar[] = {
-        "http://img.zcool.cn/community/01f9ea56e282836ac72531cbe0233b.jpg@2o.jpg",
+        "http://img.daimg.com/uploads/allimg/120302/3-1203021T03E04.jpg",
         "http://img03.tooopen.com/uploadfile/downs/images/20110714/sy_20110714135215645030.jpg"};
 
 
@@ -434,8 +434,8 @@ void StartScene::initFakeNetworkData() {
     string fileName = sNameList[0];
     string storagePath = FileUtils::getInstance()->getWritablePath() + "Download/";
     string downloadPath = urlChar[0];
-    string MD5 = "3acfaea5a847c7216f02df314c967070";
-    int resourceVersion = 100;
+    string MD5 = "5cd3cc12262abb569f79cfc6dbb25bee";
+    int resourceVersion = 101;
     int resourceID = 1;
     string des = "图片1";
     DownloadInfo info1 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
