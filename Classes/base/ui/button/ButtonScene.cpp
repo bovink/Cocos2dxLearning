@@ -273,10 +273,10 @@ void MarqueeTextTest::printSomething() {
 
 static const char *urlChar[] = {
         "http://img.daimg.com/uploads/allimg/120302/3-1203021T03E04.jpg",
-        "http://img03.tooopen.com/uploadfile/downs/images/20110714/sy_20110714135215645030.jpg"};
+        "http://video.dolphinmedia.cn/ef073948b5ba44d4b9691f2d9820b38b/08ac918f73e8434380388a8e664dbadf-5cc937797266cd387c1d7b65162819dd-ld.mp4"};
 
 
-static const char *sNameList[] = {"1.jpg", "2.jpg"};
+static const char *sNameList[] = {"1.jpg", "2.mp4"};
 
 bool DownloadTestScene::init() {
     if (!BaseScene::init()) {
@@ -380,6 +380,9 @@ bool StartScene::init() {
     insertBtn->setLayoutParameter(insertBtnP);
     insertBtn->addClickEventListener([&](Ref *ref) {
 
+        __CCLOGWITHFUNCTION("====================");
+        __CCLOGWITHFUNCTION("测试测试测试");
+        __CCLOGWITHFUNCTION("====================");
     });
     root->addChild(insertBtn);
 
@@ -448,7 +451,7 @@ void StartScene::initFakeNetworkData() {
     storagePath = FileUtils::getInstance()->getWritablePath() + "Download/";
     downloadPath = urlChar[1];
     MD5 = "";
-    resourceVersion = 100;
+    resourceVersion = 102;
     resourceID = 2;
     des = "图片2";
     DownloadInfo info2 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
