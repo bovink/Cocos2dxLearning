@@ -6,6 +6,7 @@
 #include "cocos/ui/CocosGUI.h"
 #include <thread>
 #include <iostream>
+#include "md5.h"
 
 using namespace ui;
 
@@ -270,7 +271,7 @@ void MarqueeTextTest::printSomething() {
     }
 }
 
-static const char *urlChar[] = {"http://dl.ppt123.net/pptbj/51/20181115/scivdgiyjht.jpg",
+static const char *urlChar[] = {"http://img.zcool.cn/community/01f9ea56e282836ac72531cbe0233b.jpg@2o.jpg",
                                 "http://img03.tooopen.com/uploadfile/downs/images/20110714/sy_20110714135215645030.jpg"};
 
 
@@ -389,6 +390,9 @@ bool StartScene::init() {
     queryBtn->setLayoutParameter(queryBtnP);
     queryBtn->addClickEventListener([&](Ref *ref) {
 
+        string fileName = FileUtils::getInstance()->getWritablePath() + "Download/1.jpg";
+        string fileMd5 = md5file(fileName.c_str());
+        __CCLOGWITHFUNCTION("filemd5:%s",fileMd5.c_str());
     });
     root->addChild(queryBtn);
 
@@ -431,7 +435,7 @@ void StartScene::initFakeNetworkData() {
     string downloadPath = urlChar[0];
     string MD5 = "";
     int resourceVersion = 100;
-    int resourceID = 118;
+    int resourceID = 128;
     string des = "图片1";
     DownloadInfo info1 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
                                       resourceID, des, fileName);
@@ -444,7 +448,7 @@ void StartScene::initFakeNetworkData() {
     downloadPath = urlChar[1];
     MD5 = "";
     resourceVersion = 100;
-    resourceID = 119;
+    resourceID = 129;
     des = "图片2";
     DownloadInfo info2 = DownloadInfo(storagePath, downloadPath, MD5, resourceVersion,
                                       resourceID, des, fileName);
