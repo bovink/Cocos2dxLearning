@@ -665,7 +665,27 @@ bool Scale9Test::init() {
 
     bg = ImageView::create("ps_tinglibj.png");
     bg->setPosition(_contentSize / 2);
+    bg->setScale9Enabled(true);
+    bg->setCapInsets(Rect(50, 50, 100, 100));
     addChild(bg);
+
+    auto btn1 = Button::create("animationbuttonnormal.png");
+    btn1->addClickEventListener([&](Ref *ref){
+        bg->setContentSize(Size(bg->getContentSize().width, bg->getContentSize().height + 5));
+    });
+    btn1->setPosition(Vec2(50, 50));
+    btn1->setTitleText("增加高度");
+    addChild(btn1);
+
+    auto btn2 = Button::create("animationbuttonnormal.png");
+    btn2->addClickEventListener([&](Ref *ref){
+
+        bg->setContentSize(Size(bg->getContentSize().width, bg->getContentSize().height - 5));
+    });
+    btn2->setPosition(Vec2(_contentSize.width - 50, 50));
+    btn2->setTitleText("减少高度");
+    addChild(btn2);
+
 
     return true;
 }
