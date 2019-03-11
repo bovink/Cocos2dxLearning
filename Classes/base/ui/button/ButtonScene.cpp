@@ -666,11 +666,11 @@ bool Scale9Test::init() {
     bg = ImageView::create("ps_tinglibj.png");
     bg->setPosition(_contentSize / 2);
     bg->setScale9Enabled(true);
-    bg->setCapInsets(Rect(50, 50, 100, 100));
+    bg->setCapInsets(Rect(0, 0, 640, 100));
     addChild(bg);
 
     auto btn1 = Button::create("animationbuttonnormal.png");
-    btn1->addClickEventListener([&](Ref *ref){
+    btn1->addClickEventListener([&](Ref *ref) {
         bg->setContentSize(Size(bg->getContentSize().width, bg->getContentSize().height + 5));
     });
     btn1->setPosition(Vec2(50, 50));
@@ -678,7 +678,7 @@ bool Scale9Test::init() {
     addChild(btn1);
 
     auto btn2 = Button::create("animationbuttonnormal.png");
-    btn2->addClickEventListener([&](Ref *ref){
+    btn2->addClickEventListener([&](Ref *ref) {
 
         bg->setContentSize(Size(bg->getContentSize().width, bg->getContentSize().height - 5));
     });
