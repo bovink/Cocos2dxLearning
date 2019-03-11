@@ -647,3 +647,25 @@ void StartScene::setAllTaskPaused() {
 StartScene::~StartScene() {
     setAllTaskPaused();
 }
+
+///////////////////////////////////测试点9图///////////////////////////////////
+
+Scale9Test::Scale9Test() {
+
+}
+
+Scale9Test::~Scale9Test() {
+
+}
+
+bool Scale9Test::init() {
+    if (!BaseScene::init()) {
+        return false;
+    }
+
+    bg = ImageView::create("ps_tinglibj.png");
+    bg->setPosition(_contentSize / 2);
+    addChild(bg);
+
+    return true;
+}

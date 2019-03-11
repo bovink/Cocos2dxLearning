@@ -113,6 +113,7 @@ void MainScene::initListData() {
     titles.push_back("MarqueeText");
     titles.push_back("DownloadTest");
     titles.push_back("StartScene");
+    titles.push_back("Scale9 Test Scene");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -227,6 +228,10 @@ void MainScene::onItemClickEvent(Ref *ref) {
             break;
         case 18:
             scene = StartScene::create();
+            _director->pushScene(scene);
+            break;
+        case 19:
+            scene = Scale9Test::create();
             _director->pushScene(scene);
             break;
         default:

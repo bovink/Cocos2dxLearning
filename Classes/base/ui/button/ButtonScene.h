@@ -107,9 +107,27 @@ public:
     void updateDownloadState(sqlite3 *pDb, int downloadState, int resourceID);
 
     void setAllTaskPaused();
+
 private:
 
     vector<DownloadInfo> downloadList;
+};
+
+class Scale9Test : public BaseScene {
+
+public:
+
+    CREATE_FUNC(Scale9Test)
+
+    Scale9Test();
+
+    ~Scale9Test();
+
+    bool init() override;
+
+private:
+
+    ImageView* bg;
 };
 
 
