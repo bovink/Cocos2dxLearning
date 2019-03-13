@@ -689,3 +689,39 @@ bool Scale9Test::init() {
 
     return true;
 }
+
+//
+
+SliceImageTest::SliceImageTest() {
+
+}
+
+SliceImageTest::~SliceImageTest() {
+
+}
+
+bool SliceImageTest::init() {
+    if (!BaseScene::init()) {
+        return false;
+    }
+    auto root = Layout::create();
+    root->setLayoutType(Layout::Type::RELATIVE);
+    root->setContentSize(_contentSize);
+    root->setPosition(Vec2::ZERO);
+    addChild(root);
+
+    auto background = ImageView::create("dolphin/background.png");
+    background->setScale9Enabled(true);
+    background->setContentSize(_contentSize);
+    auto backgroundP = RelativeLayoutParameter::create();
+    backgroundP->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
+    background->setLayoutParameter(backgroundP);
+    root->addChild(background);
+
+    auto bg = ImageView::create("dolphin/cover1.png");
+    auto bgP = RelativeLayoutParameter::create();
+    bgP->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
+    bg->setLayoutParameter(bgP);
+    root->addChild(bg);
+    return true;
+}

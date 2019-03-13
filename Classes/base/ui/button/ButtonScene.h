@@ -127,7 +127,20 @@ public:
 
 private:
 
-    ImageView* bg;
+    ImageView *bg;
+};
+
+class SliceImageTest : public BaseScene {
+
+public:
+
+    CREATE_FUNC(SliceImageTest)
+
+    SliceImageTest();
+
+    ~SliceImageTest();
+
+    bool init() override;
 };
 
 
