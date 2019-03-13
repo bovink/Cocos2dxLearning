@@ -704,24 +704,54 @@ bool SliceImageTest::init() {
     if (!BaseScene::init()) {
         return false;
     }
-    auto root = Layout::create();
-    root->setLayoutType(Layout::Type::RELATIVE);
-    root->setContentSize(_contentSize);
-    root->setPosition(Vec2::ZERO);
-    addChild(root);
+//    auto root = Layout::create();
+//    root->setLayoutType(Layout::Type::RELATIVE);
+//    root->setContentSize(_contentSize);
+//    root->setPosition(Vec2::ZERO);
+//    addChild(root);
+//
+//    auto background = ImageView::create("dolphin/background.png");
+//    background->setScale9Enabled(true);
+//    background->setContentSize(_contentSize);
+//    auto backgroundP = RelativeLayoutParameter::create();
+//    backgroundP->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
+//    background->setLayoutParameter(backgroundP);
+//    root->addChild(background);
+//
+//    auto bg = ImageView::create("dolphin/cover1.png");
+//    auto bgP = RelativeLayoutParameter::create();
+//    bgP->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
+//    bg->setLayoutParameter(bgP);
+//    root->addChild(bg);
 
+    auto renderer = _director->getRenderer();
+    auto &parentTransform = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+
+    // 背景，需要被裁剪
     auto background = ImageView::create("dolphin/background.png");
     background->setScale9Enabled(true);
     background->setContentSize(_contentSize);
-    auto backgroundP = RelativeLayoutParameter::create();
-    backgroundP->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
-    background->setLayoutParameter(backgroundP);
-    root->addChild(background);
+    background->setPosition(_contentSize / 2);
 
-    auto bg = ImageView::create("dolphin/cover1.png");
-    auto bgP = RelativeLayoutParameter::create();
-    bgP->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
-    bg->setLayoutParameter(bgP);
-    root->addChild(bg);
+    // 裁剪背景
+    auto cut = ImageView::create("dolphin/cover1.png");
+    cut->setPosition(_contentSize/2);
+    BlendFunc func0 = {GL_ZERO, GL_ONE_MINUS_SRC_ALPHA};
+    cut->setBlendFunc(func0);
+
+    // 画板
+    auto canvas = RenderTexture::create(_contentSize.width,
+                                        _contentSize.height,
+                                        Texture2D::PixelFormat::RGBA8888);
+    canvas->setPosition(_contentSize / 2);
+
+    canvas->begin();
+    background->visit(renderer, parentTransform, true);
+    cut->visit(renderer, parentTransform, true);
+    canvas->end();
+    addChild(canvas);
+    background->setVisible(false);
+    cut->setVisible(false);
+    canvas->setVisible(false);
     return true;
 }
