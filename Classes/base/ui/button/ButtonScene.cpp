@@ -704,11 +704,11 @@ bool SliceImageTest::init() {
     if (!BaseScene::init()) {
         return false;
     }
-//    auto root = Layout::create();
-//    root->setLayoutType(Layout::Type::RELATIVE);
-//    root->setContentSize(_contentSize);
-//    root->setPosition(Vec2::ZERO);
-//    addChild(root);
+    auto root = Layout::create();
+    root->setLayoutType(Layout::Type::RELATIVE);
+    root->setContentSize(_contentSize);
+    root->setPosition(Vec2::ZERO);
+    addChild(root);
 //
 //    auto background = ImageView::create("dolphin/background.png");
 //    background->setScale9Enabled(true);
@@ -718,11 +718,20 @@ bool SliceImageTest::init() {
 //    background->setLayoutParameter(backgroundP);
 //    root->addChild(background);
 //
-//    auto bg = ImageView::create("dolphin/cover1.png");
-//    auto bgP = RelativeLayoutParameter::create();
-//    bgP->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
-//    bg->setLayoutParameter(bgP);
+    auto bg = ImageView::create("dolphin/cover1.png");
+    auto bgP = RelativeLayoutParameter::create();
+    bgP->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
+    bg->setLayoutParameter(bgP);
 //    root->addChild(bg);
+
+    auto video = VideoPlayer::create();
+    video->setContentSize(bg->getContentSize());
+    video->setFileName("dolphin/video1.mp4");
+    root->addChild(video);
+    auto videoP = RelativeLayoutParameter::create();
+    videoP->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
+    video->setLayoutParameter(videoP);
+    video->play();
 
     auto renderer = _director->getRenderer();
     auto &parentTransform = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -735,7 +744,7 @@ bool SliceImageTest::init() {
 
     // 裁剪背景
     auto cut = ImageView::create("dolphin/cover1.png");
-    cut->setPosition(_contentSize/2);
+    cut->setPosition(_contentSize / 2);
     BlendFunc func0 = {GL_ZERO, GL_ONE_MINUS_SRC_ALPHA};
     cut->setBlendFunc(func0);
 
@@ -752,6 +761,6 @@ bool SliceImageTest::init() {
     addChild(canvas);
     background->setVisible(false);
     cut->setVisible(false);
-    canvas->setVisible(false);
+//    canvas->setVisible(false);
     return true;
 }

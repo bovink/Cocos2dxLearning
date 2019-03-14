@@ -11,6 +11,7 @@
 
 USING_NS_CC;
 using namespace ui;
+using namespace experimental::ui;
 
 class BaseScene : public Scene {
 public:
