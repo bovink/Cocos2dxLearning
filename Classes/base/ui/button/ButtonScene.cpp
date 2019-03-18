@@ -719,6 +719,7 @@ bool SliceImageTest::init() {
 //    root->addChild(background);
 //
     auto bg = ImageView::create("dolphin/cover1.png");
+    bg->setContentSize(Size(bg->getContentSize().width - 1, bg->getContentSize().height - 1));
     auto bgP = RelativeLayoutParameter::create();
     bgP->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
     bg->setLayoutParameter(bgP);
@@ -729,7 +730,8 @@ bool SliceImageTest::init() {
     video->setFileName("dolphin/video1.mp4");
     root->addChild(video);
     auto videoP = RelativeLayoutParameter::create();
-    videoP->setAlign(RelativeLayoutParameter::RelativeAlign::CENTER_IN_PARENT);
+    videoP->setMargin(Margin(_contentSize.width / 2 - bg->getContentSize().width / 2, 300, 0, 0));
+    videoP->setAlign(RelativeLayoutParameter::RelativeAlign::PARENT_TOP_LEFT);
     video->setLayoutParameter(videoP);
     video->play();
 
@@ -744,7 +746,9 @@ bool SliceImageTest::init() {
 
     // 裁剪背景
     auto cut = ImageView::create("dolphin/cover1.png");
-    cut->setPosition(_contentSize / 2);
+    cut->setScale(0.99f);
+    cut->setAnchorPoint(Vec2::ANCHOR_MIDDLE_TOP);
+    cut->setPosition(Size(_contentSize.width / 2, _contentSize.height - 300));
     BlendFunc func0 = {GL_ZERO, GL_ONE_MINUS_SRC_ALPHA};
     cut->setBlendFunc(func0);
 

@@ -28,7 +28,9 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "MyViewController.h"
 
+MyViewController* rootViewController;
 @implementation AppController
 
 @synthesize window;
@@ -55,18 +57,38 @@ static AppDelegate s_sharedApplication;
     // Use RootViewController to manage CCEAGLView
     _viewController = [[RootViewController alloc]init];
     _viewController.wantsFullScreenLayout = YES;
+    _viewController.view.backgroundColor = [UIColor clearColor];
+    _viewController.view.autoresizesSubviews = YES;
+    _viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _viewController.view.tag = 1;
     
+    // 根视图
+    rootViewController = [[MyViewController alloc] init];
+    rootViewController.view.autoresizesSubviews = YES;
+    rootViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    // 视频视图控制器
+    MyViewController* videoViewController = [[MyViewController alloc] init];
+    videoViewController.view.autoresizesSubviews = YES;
+    videoViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    videoViewController.view.tag = 2;
+    
+    [rootViewController.view addSubview:videoViewController.view];
+    [rootViewController.view addSubview:_viewController.view];
+
 
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
     {
         // warning: addSubView doesn't work on iOS6
-        [window addSubview: _viewController.view];
+        //        [window addSubview: _viewController.view];
+        [window addSubview: rootViewController.view];
     }
     else
     {
         // use this method on ios6
-        [window setRootViewController:_viewController];
+        //        [window setRootViewController:_viewController];
+        [window setRootViewController:rootViewController];
     }
 
     [window makeKeyAndVisible];
@@ -76,6 +98,8 @@ static AppDelegate s_sharedApplication;
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
+    cocos2d::Director::getInstance()->setClearColor(cocos2d::Color4F(0, 0, 0, 0));
+
     
     //run the cocos2d-x game scene
     app->run();

@@ -130,12 +130,12 @@ using namespace cocos2d::experimental::ui;
     if (self.moviePlayer != nullptr) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.moviePlayer];
-
+        
         [self.moviePlayer stop];
         [self.moviePlayer.view removeFromSuperview];
         self.moviePlayer = nullptr;
     }
-
+    
     if (videoSource == 1) {
         self.moviePlayer = [[[MPMoviePlayerController alloc] init] autorelease];
         self.moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
@@ -145,26 +145,27 @@ using namespace cocos2d::experimental::ui;
         self.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
     }
     self.moviePlayer.allowsAirPlay = false;
-    self.moviePlayer.controlStyle = MPMovieControlStyleEmbedded;
+    self.moviePlayer.controlStyle = MPMovieControlStyleNone;
     self.moviePlayer.view.userInteractionEnabled = true;
-
+    
     auto clearColor = [UIColor clearColor];
     self.moviePlayer.backgroundView.backgroundColor = clearColor;
     self.moviePlayer.view.backgroundColor = clearColor;
     for (UIView * subView in self.moviePlayer.view.subviews) {
         subView.backgroundColor = clearColor;
     }
-
+    
     if (_keepRatioEnabled) {
         self.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
     } else {
         self.moviePlayer.scalingMode = MPMovieScalingModeFill;
     }
-
+    
     auto view = cocos2d::Director::getInstance()->getOpenGLView();
     auto eaglview = (CCEAGLView *) view->getEAGLView();
-    [eaglview addSubview:self.moviePlayer.view];
-
+    //    [eaglview addSubview:self.moviePlayer.view];
+    [[eaglview.superview viewWithTag:2] addSubview:self.moviePlayer.view];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playStateChange) name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.moviePlayer];
 }
