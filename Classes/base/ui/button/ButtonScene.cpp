@@ -783,5 +783,29 @@ bool MotionStreakTest::init() {
         return false;
     }
     __CCLOGWITHFUNCTION("%s", __FUNCTION__);
+    auto eventListenerTouchOneByOne = EventListenerTouchOneByOne::create();
+
+    eventListenerTouchOneByOne->onTouchBegan = CC_CALLBACK_2(MotionStreakTest::onTouchBegan, this);
+
+    eventListenerTouchOneByOne->onTouchMoved = CC_CALLBACK_2(MotionStreakTest::onTouchMoved, this);
+
+    eventListenerTouchOneByOne->onTouchEnded = CC_CALLBACK_2(MotionStreakTest::onTouchEnded, this);
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListenerTouchOneByOne, this);
     return true;
+}
+
+bool MotionStreakTest::onTouchBegan(Touch *touch, Event *event) {
+    _streak = MotionStreak::create(0.5, 3, 5, Color3B::WHITE, "streak.png");
+    addChild(_streak);
+    return true;
+}
+
+void MotionStreakTest::onTouchMoved(Touch *touch, Event *event) {
+    _streak->setPosition(touch->getLocation());
+}
+
+void MotionStreakTest::onTouchEnded(Touch *touch, Event *event) {
+
+    removeChild(_streak);
 }

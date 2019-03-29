@@ -154,6 +154,15 @@ public:
     ~MotionStreakTest();
 
     bool init() override;
+
+    virtual bool onTouchBegan(Touch *touch, Event *event);
+
+    virtual void onTouchMoved(Touch *touch, Event *event);
+
+    virtual void onTouchEnded(Touch *touch, Event *event);
+
+private:
+    MotionStreak* _streak;
 };
 
 #endif //PROJ_ANDROID_TESTBUTTONSCENE_H
