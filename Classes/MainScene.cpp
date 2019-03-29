@@ -115,6 +115,7 @@ void MainScene::initListData() {
     titles.push_back("StartScene");
     titles.push_back("Scale9 Test Scene");
     titles.push_back("SliceImage");
+    titles.push_back("MotionStreak");
 
     for (int i = 0; i < titles.size(); i++) {
         string title = titles.at(i);
@@ -237,6 +238,10 @@ void MainScene::onItemClickEvent(Ref *ref) {
             break;
         case 20:
             scene = SliceImageTest::create();
+            _director->pushScene(scene);
+            break;
+        case 21:
+            scene = MotionStreakTest::create();
             _director->pushScene(scene);
             break;
         default:

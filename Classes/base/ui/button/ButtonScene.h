@@ -143,5 +143,17 @@ public:
     bool init() override;
 };
 
+class MotionStreakTest : public BaseScene {
+
+public:
+
+    CREATE_FUNC(MotionStreakTest)
+
+    MotionStreakTest();
+
+    ~MotionStreakTest();
+
+    bool init() override;
+};
 
 #endif //PROJ_ANDROID_TESTBUTTONSCENE_H

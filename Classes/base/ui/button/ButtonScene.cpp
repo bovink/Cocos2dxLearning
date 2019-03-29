@@ -768,3 +768,20 @@ bool SliceImageTest::init() {
 //    canvas->setVisible(false);
     return true;
 }
+
+MotionStreakTest::MotionStreakTest() {
+
+}
+
+MotionStreakTest::~MotionStreakTest() {
+
+}
+
+bool MotionStreakTest::init() {
+    if (!BaseScene::init()) {
+
+        return false;
+    }
+    __CCLOGWITHFUNCTION("%s", __FUNCTION__);
+    return true;
+}
