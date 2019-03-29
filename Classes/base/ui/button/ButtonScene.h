@@ -162,7 +162,8 @@ public:
     virtual void onTouchEnded(Touch *touch, Event *event);
 
 private:
-    MotionStreak* _streak;
+    vector<MotionStreak *> streakList;
+    int currentIndex;
 };
 
 #endif //PROJ_ANDROID_TESTBUTTONSCENE_H

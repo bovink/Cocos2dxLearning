@@ -796,16 +796,19 @@ bool MotionStreakTest::init() {
 }
 
 bool MotionStreakTest::onTouchBegan(Touch *touch, Event *event) {
-    _streak = MotionStreak::create(0.5, 3, 5, Color3B::WHITE, "streak.png");
-    addChild(_streak);
+    auto streak = MotionStreak::create(0.5, 3, 5, Color3B::WHITE, "streak.png");
+    addChild(streak);
+    streakList.push_back(streak);
+    currentIndex = streakList.size() - 1;
     return true;
 }
 
 void MotionStreakTest::onTouchMoved(Touch *touch, Event *event) {
-    _streak->setPosition(touch->getLocation());
+
+    MotionStreak *node = streakList.at(currentIndex);
+    node->setPosition(touch->getLocation());
 }
 
 void MotionStreakTest::onTouchEnded(Touch *touch, Event *event) {
 
-    removeChild(_streak);
 }
