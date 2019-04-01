@@ -798,7 +798,7 @@ bool MotionStreakTest::init() {
 
     image = ImageView::create("ps_fj_sjcgg_tt38.png");
     image->setPosition(Vec2(0, _contentSize.height / 2));
-//    image->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    image->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     addChild(image);
 
     schedule([&](float) {
@@ -828,7 +828,7 @@ bool MotionStreakTest::init() {
 
 bool MotionStreakTest::onTouchBegan(Touch *touch, Event *event) {
     auto streak = MotionStreak::create(0.5, 3, 5, Color3B::WHITE, "streak.png");
-//    streak->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    streak->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     addChild(streak);
     streakList.push_back(streak);
     currentIndex = streakList.size() - 1;
@@ -839,7 +839,7 @@ void MotionStreakTest::onTouchMoved(Touch *touch, Event *event) {
 
     MotionStreak *node = streakList.at(currentIndex);
     node->setPosition(touch->getLocation());
-    auto x = checkTouch(image->getBoundingBox(),
+    auto x = checkTouch(Rect(image->getPosition(), image->getContentSize()),
                         Rect(touch->getLocation(), node->getContentSize()));
     if (x) {
         __CCLOGWITHFUNCTION("碰撞");
