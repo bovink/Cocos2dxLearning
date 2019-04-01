@@ -796,20 +796,39 @@ bool MotionStreakTest::init() {
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListenerTouchOneByOne, this);
 
-    image = ImageView::create("ccicon.png");
+    image = ImageView::create("ps_fj_sjcgg_tt38.png");
     image->setPosition(Vec2(0, _contentSize.height / 2));
-    image->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+//    image->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     addChild(image);
 
-    auto moveBy = MoveBy::create(1, Vec2(_contentSize.width - image->getContentSize().width, 0));
-    auto seq = Sequence::create(moveBy->clone(), moveBy->clone()->reverse(), NULL);
-    image->runAction(RepeatForever::create(seq));
+    schedule([&](float) {
+        image->setPosition(Vec2(random(-200, 0), 0));
+
+        ccBezierConfig bezierConfig;
+
+
+        bezierConfig.controlPoint_1 = Vec2(0, _contentSize.height);
+        bezierConfig.controlPoint_2 = Vec2(_contentSize.width - 200, _contentSize.height);
+        bezierConfig.endPosition = Vec2(_contentSize.width + random(-200, 0), -300);
+        auto bezierTo = BezierTo::create(3, bezierConfig);
+        auto delayTime = DelayTime::create(1);
+
+        auto seq = Sequence::create(bezierTo, delayTime, NULL);
+        image->runAction(seq);
+
+        // 旋转动画
+        auto rotate = random(90, 180);
+        auto rotateBy = RotateBy::create(3, rotate);
+        auto ease = EaseOut::create(rotateBy, 2.5);
+        image->runAction(ease);
+    }, 5, "run_action");
+
     return true;
 }
 
 bool MotionStreakTest::onTouchBegan(Touch *touch, Event *event) {
     auto streak = MotionStreak::create(0.5, 3, 5, Color3B::WHITE, "streak.png");
-    streak->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+//    streak->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     addChild(streak);
     streakList.push_back(streak);
     currentIndex = streakList.size() - 1;
