@@ -792,11 +792,17 @@ bool MotionStreakTest::init() {
     eventListenerTouchOneByOne->onTouchEnded = CC_CALLBACK_2(MotionStreakTest::onTouchEnded, this);
 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListenerTouchOneByOne, this);
+
+    image = ImageView::create("ccicon.png");
+    image->setPosition(_contentSize / 2);
+    image->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    addChild(image);
     return true;
 }
 
 bool MotionStreakTest::onTouchBegan(Touch *touch, Event *event) {
     auto streak = MotionStreak::create(0.5, 3, 60, Color3B::WHITE, "ccicon.png");
+    streak->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     addChild(streak);
     streakList.push_back(streak);
     currentIndex = streakList.size() - 1;
@@ -807,6 +813,14 @@ void MotionStreakTest::onTouchMoved(Touch *touch, Event *event) {
 
     MotionStreak *node = streakList.at(currentIndex);
     node->setPosition(touch->getLocation());
+    auto x = checkTouch(image->getBoundingBox(),
+                        Rect(touch->getLocation(), node->getContentSize()));
+    if (x) {
+        __CCLOGWITHFUNCTION("碰撞");
+    } else {
+
+        __CCLOGWITHFUNCTION("无碰撞");
+    }
 }
 
 void MotionStreakTest::onTouchEnded(Touch *touch, Event *event) {
@@ -818,4 +832,26 @@ void MotionStreakTest::onTouchEnded(Touch *touch, Event *event) {
 
         streakList.clear();
     }
+}
+
+bool MotionStreakTest::checkTouch(Rect rect1, Rect rect2) {
+    float x1 = rect1.origin.x;//矩形1中心点的横坐标
+    float y1 = rect1.origin.y;//矩形1中心点的纵坐标
+    float w1 = rect1.size.width;//矩形1的宽度
+    float h1 = rect1.size.height;//矩形1的高度
+    float x2 = rect2.origin.x;
+    float y2 = rect2.origin.y;
+    float w2 = rect2.size.width;
+    float h2 = rect2.size.height;
+
+    if (x1 + w1 * 0.5 < x2 - w2 * 0.5)
+        return false;//矩形1在矩形2左方，两者无碰撞
+    else if (x1 - w1 * 0.5 > x2 + w2 * 0.5)
+        return false;//矩形1在矩形2右方，两者无碰撞
+    else if (y1 + h1 * 0.5 < y2 - h2 * 0.5)
+        return false;//矩形1在矩形2下方，两者无碰撞
+    else if (y1 - h1 * 0.5 > y2 + h2 * 0.5)
+        return false;//矩形1在矩形2上方，两者无碰撞
+
+    return true;
 }

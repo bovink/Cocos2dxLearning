@@ -161,7 +161,9 @@ public:
 
     virtual void onTouchEnded(Touch *touch, Event *event);
 
+    bool checkTouch(Rect rect1, Rect rect2);
 private:
+    ImageView* image;
     vector<MotionStreak *> streakList;
     int currentIndex;
 };
