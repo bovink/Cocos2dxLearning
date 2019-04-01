@@ -808,7 +808,7 @@ bool MotionStreakTest::init() {
 }
 
 bool MotionStreakTest::onTouchBegan(Touch *touch, Event *event) {
-    auto streak = MotionStreak::create(0.5, 3, 60, Color3B::WHITE, "ccicon.png");
+    auto streak = MotionStreak::create(0.5, 3, 5, Color3B::WHITE, "streak.png");
     streak->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     addChild(streak);
     streakList.push_back(streak);
