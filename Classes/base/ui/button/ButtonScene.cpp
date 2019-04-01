@@ -796,7 +796,7 @@ bool MotionStreakTest::init() {
 }
 
 bool MotionStreakTest::onTouchBegan(Touch *touch, Event *event) {
-    auto streak = MotionStreak::create(0.5, 3, 5, Color3B::WHITE, "streak.png");
+    auto streak = MotionStreak::create(0.5, 3, 60, Color3B::WHITE, "ccicon.png");
     addChild(streak);
     streakList.push_back(streak);
     currentIndex = streakList.size() - 1;
