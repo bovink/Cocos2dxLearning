@@ -7,8 +7,11 @@
 #include <thread>
 #include <iostream>
 #include "md5.h"
+#include "AudioEngine.h"
 
 using namespace ui;
+
+using namespace experimental;
 
 bool ButtonScene::init() {
 
@@ -794,9 +797,13 @@ bool MotionStreakTest::init() {
     _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListenerTouchOneByOne, this);
 
     image = ImageView::create("ccicon.png");
-    image->setPosition(_contentSize / 2);
+    image->setPosition(Vec2(0, _contentSize.height / 2));
     image->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     addChild(image);
+
+    auto moveBy = MoveBy::create(1, Vec2(_contentSize.width - image->getContentSize().width, 0));
+    auto seq = Sequence::create(moveBy->clone(), moveBy->clone()->reverse(), NULL);
+    image->runAction(RepeatForever::create(seq));
     return true;
 }
 
@@ -817,6 +824,7 @@ void MotionStreakTest::onTouchMoved(Touch *touch, Event *event) {
                         Rect(touch->getLocation(), node->getContentSize()));
     if (x) {
         __CCLOGWITHFUNCTION("碰撞");
+        AudioEngine::play2d("audio/good.mp3");
     } else {
 
         __CCLOGWITHFUNCTION("无碰撞");
