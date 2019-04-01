@@ -811,4 +811,11 @@ void MotionStreakTest::onTouchMoved(Touch *touch, Event *event) {
 
 void MotionStreakTest::onTouchEnded(Touch *touch, Event *event) {
 
+    if (streakList.size() > 10) {
+        for (int i = 0; i < streakList.size(); ++i) {
+            removeChild(streakList.at(i));
+        }
+
+        streakList.clear();
+    }
 }
