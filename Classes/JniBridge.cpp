@@ -7,8 +7,8 @@
 
 extern "C" {
 
-void Java_org_cocos2dx_cpp_AppActivity_testSomething(JNIEnv *, jobject *obj) {
+void Java_org_cocos2dx_cpp_AppActivity_testSomething(JNIEnv *, jobject *obj, jint type) {
 
-    testSomething();
+    testSomething(type);
 }
 };

@@ -173,7 +173,7 @@ public class AppActivity extends Cocos2dxActivity {
         }
     }
 
-    public static native void testSomething();
+    public static native void testSomething(int type);
 
 
 }

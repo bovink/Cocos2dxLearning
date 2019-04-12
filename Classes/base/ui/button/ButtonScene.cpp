@@ -769,6 +769,8 @@ bool SliceImageTest::init() {
     background->setVisible(false);
     cut->setVisible(false);
 //    canvas->setVisible(false);
+    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
+                                    "testSomething", 2);
     return true;
 }
 
@@ -833,7 +835,7 @@ bool MotionStreakTest::onTouchBegan(Touch *touch, Event *event) {
     streakList.push_back(streak);
     currentIndex = streakList.size() - 1;
     JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
-                                    "testSomething");
+                                    "testSomething", 1);
     return true;
 }
 

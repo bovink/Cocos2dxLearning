@@ -11,12 +11,18 @@
 USING_NS_CC;
 using namespace std;
 
-static void testSomething();
+static void testSomething(int type);
 
-void testSomething() {
+void testSomething(int type) {
 
+    if (type == 1) {
+
+        __CCLOGWITHFUNCTION("%s,测试1", __FUNCTION__);
+    } else if (type == 2) {
+
+        __CCLOGWITHFUNCTION("%s,测试2", __FUNCTION__);
+    }
     cout << "testSomething" << endl;
-    __CCLOGWITHFUNCTION("%s", __FUNCTION__);
 }
 
 class JniBridge {
