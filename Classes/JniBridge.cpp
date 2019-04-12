@@ -3,3 +3,12 @@
 //
 
 #include "JniBridge.h"
+
+
+extern "C" {
+
+void Java_org_cocos2dx_cpp_AppActivity_testSomething(JNIEnv *, jobject *obj) {
+
+    testSomething();
+}
+};

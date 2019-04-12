@@ -832,6 +832,8 @@ bool MotionStreakTest::onTouchBegan(Touch *touch, Event *event) {
     addChild(streak);
     streakList.push_back(streak);
     currentIndex = streakList.size() - 1;
+    JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
+                                    "testSomething");
     return true;
 }
 
