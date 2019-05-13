@@ -4,7 +4,7 @@
 
 #include "JniBridge.h"
 
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 extern "C" {
 
 void Java_org_cocos2dx_cpp_AppActivity_testSomething(JNIEnv *, jobject *obj, jint type) {
@@ -12,3 +12,4 @@ void Java_org_cocos2dx_cpp_AppActivity_testSomething(JNIEnv *, jobject *obj, jin
     testSomething(type);
 }
 };
+#endif

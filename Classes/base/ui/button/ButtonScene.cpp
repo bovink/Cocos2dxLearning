@@ -769,8 +769,10 @@ bool SliceImageTest::init() {
     background->setVisible(false);
     cut->setVisible(false);
 //    canvas->setVisible(false);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
                                     "testSomething", 2);
+#endif
     return true;
 }
 
@@ -834,8 +836,10 @@ bool MotionStreakTest::onTouchBegan(Touch *touch, Event *event) {
     addChild(streak);
     streakList.push_back(streak);
     currentIndex = streakList.size() - 1;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     JniHelper::callStaticVoidMethod("org/cocos2dx/cpp/AppActivity",
                                     "testSomething", 1);
+#endif
     return true;
 }
 
