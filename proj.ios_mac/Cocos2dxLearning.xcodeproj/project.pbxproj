@@ -11,8 +11,6 @@
 		1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */; };
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AF87B481F6F77D6007BE51C /* AppController.mm */; };
-		1AF87B881F6F781D007BE51C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87B591F6F77D6007BE51C /* LaunchScreen.storyboard */; };
-		1AF87B891F6F781D007BE51C /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87B5A1F6F77D6007BE51C /* LaunchScreenBackground.png */; };
 		1AF87B8A1F6F7822007BE51C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AF87B5B1F6F77D6007BE51C /* main.m */; };
 		1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AF87B5E1F6F77D6007BE51C /* RootViewController.mm */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -166,8 +164,6 @@
 		1AF87B471F6F77D6007BE51C /* AppController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		1AF87B481F6F77D6007BE51C /* AppController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		1AF87B581F6F77D6007BE51C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1AF87B591F6F77D6007BE51C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		1AF87B5A1F6F77D6007BE51C /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenBackground.png; sourceTree = "<group>"; };
 		1AF87B5B1F6F77D6007BE51C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1AF87B5C1F6F77D6007BE51C /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		1AF87B5D1F6F77D6007BE51C /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -394,8 +390,6 @@
 				1AF87B471F6F77D6007BE51C /* AppController.h */,
 				1AF87B481F6F77D6007BE51C /* AppController.mm */,
 				1AF87B581F6F77D6007BE51C /* Info.plist */,
-				1AF87B591F6F77D6007BE51C /* LaunchScreen.storyboard */,
-				1AF87B5A1F6F77D6007BE51C /* LaunchScreenBackground.png */,
 				1AF87B5B1F6F77D6007BE51C /* main.m */,
 				1AF87B5C1F6F77D6007BE51C /* Prefix.pch */,
 				1AF87B5D1F6F77D6007BE51C /* RootViewController.h */,
@@ -977,7 +971,6 @@
 				546C237E228907B60077DE88 /* animation in Resources */,
 				546C2382228907B60077DE88 /* fonts in Resources */,
 				546C237A228907B60077DE88 /* ps_juxingbj.png in Resources */,
-				1AF87B891F6F781D007BE51C /* LaunchScreenBackground.png in Resources */,
 				546C2389228907B70077DE88 /* animationbuttonnormal.png in Resources */,
 				546C2373228907B60077DE88 /* ps_game10_bj.png in Resources */,
 				546C2369228907B60077DE88 /* ps_danci_k1.png in Resources */,
@@ -988,7 +981,6 @@
 				546C2371228907B60077DE88 /* ps_tinglibj.png in Resources */,
 				546C237B228907B60077DE88 /* word.plist in Resources */,
 				546C2386228907B60077DE88 /* animationbuttonpressed.png in Resources */,
-				1AF87B881F6F781D007BE51C /* LaunchScreen.storyboard in Resources */,
 				546C2388228907B70077DE88 /* streak.png in Resources */,
 				546C2378228907B60077DE88 /* ccicon.png in Resources */,
 				546C2385228907B60077DE88 /* grossini_dance_08.png in Resources */,
@@ -1097,6 +1089,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				DEVELOPMENT_TEAM = S9M79MN594;
@@ -1132,6 +1125,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				DEVELOPMENT_TEAM = S9M79MN594;
