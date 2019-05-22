@@ -890,3 +890,36 @@ bool MotionStreakTest::checkTouch(Rect rect1, Rect rect2) {
 
     return true;
 }
+
+FairyGUITest::FairyGUITest() {
+
+}
+
+FairyGUITest::~FairyGUITest() {
+
+}
+
+bool FairyGUITest::init() {
+    if (!BaseScene::init()) {
+
+        return false;
+    }
+
+    __CCLOGWITHFUNCTION("FairyGUITest, init");
+    groot = fairygui::GRoot::create(this);
+    groot->retain();
+    fairygui::UIPackage::addPackage("UI/Transition");
+    fairygui::GComponent *g1 = fairygui::UIPackage::createObject("Transition", "testmotion")->as<fairygui::GComponent>();
+//    g1->retain();
+
+    groot->addChild(g1);
+    fairygui::Transition *t = g1->getTransition("t0");
+    t->play([=](){
+        __CCLOGWITHFUNCTION("paly over");
+    });
+//    fairygui::Transition * t = g1->getTransition("t0");
+//    t->play([=](){
+//        __CCLOGWITHFUNCTION("play over");
+//    });
+    return true;
+}

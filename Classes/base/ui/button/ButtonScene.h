@@ -6,6 +6,8 @@
 #define PROJ_ANDROID_TESTBUTTONSCENE_H
 
 #include "BaseScene.h"
+#include "FairyGUI.h"
+
 
 class ButtonScene : public BaseScene {
 
@@ -162,10 +164,28 @@ public:
     virtual void onTouchEnded(Touch *touch, Event *event);
 
     bool checkTouch(Rect rect1, Rect rect2);
+
 private:
-    ImageView* image;
+    ImageView *image;
     vector<MotionStreak *> streakList;
     int currentIndex;
+};
+
+class FairyGUITest : public BaseScene {
+
+public:
+
+    CREATE_FUNC(FairyGUITest);
+
+    FairyGUITest();
+
+    ~FairyGUITest();
+
+    bool init() override;
+
+private:
+
+    fairygui::GRoot* groot;
 };
 
 #endif //PROJ_ANDROID_TESTBUTTONSCENE_H
