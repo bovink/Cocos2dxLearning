@@ -16,7 +16,9 @@
 #include "EraserScene.h"
 #include "ImageViewScene.h"
 #include "ButtonScene.h"
+#include "tinyxml2.h"
 
+using namespace tinyxml2;
 using namespace std;
 
 static void executeCheckOrderStatus(int width, int height);
@@ -47,6 +49,20 @@ bool MainScene::init() {
     if (!Scene::init()) {
 
         return false;
+    }
+
+    string xmlcontent = FileUtils::getInstance()->getStringFromFile("helloworld.xml");
+
+    XMLDocument *doc = new XMLDocument();
+    XMLError error = doc->Parse(xmlcontent.c_str(), xmlcontent.size());
+    if (error == 0) {
+
+        string content = doc->FirstChildElement("Hello")->GetText();
+        __CCLOGWITHFUNCTION("加载成功");
+        __CCLOGWITHFUNCTION("第一个节点的内容是:%s", content.c_str());
+    } else if (error == 3) {
+
+        __CCLOGWITHFUNCTION("没有找到文件");
     }
 
     initListView();
