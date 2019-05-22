@@ -66,8 +66,6 @@ public class Cocos2dxVideoHelper {
     private final static int VideoTaskRestart = 10;
     private final static int VideoTaskKeepRatio = 11;
     private final static int VideoTaskFullScreen = 12;
-    private final static int VideoTaskGetDuration = 13;
-    private final static int VideoTaskGetCurrentPosition = 14;
     final static int KeyEventBack = 1000;
     
     static class VideoHandler extends Handler{
@@ -98,16 +96,6 @@ public class Cocos2dxVideoHelper {
             case VideoTaskStart: {
                 Cocos2dxVideoHelper helper = mReference.get();
                 helper._startVideo(msg.arg1);
-                break;
-            }
-            case VideoTaskGetDuration: {
-                Cocos2dxVideoHelper helper = mReference.get();
-                helper._getDuration(msg.arg1);
-                break;
-            }
-            case VideoTaskGetCurrentPosition: {
-                Cocos2dxVideoHelper helper = mReference.get();
-                helper._getCurrentPosition(msg.arg1);
                 break;
             }
             case VideoTaskSetRect: {
@@ -199,11 +187,7 @@ public class Cocos2dxVideoHelper {
     }
     
     public static native void nativeExecuteVideoCallback(int index,int event);
-
-    public static native void nativeExecuteGetDuration(int duration);
-
-    public static native void nativeExecuteGetCurrentPosition(int currentPosition);
-
+    
     OnVideoEventListener videoEventListener = new OnVideoEventListener() {
         
         @Override
@@ -228,8 +212,8 @@ public class Cocos2dxVideoHelper {
         FrameLayout.LayoutParams lParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);
-        videoView.setZOrderOnTop(false);
-        mLayout.addView(videoView, 0, lParams);
+        mLayout.addView(videoView, lParams);
+        videoView.setZOrderOnTop(true);
         videoView.setOnCompletionListener(videoEventListener);
     }
     
@@ -318,36 +302,6 @@ public class Cocos2dxVideoHelper {
                 videoView.setFullScreenEnabled(false, 0, 0);
                 mActivity.runOnGLThread(new VideoEventRunnable(key, KeyEventBack));
             }
-        }
-    }
-
-    public static void getDuration(int index) {
-        Message msg = new Message();
-        msg.what = VideoTaskGetDuration;
-        msg.arg1 = index;
-        mVideoHandler.sendMessage(msg);
-    }
-
-    private void _getDuration(int index) {
-        Cocos2dxVideoView videoView = sVideoViews.get(index);
-        if (videoView != null) {
-            int duration = videoView.getDuration();
-            nativeExecuteGetDuration(duration);
-        }
-    }
-
-    public static void getCurrentPosition(int index) {
-        Message msg = new Message();
-        msg.what = VideoTaskGetCurrentPosition;
-        msg.arg1 = index;
-        mVideoHandler.sendMessage(msg);
-    }
-
-    private void _getCurrentPosition(int index) {
-        Cocos2dxVideoView videoView = sVideoViews.get(index);
-        if (videoView != null) {
-            int currentPosition = videoView.getCurrentPosition();
-            nativeExecuteGetCurrentPosition(currentPosition);
         }
     }
     

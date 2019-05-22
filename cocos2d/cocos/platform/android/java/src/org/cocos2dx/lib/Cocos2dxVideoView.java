@@ -43,8 +43,6 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     
     private Uri         mVideoUri;   
     private int         mDuration;
-    private boolean isComplete  = false;   //插入一个变量，用来记录是不是完成播放
-
 
     // all possible internal states
     private static final int STATE_ERROR              = -1;
@@ -108,8 +106,6 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (mVideoWidth == 0 || mVideoHeight == 0) {
-            mViewWidth = mVisibleWidth;
-            mViewHeight = mVisibleHeight;
             setMeasuredDimension(mViewWidth, mViewHeight);
             Log.i(TAG, ""+mViewWidth+ ":" +mViewHeight);
         }
@@ -206,7 +202,6 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         {
             if (isPlaying()) {
                 pause();
-                resume();
             } else if(mCurrentState == STATE_PAUSED){
                 resume();
             }
@@ -551,7 +546,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         public void surfaceChanged(SurfaceHolder holder, int format,
                                     int w, int h)
         {
-            boolean isValidState =  (mTargetState == STATE_PLAYING)|| !isComplete; //2.加入isComplete判断
+            boolean isValidState =  (mTargetState == STATE_PLAYING);
             boolean hasValidSize = (mVideoWidth == w && mVideoHeight == h);
             if (mMediaPlayer != null && isValidState && hasValidSize) {
                 if (mSeekWhenPrepared != 0) {
@@ -571,10 +566,6 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         {
             // after we return from this we can't use the surface any more
             mSurfaceHolder = null;
-            if(mCurrentState == STATE_PLAYING) {
-                isComplete = mMediaPlayer.getCurrentPosition() == mMediaPlayer.getDuration(); //保存一下当前进度和是否播放完成
-                mSeekWhenPrepared = mMediaPlayer.getCurrentPosition(); //保存一下当前进度和是否播放完成
-            }
             
             release(true);
         }

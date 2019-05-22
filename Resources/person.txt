@@ -1,5 +1,0 @@
-[
-{"name":"lilei","sex":"female","age":13},
-{"name":"hanmeimei","sex":"male","age":14},
-{"name":"zhangxiaoming","sex":"female","age":15}
-]

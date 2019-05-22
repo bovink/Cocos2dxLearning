@@ -43,8 +43,6 @@ using namespace cocos2d::experimental::ui;
 - (void) setFrame:(int) left :(int) top :(int) width :(int) height;
 - (void) setURL:(int) videoSource :(std::string&) videoUrl;
 - (void) play;
-- (NSTimeInterval) getDuration;
-- (NSTimeInterval) getCurrentPosition;
 - (void) pause;
 - (void) resume;
 - (void) stop;
@@ -238,23 +236,6 @@ using namespace cocos2d::experimental::ui;
     }
 }
 
--(NSTimeInterval) getDuration
-{
-    
-    if (self.moviePlayer != NULL) {
-        return [self.moviePlayer duration];
-    }
-    return -2;
-}
-
--(NSTimeInterval) getCurrentPosition
-{
-    if (self.moviePlayer != NULL) {
-        return [self.moviePlayer currentPlaybackTime];
-    }
-    return -1;
-}
-
 -(void) pause
 {
     if (self.moviePlayer != NULL) {
@@ -385,23 +366,6 @@ void VideoPlayer::play()
     }
 }
 
-float VideoPlayer::getDuration()
-{
-    if (! _videoURL.empty())
-    {
-        return [((UIVideoViewWrapperIos*)_videoView) getDuration];
-    }
-    return -4;
-}
-
-int VideoPlayer::getCurrentPosition()
-{
-    if (! _videoURL.empty())
-    {
-        return [((UIVideoViewWrapperIos*)_videoView) getCurrentPosition];
-    }
-    return -2;
-}
 void VideoPlayer::pause()
 {
     if (! _videoURL.empty())

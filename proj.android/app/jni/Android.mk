@@ -7,19 +7,15 @@ $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d/external)
 $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d/cocos)
 $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d/cocos/audio/include)
 
-LOCAL_MODULE := Cocos2dxLearning_shared
+LOCAL_MODULE := MyGame_shared
 
-LOCAL_MODULE_FILENAME := libCocos2dxLearning
+LOCAL_MODULE_FILENAME := libMyGame
 
-LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp
-LOCAL_SRC_FILES += $(shell find $(LOCAL_PATH)/../../../Classes \
-                   \( -name \*.cpp -o -name \*.c \) -print)
+LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
+                   $(LOCAL_PATH)/../../../Classes/AppDelegate.cpp \
+                   $(LOCAL_PATH)/../../../Classes/HelloWorldScene.cpp
 
-LOCAL_C_INCLUDES := ${sort ${dir ${wildcard $(LOCAL_PATH)/../../../Classes/ \
-                                            $(LOCAL_PATH)/../../../Classes/*/ \
-                                            $(LOCAL_PATH)/../../../Classes/*/*/ \
-                                            $(LOCAL_PATH)/../../../Classes/*/*/*/ \
-                                            }}}
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END

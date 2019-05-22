@@ -176,10 +176,6 @@ namespace experimental{
             virtual void onEnter() override;
             virtual void onExit() override;
 
-            virtual float getDuration();
-
-            virtual int getCurrentPosition();
-
         protected:
             virtual cocos2d::ui::Widget* createCloneInstance() override;
             virtual void copySpecialProperties(Widget* model) override;
