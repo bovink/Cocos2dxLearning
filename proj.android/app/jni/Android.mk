@@ -26,6 +26,7 @@ LOCAL_C_INCLUDES := ${sort ${dir ${wildcard $(LOCAL_PATH)/../../../Classes/ \
 
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_STATIC_LIBRARIES += fairygui_static
 
 # _COCOS_LIB_ANDROID_BEGIN
 # _COCOS_LIB_ANDROID_END
@@ -34,6 +35,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 $(call import-add-path, $(LOCAL_PATH)/../../../cocos2d)
 $(call import-module, cocos)
+$(call import-module,editor-support/libfairygui)
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END
