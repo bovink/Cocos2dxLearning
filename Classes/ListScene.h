@@ -5,8 +5,26 @@
 #ifndef PROJ_ANDROID_LISTSCENE_H
 #define PROJ_ANDROID_LISTSCENE_H
 
+#include "cocos2d.h"
+#include "cocos/ui/CocosGUI.h"
 
-class ListScene {
+USING_NS_CC;
+#include "FairyGui.h"
+USING_NS_FGUI;
+using namespace cocos2d::ui;
+using namespace experimental::ui;
+using namespace std;
+
+class ListScene :public Scene {
+
+public:
+
+   CREATE_FUNC(ListScene)
+
+    bool init() override;
+
+private:
+    GRoot *gRoot;
 
 };
 

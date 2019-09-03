@@ -24,6 +24,7 @@
 
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include "ListScene.h"
 
 USING_NS_CC;
 
@@ -115,5 +116,8 @@ Layout *HelloWorld::generateLayout() {
 void HelloWorld::onItemClickEvent(Ref *ref) {
     Layout *layout = dynamic_cast<Layout *>(ref);
     int tag = layout->getTag();
+
+    auto scene = ListScene::create();
+    Director::getInstance()->pushScene(scene);
 
 }
