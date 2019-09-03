@@ -48,6 +48,8 @@ bool HelloWorld::init()
     {
         return false;
     }
+    initListView();
+    initListData();
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -133,5 +135,75 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 
+
+}
+
+void HelloWorld::initListView() {
+
+    auto _layoutItem = generateLayout();
+
+    ListView *listView = ListView::create();
+    listView->setName(_NAME_LIST);
+    listView->setDirection(ui::ScrollView::Direction::VERTICAL);
+    listView->setContentSize(Size(_contentSize.width, _contentSize.height - 48));
+    listView->setPosition(Vec2::ZERO);
+    addChild(listView);
+
+    listView->setItemModel(_layoutItem);
+}
+
+void HelloWorld::initListData() {
+
+    ListView *listView = dynamic_cast<ListView *>(getChildByName(_NAME_LIST));
+
+    std::vector<const std::string> titles;
+    titles.push_back("长腿爸爸");
+    titles.push_back("月亮之歌");
+    titles.push_back("爱哭的猫头鹰");
+    titles.push_back("蔬菜大家族");
+    titles.push_back("抱抱我");
+    titles.push_back("飘着幽灵的小房子");
+    titles.push_back("红气球不见了");
+    titles.push_back("两个怪物");
+    titles.push_back("我会刷牙了");
+    titles.push_back("海盗兔子小分队");
+    titles.push_back("萝卜不见了");
+
+    for (int i = 0; i < titles.size(); i++) {
+        string title = titles.at(i);
+
+        Widget *item = generateLayout();
+        item->setTouchEnabled(true);
+        item->addClickEventListener(CC_CALLBACK_1(HelloWorld::onItemClickEvent, this));
+        item->setTag(i);
+        Text *titleText = dynamic_cast<Text *>(item->getChildByName(_NAME_TITLE));
+        titleText->setString(title);
+        listView->pushBackCustomItem(item);
+    }
+
+    listView->setItemsMargin(20);
+}
+
+Layout *HelloWorld::generateLayout() {
+
+    auto *text = Text::create("example", "", 80);
+    text->setName(_NAME_TITLE);
+
+    auto params = LinearLayoutParameter::create();
+    params->setGravity(LinearLayoutParameter::LinearGravity::CENTER_HORIZONTAL);
+    text->setLayoutParameter(params);
+
+    auto _layoutItem = Layout::create();
+    _layoutItem->setLayoutType(Layout::Type::VERTICAL);
+    _layoutItem->setPosition(Vec2::ZERO);
+    _layoutItem->setContentSize(Size(_contentSize.width, text->getContentSize().height));
+    _layoutItem->addChild(text);
+
+    return _layoutItem;
+}
+
+void HelloWorld::onItemClickEvent(Ref *ref) {
+    Layout *layout = dynamic_cast<Layout *>(ref);
+    int tag = layout->getTag();
 
 }

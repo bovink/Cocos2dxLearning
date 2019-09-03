@@ -26,6 +26,13 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "cocos2d.h"
+#include "cocos/ui/CocosGUI.h"
+
+USING_NS_CC;
+using namespace cocos2d::ui;
+using namespace experimental::ui;
+using namespace std;
 
 class HelloWorld : public cocos2d::Scene
 {
@@ -39,6 +46,22 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+private:
+
+    void initListView();
+
+    void initListData();
+
+    Layout *generateLayout();
+
+    void onItemClickEvent(Ref* ref);
+
+private:
+
+//    Layout* _layoutItem;
+
+    const std::string _NAME_TITLE = "title";
+    const std::string _NAME_LIST = "list";
 };
 
 #endif // __HELLOWORLD_SCENE_H__
