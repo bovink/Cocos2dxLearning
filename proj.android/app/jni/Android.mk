@@ -37,5 +37,5 @@ $(call import-add-path, $(LOCAL_PATH)/../../../cocos2d)
 $(call import-module, cocos)
 $(call import-module,editor-support/libfairygui)
 
-# _COCOS_LIB_IMPORT_ANDROID_BEGIN
+ # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END
