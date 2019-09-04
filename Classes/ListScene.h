@@ -9,22 +9,32 @@
 #include "cocos/ui/CocosGUI.h"
 
 USING_NS_CC;
+
 #include "FairyGui.h"
+
 USING_NS_FGUI;
 using namespace cocos2d::ui;
 using namespace experimental::ui;
 using namespace std;
 
-class ListScene :public Scene {
+class ListScene : public Scene {
 
 public:
 
-   CREATE_FUNC(ListScene)
+    CREATE_FUNC(ListScene)
 
     bool init() override;
 
 private:
+    void renderListItem(int index, GObject *obj);
+
+    void runDemo(EventContext *context);
+
+private:
     GRoot *gRoot;
+    GController* _cc;
+
+    GComponent *demoContainer;
 
 };
 
