@@ -117,7 +117,7 @@ void HelloWorld::onItemClickEvent(Ref *ref) {
     Layout *layout = dynamic_cast<Layout *>(ref);
     int tag = layout->getTag();
 
-    auto scene = ListScene::create();
+    auto scene = TestCacheRemoveScene::create();
     Director::getInstance()->pushScene(scene);
 
 }

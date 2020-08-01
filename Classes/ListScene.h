@@ -7,10 +7,12 @@
 
 #include "cocos2d.h"
 #include "cocos/ui/CocosGUI.h"
+#include <string>
+#include <vector>
 
 USING_NS_CC;
 
-#include "FairyGui.h"
+#include "FairyGUI.h"
 
 USING_NS_FGUI;
 using namespace cocos2d::ui;
@@ -36,6 +38,34 @@ private:
 
     GComponent *demoContainer;
 
+};
+
+class TestCacheRemoveScene : public Scene {
+public:
+
+    TestCacheRemoveScene();
+
+    virtual ~TestCacheRemoveScene();
+
+    CREATE_FUNC(TestCacheRemoveScene)
+
+    bool init() override;
+
+private:
+
+    void addImageAsync();
+
+    void removeImageCache();
+
+    void unbindImageAsync();
+
+    void removeUnusedCache();
+private:
+    GRoot *gRoot;
+
+    string cachePicName;
+    vector<string> removeTextures;
+    bool needRemove  = false;
 };
 
 
