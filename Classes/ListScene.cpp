@@ -62,6 +62,9 @@ bool TestCacheRemoveScene::init() {
 
     gRoot = GRoot::create(this, 0);
     gRoot->retain();
+    view_render = UIPackage::createObject("test_cache_image", "Component3")
+            ->as<GComponent>();
+    gRoot->addChild(view_render);
     // 获取主视图
     __CCLOGWITHFUNCTION("TestCacheRemoveScene init");
     view = UIPackage::createObject("test_cache_image", "base")->as<GComponent>();
@@ -88,6 +91,7 @@ bool TestCacheRemoveScene::init() {
         removeImageCache();
     });
 
+        view_render->setVisible(false);
     GButton *_btnAddScene = view->getChild("btn_add_scene")->as<GButton>();
     _btnAddScene->addClickListener([&](EventContext *) {
 //        UIPackage::addPackage("the_farm/the_farm");
@@ -99,19 +103,28 @@ bool TestCacheRemoveScene::init() {
 //
 //        gRoot->addChild(newScene);
 
-        auto view_render = UIPackage::createObject("test_cache_image", "Component1")
-                ->as<GComponent>();
-        gRoot->addChild(view_render);
-        auto screen = RenderTexture::create(_contentSize.width, _contentSize.height);
+        auto screen = RenderTexture::create(720, 1280);
+//        view_render->displayObject()->addChild(screen);
+//        if (screen->isAutoDraw()) {
+//
+//            __CCLOGWITHFUNCTION("自动包括");
+//        }
+//        screen->setAutoDraw(true);
+//        screen->setKeepMatrix(true);
+//        screen->setVirtualViewport(Vec2(0,0),Rect(0,0,720,1280),Rect(0,0,720,1280));
+        Director::getInstance()->getOpenGLView()->setFrameSize(5000,5000);
         screen->begin();
         auto children = view_render->getChildren();
-        if (children.size() != 0) {
+        for (int i = 0; i < children.size(); ++i) {
+
             children.at(0)->displayObject()->getParent()->visit();
         }
+//        if (children.size() != 0) {
+//        }
         screen->end();
         screen->saveToFile("ScreenShot.png", Image::Format::PNG);
-
-        gRoot->removeChild(view_render);
+        Director::getInstance()->getOpenGLView()->setFrameSize(1280,720);
+//        gRoot->removeChild(view_render);
     });
     GButton *_btnDeleteScene = view->getChild("btn_delete_scene")->as<GButton>();
     _btnDeleteScene->addClickListener([&](EventContext *) {
