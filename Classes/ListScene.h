@@ -63,6 +63,9 @@ private:
 private:
     GRoot *gRoot;
 
+    GComponent* view;
+    GComponent* view_render;
+
     string cachePicName;
     vector<string> removeTextures;
     bool needRemove  = false;
