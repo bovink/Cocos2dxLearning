@@ -68,9 +68,6 @@ bool TestCacheRemoveScene::init() {
     view->setSortingOrder(100);
     gRoot->addChild(view);
 
-    view_render = UIPackage::createObject("test_cache_image", "Component2")->as<GComponent>();
-    view_render->setPosition(10000, 10000);
-    gRoot->addChild(view_render);
 
     GButton *_btnDeleteBind = view->getChild("btn_delete_bind")->as<GButton>();
     _btnDeleteBind->addClickListener([&](EventContext *) {
@@ -101,13 +98,20 @@ bool TestCacheRemoveScene::init() {
 //        newScene->name = "newScene";
 //
 //        gRoot->addChild(newScene);
+
+        auto view_render = UIPackage::createObject("test_cache_image", "Component1")
+                ->as<GComponent>();
+        gRoot->addChild(view_render);
         auto screen = RenderTexture::create(_contentSize.width, _contentSize.height);
         screen->begin();
-        view_render->getChild("n0")->displayObject()->getParent()->visit();
+        auto children = view_render->getChildren();
+        if (children.size() != 0) {
+            children.at(0)->displayObject()->getParent()->visit();
+        }
         screen->end();
         screen->saveToFile("ScreenShot.png", Image::Format::PNG);
-        view_render->setVisible(false);
 
+        gRoot->removeChild(view_render);
     });
     GButton *_btnDeleteScene = view->getChild("btn_delete_scene")->as<GButton>();
     _btnDeleteScene->addClickListener([&](EventContext *) {
@@ -124,7 +128,6 @@ bool TestCacheRemoveScene::init() {
         __CCLOGWITHFUNCTION("加载%s", icon.c_str());
         auto load = view->getChild("load")->as<GLoader>();
         load->setURL(icon);
-        gRoot->removeChild(view_render);
 
     });
     return true;
