@@ -19,10 +19,13 @@ using namespace cocos2d::ui;
 using namespace experimental::ui;
 using namespace std;
 
+#define BindButtonView(__PARENT__, __NAME__) (__PARENT__->getChild(#__NAME__)->as<GButton>())
+
 class ListScene : public Scene {
 
 public:
     ListScene();
+
     virtual ~ListScene();
 
     CREATE_FUNC(ListScene)
@@ -44,11 +47,11 @@ private:
 
 private:
     GRoot *gRoot;
-    GController* _cc;
-    GComponent* _view;
+    GController *_cc;
+    GComponent *_view;
 
     GComponent *demoContainer;
-    const char* tag;
+    const char *tag;
 
 };
 
@@ -80,16 +83,17 @@ private:
     void unbindImageAsync();
 
     void removeUnusedCache();
+
 private:
-    const char* tag;
+    const char *tag;
     GRoot *gRoot;
 
-    GComponent* view;
-    GComponent* view_render;
+    GComponent *view;
+    GComponent *view_render;
 
     string cachePicName;
     vector<string> removeTextures;
-    bool needRemove  = false;
+    bool needRemove = false;
 };
 
 
