@@ -4,6 +4,37 @@
 
 #include "ListScene.h"
 
+ListScene::ListScene() {
+
+    tag = "ListScene";
+    __CCLOGWITHFUNCTION("%s",tag);
+}
+
+ListScene::~ListScene() {
+
+    __CCLOGWITHFUNCTION("%s",tag);
+}
+
+void ListScene::onEnter() {
+    Node::onEnter();
+    __CCLOGWITHFUNCTION("%s",tag);
+}
+
+void ListScene::onEnterTransitionDidFinish() {
+    Node::onEnterTransitionDidFinish();
+    __CCLOGWITHFUNCTION("%s",tag);
+}
+
+void ListScene::onExit() {
+    Node::onExit();
+    __CCLOGWITHFUNCTION("%s",tag);
+}
+
+void ListScene::onExitTransitionDidStart() {
+    Node::onExitTransitionDidStart();
+    __CCLOGWITHFUNCTION("%s",tag);
+}
+
 bool ListScene::init() {
     if (!Scene::init()) {
         return false;
@@ -13,7 +44,7 @@ bool ListScene::init() {
 //    gRoot = GRoot::create(this, 0);
 //    gRoot->retain();
     // 获取主视图
-    __CCLOGWITHFUNCTION("加载新p内容");
+//    __CCLOGWITHFUNCTION("加载新p内容");
 //    auto view = UIPackage::createObject("list", "list")->as<GComponent>();
 //
 //    gRoot->addChild(view);
@@ -27,6 +58,19 @@ bool ListScene::init() {
 //            obj->addClickListener(CC_CALLBACK_1(ListScene::runDemo, this));
 //    }
 
+    UIPackage::addPackage("scene1");
+
+    gRoot = GRoot::create(this, 0);
+    gRoot->retain();
+    _view = UIPackage::createObject("scene1", "com_scene1")
+            ->as<GComponent>();
+    gRoot->addChild(_view);
+    auto btn  = _view->getChild("btn_next")->as<GButton>();
+    btn->addClickListener([&](EventContext*){
+
+        auto scene = TestCacheRemoveScene::create();
+        Director::getInstance()->replaceScene(scene);
+    });
     return true;
 }
 
@@ -66,7 +110,7 @@ bool TestCacheRemoveScene::init() {
             ->as<GComponent>();
     gRoot->addChild(view_render);
     // 获取主视图
-    __CCLOGWITHFUNCTION("TestCacheRemoveScene init");
+//    __CCLOGWITHFUNCTION("TestCacheRemoveScene init");
     view = UIPackage::createObject("test_cache_image", "base")->as<GComponent>();
     view->setSortingOrder(100);
     gRoot->addChild(view);
@@ -94,24 +138,7 @@ bool TestCacheRemoveScene::init() {
         view_render->setVisible(false);
     GButton *_btnAddScene = view->getChild("btn_add_scene")->as<GButton>();
     _btnAddScene->addClickListener([&](EventContext *) {
-//        UIPackage::addPackage("the_farm/the_farm");
-//
-//
-//        auto newScene = UIPackage::createObject("the_farm", "backcover")->as<GComponent>();
-//        newScene->setSortingOrder(99);
-//        newScene->name = "newScene";
-//
-//        gRoot->addChild(newScene);
-
         auto screen = RenderTexture::create(720, 1280);
-//        view_render->displayObject()->addChild(screen);
-//        if (screen->isAutoDraw()) {
-//
-//            __CCLOGWITHFUNCTION("自动包括");
-//        }
-//        screen->setAutoDraw(true);
-//        screen->setKeepMatrix(true);
-//        screen->setVirtualViewport(Vec2(0,0),Rect(0,0,720,1280),Rect(0,0,720,1280));
         Director::getInstance()->getOpenGLView()->setFrameSize(5000,5000);
         screen->begin();
         auto children = view_render->getChildren();
@@ -119,12 +146,9 @@ bool TestCacheRemoveScene::init() {
 
             children.at(0)->displayObject()->getParent()->visit();
         }
-//        if (children.size() != 0) {
-//        }
         screen->end();
         screen->saveToFile("ScreenShot.png", Image::Format::PNG);
         Director::getInstance()->getOpenGLView()->setFrameSize(1280,720);
-//        gRoot->removeChild(view_render);
     });
     GButton *_btnDeleteScene = view->getChild("btn_delete_scene")->as<GButton>();
     _btnDeleteScene->addClickListener([&](EventContext *) {
@@ -143,6 +167,18 @@ bool TestCacheRemoveScene::init() {
         load->setURL(icon);
 
     });
+
+    // 监听键盘事件
+    auto listener = EventListenerKeyboard::create();
+
+    listener->onKeyPressed = [&](EventKeyboard::KeyCode keyCode, Event *event){
+//        __CCLOGWITHFUNCTION("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        Director::getInstance()->popScene();
+    };
+
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
     return true;
 }
 
@@ -197,9 +233,32 @@ void TestCacheRemoveScene::removeUnusedCache() {
 
 TestCacheRemoveScene::TestCacheRemoveScene() {
     cachePicName = "the_farm/the_farm_atlas7_1.png";
+    tag = "TestCacheRemoveScene";
+    __CCLOGWITHFUNCTION("%s",tag);
 }
 
 TestCacheRemoveScene::~TestCacheRemoveScene() {
 
+    __CCLOGWITHFUNCTION("%s",tag);
     gRoot->release();
+}
+
+void TestCacheRemoveScene::onEnter() {
+    Node::onEnter();
+    __CCLOGWITHFUNCTION("%s",tag);
+}
+
+void TestCacheRemoveScene::onEnterTransitionDidFinish() {
+    Node::onEnterTransitionDidFinish();
+    __CCLOGWITHFUNCTION("%s",tag);
+}
+
+void TestCacheRemoveScene::onExit() {
+    Node::onExit();
+    __CCLOGWITHFUNCTION("%s",tag);
+}
+
+void TestCacheRemoveScene::onExitTransitionDidStart() {
+    Node::onExitTransitionDidStart();
+    __CCLOGWITHFUNCTION("%s",tag);
 }

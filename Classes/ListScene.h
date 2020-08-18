@@ -22,10 +22,20 @@ using namespace std;
 class ListScene : public Scene {
 
 public:
+    ListScene();
+    virtual ~ListScene();
 
     CREATE_FUNC(ListScene)
 
     bool init() override;
+
+    void onEnter() override;
+
+    void onEnterTransitionDidFinish() override;
+
+    void onExit() override;
+
+    void onExitTransitionDidStart() override;
 
 private:
     void renderListItem(int index, GObject *obj);
@@ -35,8 +45,10 @@ private:
 private:
     GRoot *gRoot;
     GController* _cc;
+    GComponent* _view;
 
     GComponent *demoContainer;
+    const char* tag;
 
 };
 
@@ -51,6 +63,14 @@ public:
 
     bool init() override;
 
+    void onEnter() override;
+
+    void onEnterTransitionDidFinish() override;
+
+    void onExit() override;
+
+    void onExitTransitionDidStart() override;
+
 private:
 
     void addImageAsync();
@@ -61,6 +81,7 @@ private:
 
     void removeUnusedCache();
 private:
+    const char* tag;
     GRoot *gRoot;
 
     GComponent* view;
